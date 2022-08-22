@@ -2,6 +2,7 @@ import React, { useState, useEffect }  from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 import * as Api from "api";
 import Certificate from "./Certificate";
+import CertificateAddForm from "./CertificateAddForm";
 
 function Certificates({ portfolioOwnerId, isEditable }) {
     const [certificates, setCertificates] = useState([]);
