@@ -1,3 +1,6 @@
+// Test를 위한 Data
+// 백엔드 API와 연동할 때 실제 Data로 주고 받을 수 있도록 수정.
+
 const userId = 1
 
 const AwardTestData = {
