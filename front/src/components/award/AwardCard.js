@@ -6,7 +6,7 @@ const AwardCard = ({ award, isEditable, onEnterEditModeButtonClickEvent }) => {
     }
 
     return (
-        <Card.Text>
+        <Card>
             <Row className="align-items-center">
                 <Col>
                     <span>{award.title}</span>
@@ -26,7 +26,7 @@ const AwardCard = ({ award, isEditable, onEnterEditModeButtonClickEvent }) => {
                     </Col>
                 )}
             </Row>
-        </Card.Text>
+        </Card>
     )
 }
 
