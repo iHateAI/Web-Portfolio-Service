@@ -19,8 +19,8 @@ const AwardCardAddForm = ({
     const onAddSubmitEventHandler = (e) => {
         e.preventDefault()
         const awardObj = {
-            awardTitle: awardTitle,
-            awardDescription: awardDescription,
+            title: awardTitle,
+            description: awardDescription,
         }
         onAddSubmitEvent(awardObj)
     }
