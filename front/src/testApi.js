@@ -11,6 +11,7 @@ const userMock1 = {
       school: "서울대",
       major: "의류",
       position: "학사",
+      user_id: "abcde-1",
     },
   ],
 };
@@ -25,6 +26,7 @@ const userMock2 = {
       school: "고려대",
       major: "소프트웨어",
       position: "박사",
+      user_id: "abcde-12",
     },
   ],
 };
@@ -39,6 +41,7 @@ const userMock3 = {
       school: "충북대",
       major: "식품",
       position: "석사",
+      user_id: "abcde-123",
     },
   ],
 };
@@ -53,6 +56,7 @@ const userMock4 = {
       school: "한기대",
       major: "컴공",
       position: "학사",
+      user_id: "abcde-1234",
     },
   ],
 };
@@ -67,6 +71,7 @@ const userMock5 = {
       school: "서시대",
       major: "기계",
       position: "학사",
+      user_id: "abcde-12345",
     },
   ],
 };
