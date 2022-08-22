@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function Education({ portfolioOwnerId, isEditable }) {
+function Education({ education, setEducations }) {
   // useState 훅을 통해 isEditing 상태를 생성함.
   const [isEditing, setIsEditing] = useState(falase);
   // useState 훅을 통해 education 상태를 생성함.
-  const [education, setEducation] = useState(null);
 
   useEffect(() => {
     // 'education/유저id' 엔드포인트로 GET 요청을 하고, education을 response의 data로 세팅함.
@@ -16,13 +15,14 @@ function Education({ portfolioOwnerId, isEditable }) {
       {isEditing ? (
         <EducationEditForm
           education={education}
-          setEducation={setEducation}
+          setEducations={setEducations}
           setIsEditing={setIsEditing}
         />
       ) : (
         <EducationCard
           education={education}
-          setEducation={setEducation}
+          setEducations={setEducations}
+          setIsEditing={setIsEditing}
           isEditable={isEditable}
         />
       )}
