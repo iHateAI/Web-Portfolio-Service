@@ -30,8 +30,8 @@ const AwardCardAddForm = ({
     }
 
     return (
-        <Form submit={onAddSubmitEventHandler}>
-            <Form.Group controllId="formAddAwardTitle">
+        <Form onSubmit={onAddSubmitEventHandler}>
+            <Form.Group controlId="formAddAwardTitle">
                 <Form.Control
                     type="text"
                     placeholder="수상내역"
@@ -39,7 +39,7 @@ const AwardCardAddForm = ({
                     onChange={onAddAwardTitleChangeEventHandler}
                 />
             </Form.Group>
-            <Form.Group controllId="formAddAwardDescription">
+            <Form.Group controlId="formAddAwardDescription">
                 <Form.Control
                     type="text"
                     placeholder="수상내역 설명"
