@@ -7,6 +7,7 @@ const AwardCardPresenter = ({ award, isEditable, onEditButtonClickEvent }) => {
 
     const onAwardEditButtonClickEventHandler = (editedAward) => {
         onEditButtonClickEvent(editedAward)
+        setIsEditMode(false)
     }
 
     const onCancelButtonClickEventHandler = (isCanceld) => {
