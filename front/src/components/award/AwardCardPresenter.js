@@ -3,7 +3,6 @@ import AwardCard from "./AwardCard"
 import AwardCardEdit from "./AwardCardEdit"
 
 const AwardCardPresenter = ({ award, isEditable, onEditButtonClickEvent }) => {
-    console.log(award)
     const [isEditMode, setIsEditMode] = useState(false)
 
     const onAwardEditButtonClickEventHandler = (editedAward) => {
