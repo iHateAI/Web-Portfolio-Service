@@ -12,9 +12,9 @@ const AwardCardEdit = ({
     const onSubmitEventHander = (e) => {
         e.preventDefault()
         const editedAward = {
-            id: award.Id,
-            awardTitle: awardTitle,
-            awardDescription: awardDescription,
+            id: award.id,
+            title: awardTitle,
+            description: awardDescription,
         }
         onAwardEditButtonClickEvent(editedAward)
     }
@@ -32,7 +32,7 @@ const AwardCardEdit = ({
     }
 
     return (
-        <Form submit={onSubmitEventHander}>
+        <Form onSubmit={onSubmitEventHander}>
             <Form.Group controlled="formAwardTitle">
                 <Form.Control
                     type="text"
