@@ -125,7 +125,7 @@ async function post(endpoint, data) {
     const id = `abcde-${random}`;
     console.log(matchingUser);
 
-    matchingUser.educations.push({ id, school, major, position });
+    matchingUser.educations.push({ id, user_id, school, major, position });
     console.dir(matchingUser);
     return { data: matchingUser };
   }
