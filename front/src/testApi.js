@@ -1,3 +1,5 @@
+import Education from "./components/education/Education";
+
 const userMock1 = {
   id: "abcde-1",
   email: "ktkim@elicer.com",
@@ -125,7 +127,7 @@ async function post(endpoint, data) {
     const id = `abcde-${random}`;
     console.log(matchingUser);
 
-    matchingUser.educations.push({ id, user_id, school, major, position });
+    matchingUser.educations.push({ id, school, major, position, user_id });
     console.dir(matchingUser);
     return { data: matchingUser };
   }
@@ -140,13 +142,36 @@ async function put(endpoint, data) {
   );
 
   const urlAndId = endpoint.split("/");
-  const userId = urlAndId[1];
-  data.id = userId;
-  userlist = userlist.filter((user) => user.id !== userId);
-  userlist.push(data);
+  const req = urlAndId.shift(); // 요청한 mvp
+  const req_id = urlAndId[0]; // 요청 mvp id
+  if (req === "users") {
+    data.id = req_id;
+    userlist = userlist.filter((user) => user.id !== req_id);
+    userlist.push(data);
 
-  const response = { data };
-  return response;
+    const response = { data };
+    return response;
+  }
+
+  if (req === "educations") {
+    const matchingEducations = userlist.find(
+      //data.userid로 유저 찾기
+      (user) => user.id === data.user_id
+    );
+
+    console.log(matchingEducations);
+    matchingEducations.educations = matchingEducations.educations.filter(
+      //찾은 유저에서 받아온 education.id랑 같은 education 제거
+      (education) => education.id !== req_id
+    );
+    console.log(matchingEducations.educations);
+
+    matchingEducations.educations.push({ id: req_id, ...data }); // 새로운 data 삽입
+
+    const response = { data };
+
+    return response;
+  }
 }
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
