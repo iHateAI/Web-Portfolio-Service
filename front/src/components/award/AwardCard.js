@@ -9,9 +9,9 @@ const AwardCard = ({ award, isEditable, onEnterEditModeButtonClickEvent }) => {
         <Card>
             <Row className="align-items-center">
                 <Col>
-                    <span>{award.title}</span>
+                    <Card.Title>{award.title}</Card.Title>
                     <br />
-                    <span className="text-muted">{award.description}</span>
+                    <Card.Subtitle>{award.description}</Card.Subtitle>
                 </Col>
                 {isEditable && (
                     <Col xs lg="1">
