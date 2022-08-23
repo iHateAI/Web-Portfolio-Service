@@ -11,7 +11,7 @@ class certificationService {
     console.log('서비스' + userId);
     const certification = await Certification.findByUserId(userId);
     if (!certification) {
-      const error = new Error('자격정 정보가 존재하지 않습니다.');
+      const error = new Error('자격증 정보가 존재하지 않습니다.');
       return { error };
     }
     return certification;

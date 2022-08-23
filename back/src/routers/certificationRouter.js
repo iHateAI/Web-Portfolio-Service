@@ -6,11 +6,10 @@ const certificationRouter = Router();
 // 자격증 정보 추가 라우터
 certificationRouter.post('/', async (req, res, next) => {
   try {
-    console.log(1);
     const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
 
-    const castingStringToDate = new Date(req.body.certificationDate);
-    req.body.certificationDate = castingStringToDate;
+    // const castingStringToDate = new Date(req.body.certificationDate);
+    // req.body.certificationDate = castingStringToDate;
 
     const data = { ...req.body, userId };
     const registeredCertification =
