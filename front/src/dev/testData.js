@@ -38,4 +38,10 @@ AwardTestData.updateAward = async function (userId, editedAward) {
     })
 }
 
+AwardTestData.deleteAward = async function (userId, target) {
+    return AwardTestData[userId].awardArray.filter(
+        (item) => item.id !== target.id
+    )
+}
+
 export default AwardTestData
