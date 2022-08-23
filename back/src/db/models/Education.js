@@ -4,13 +4,15 @@ class Education {
   static async create(newEducation) {
     console.log('모델' + newEducation);
     const createdEducation = await EducationModel.create(newEducation);
-    return createdEducation;
+    const { _id, university, major, status } = createdEducation;
+    const resultEducation = { _id, university, major, status };
+    return resultEducation;
   }
 
   static async findByUserId(userId) {
     console.log('모델' + userId);
     const educationData = await EducationModel.find({ userId }).select(
-      '_id userId university major status'
+      '_id university major status'
     );
     console.log(educationData);
     return educationData;

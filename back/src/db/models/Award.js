@@ -4,7 +4,9 @@ class Award {
   static async create(newAward) {
     console.log('모델' + newAward);
     const createdAward = await AwardModel.create(newAward);
-    return createdAward;
+    const { _id, title, detail } = createdAward;
+    const resultAward = { _id, title, detail };
+    return resultAward;
   }
 
   static async findByUserId(userId) {

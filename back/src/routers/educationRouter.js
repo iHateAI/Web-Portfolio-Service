@@ -11,7 +11,7 @@ educationRouter.post('/', async (req, res, next) => {
     const data = { ...req.body, userId };
     const registeredEducation = await educationService.addEducationInfo(data);
 
-    res.status(200).send(registeredEducation);
+    res.status(201).send(registeredEducation);
   } catch (err) {
     next(err);
   }
