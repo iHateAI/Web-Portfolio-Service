@@ -5,11 +5,19 @@ import { useState } from "react"
 const useModal = (initialValue) => {
     const [isShow, setIsShow] = useState(initialValue)
 
+    const onShowButtonClickEventHandler = () => {
+        setIsShow(true)
+    }
+
     const onCloseButtonClickEventHandler = () => {
         setIsShow(false)
     }
 
-    return [isShow, onCloseButtonClickEventHandler]
+    return [
+        isShow,
+        onShowButtonClickEventHandler,
+        onCloseButtonClickEventHandler,
+    ]
 }
 
 export default useModal
