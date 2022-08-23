@@ -59,9 +59,13 @@ function CertificateAddForm({ portfolioOwnerId, setCertificates, setIsAdding }) 
                 />
             </Form.Group>
             <Form.Group controlId="certificateAddDate"  className="mt-3">
-                <DatePicker selected={certificateDate} onChange={(date) => setCertificateDate(date)} />
+                <DatePicker
+                    selected={certificateDate}
+                    onChange={(date) => setCertificateDate(date)}
+                    dateFormat="yyyy-MM-d"
+                />
             </Form.Group>
-            <Form.Group as={Row} className="mt-3 text-center">
+            <Form.Group as={Row} className="mt-3 text-center mb-4">
                 <Col sm={{ span: 20 }}>
                     <Button variant="primary" type="submit" className="me-3">확인</Button>
                     <Button variant="secondary" onClick={() => setIsAdding(false)}>취소</Button>
