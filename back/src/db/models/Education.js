@@ -9,9 +9,11 @@ class Education {
 
   static async findByUserId(userId) {
     console.log('모델' + userId);
-    const EducationData = await EducationModel.find({ userId }).select('_id userId university major status');
-    console.log(EducationData)
-    return EducationData;
+    const educationData = await EducationModel.find({ userId }).select(
+      '_id userId university major status'
+    );
+    console.log(educationData);
+    return educationData;
   }
 
   static async updateByEducationId(data) {

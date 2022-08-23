@@ -22,8 +22,9 @@ educationRouter.get('/', async (req, res, next) => {
   try {
     const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
     const education = await educationService.getEducationInfo(userId);
-    if (education.errorMessage) {
-      throw new Error('학력 정보 조회 실패');
+    if (education.error) {
+      console.log(education.error.message);
+      throw education.error;
     }
     res.status(200).send(education);
   } catch (err) {

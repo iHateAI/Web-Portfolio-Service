@@ -11,8 +11,8 @@ class educationService {
     console.log('서비스' + userId);
     const education = await Education.findByUserId(userId);
     if (!education) {
-      const errorMessage = "학력 데이터가 존재하지 않습니다.";
-      return { errorMessage };
+      const error = new Error('학력 정보가 존재하지 않습니다.');
+      return { error };
     }
     return education;
   }
