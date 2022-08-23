@@ -5,9 +5,9 @@ import { login_required } from '../middlewares/login_required';
 const educationRouter = Router();
 
 // 학력 정보 추가 라우터
-educationRouter.post('/', async (req, res, next) => {
+educationRouter.post('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
     const data = { ...req.body, userId };
     const registeredEducation = await educationService.addEducationInfo(data);
 
@@ -18,9 +18,9 @@ educationRouter.post('/', async (req, res, next) => {
 });
 
 // 학력 정보 조회 라우터
-educationRouter.get('/', async (req, res, next) => {
+educationRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
     const education = await educationService.getEducationInfo(userId);
     if (education.error) {
       console.log(education.error.message);
@@ -33,7 +33,7 @@ educationRouter.get('/', async (req, res, next) => {
 });
 
 // 학력 정보 수정 라우터
-educationRouter.put('/:educationId', async (req, res, next) => {
+educationRouter.put('/:educationId', login_required, async (req, res, next) => {
   try {
     const { educationId } = req.params;
     const data = { ...req.body, educationId };

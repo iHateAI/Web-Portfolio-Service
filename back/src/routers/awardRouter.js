@@ -5,9 +5,9 @@ import { login_required } from '../middlewares/login_required';
 const awardRouter = Router();
 
 // 수상 이력 추가 라우터
-awardRouter.post('/', async (req, res, next) => {
+awardRouter.post('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
     const data = { ...req.body, userId };
     const registeredAward = await awardService.addAwardInfo(data);
 
@@ -17,9 +17,9 @@ awardRouter.post('/', async (req, res, next) => {
   }
 });
 
-awardRouter.get('/', async (req, res, next) => {
+awardRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
     const award = await awardService.getAwardInfo(userId);
     if (award.error) {
       console.log(award.error.message);
@@ -31,7 +31,7 @@ awardRouter.get('/', async (req, res, next) => {
   }
 });
 
-awardRouter.put('/:awardId', async (req, res, next) => {
+awardRouter.put('/:awardId', login_required, async (req, res, next) => {
   try {
     const { awardId } = req.params;
     const data = { ...req.body, awardId };

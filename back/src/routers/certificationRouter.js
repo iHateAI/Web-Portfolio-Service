@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import { certificationService } from '../services/certificationService';
+import { login_required } from '../middlewares/login_required';
 
 const certificationRouter = Router();
 
 // 자격증 정보 추가 라우터
-certificationRouter.post('/', async (req, res, next) => {
+certificationRouter.post('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
 
     // const castingStringToDate = new Date(req.body.certificationDate);
     // req.body.certificationDate = castingStringToDate;
@@ -22,9 +23,9 @@ certificationRouter.post('/', async (req, res, next) => {
 });
 
 // 자격증 정보 조희 라우터
-certificationRouter.get('/', async (req, res, next) => {
+certificationRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = 'ad7ff66b-f2ad-4729-b640-3c23d074f56f';
+    const userId = req.currentUserId;
     const certification = await certificationService.getCertificationInfo(
       userId
     );
@@ -39,7 +40,7 @@ certificationRouter.get('/', async (req, res, next) => {
 });
 
 // 자격증 정보 수정 라우터
-certificationRouter.put('/:certificationId', async (req, res, next) => {
+certificationRouter.put('/:certificationId', login_required, async (req, res, next) => {
   try {
     const { certificationId } = req.params;
     const data = { ...req.body, certificationId };
