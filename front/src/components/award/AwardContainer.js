@@ -52,7 +52,7 @@ const AwardContainer = ({ userId, isEditable }) => {
     }
 
     const onConfirmCheckButtonClickEventHandler = async (checked) => {
-        // POSDT: awards/delete/:id
+        // POST: awards/delete/:id
         if (checked) {
             const result = await AwardTestData.deleteAward(userId, deleteAward)
             setAwardArray(result)
