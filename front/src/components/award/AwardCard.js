@@ -1,8 +1,17 @@
 import { Card, Col, Row, Button } from "react-bootstrap"
 
-const AwardCard = ({ award, isEditable, onEnterEditModeButtonClickEvent }) => {
+const AwardCard = ({
+    award,
+    isEditable,
+    onEnterEditModeButtonClickEvent,
+    onDeleteButtonClickEvent,
+}) => {
     const onEnterEditModeButtonClickEventHandler = () => {
         onEnterEditModeButtonClickEvent()
+    }
+
+    const onDeleteButtonClickEventHandler = () => {
+        onDeleteButtonClickEvent(award)
     }
 
     return (
@@ -22,6 +31,14 @@ const AwardCard = ({ award, isEditable, onEnterEditModeButtonClickEvent }) => {
                             className="mr-3"
                         >
                             편집
+                        </Button>
+                        <Button
+                            variant="danger"
+                            size="sm"
+                            onClick={onDeleteButtonClickEventHandler}
+                            className="mr-3"
+                        >
+                            삭제
                         </Button>
                     </Col>
                 )}
