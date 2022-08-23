@@ -1,9 +1,9 @@
-import cors from "cors";
-import express from "express";
-import { userAuthRouter } from "./routers/userRouter";
-const educationRouter = require('./routers/educationRouter');
+import cors from 'cors';
+import express from 'express';
+import { userAuthRouter } from './routers/userRouter';
+import { educationRouter } from './routers/educationRouter';
 
-import { errorMiddleware } from "./middlewares/errorMiddleware";
+import { errorMiddleware } from './middlewares/errorMiddleware';
 
 const app = express();
 
@@ -17,8 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // 기본 페이지
-app.get("/", (req, res) => {
-  res.send("안녕하세요, 레이서 프로젝트 API 입니다.");
+app.get('/', (req, res) => {
+  res.send('안녕하세요, 레이서 프로젝트 API 입니다.');
 });
 
 // router, service 구현 (userAuthRouter는 맨 위에 있어야 함.)
