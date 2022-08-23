@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Project from './Project';
 import ProjectAddForm from './ProjectAddForm';
-import { getProjects, deleteProject, postProject } from './dev/mockApiProject';
+import { getProjects } from './dev/mockApiProject';
 
 Projects.defaultProps = {
   portfolioOwnerId: 'dhekgus1122',
@@ -13,11 +13,10 @@ Projects.defaultProps = {
 function Projects({ portfolioOwnerId, isEditable }) {
   //api 요청에 사용할 값, 편집 가능 여부
   const [isEditing, setIsEditing] = useState(false);
-  //편집 상태 state
   const [user, setUser] = useState(null);
-  //유저 정보 state
+  //state
 
-  const handleEditClick = () => {
+  const handleIsEditing = () => {
     setIsEditing(!isEditing);
   };
   //버튼 및 ProjectAddForm에 넘겨줄 isEditing 변경함수
@@ -25,24 +24,6 @@ function Projects({ portfolioOwnerId, isEditable }) {
   const getUser = async () => {
     const fetchUser = await getProjects();
     setUser({ ...fetchUser.data });
-  };
-
-  const handleDeleteClick = async (key) => {
-    await deleteProject(key);
-    getUser();
-  };
-
-  const updateClosure = (key) => {
-    const update = {};
-    update.key = key;
-    const setUpdate = (project) => {
-      update.project = { ...project };
-    };
-    const postUpdate = async () => {
-      await postProject(update.key, update.project);
-      getUser();
-    };
-    return { setUpdate, postUpdate };
   };
 
   useEffect(() => {
@@ -57,10 +38,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
         <Project
           project={project}
           isEditable={isEditable}
-          handleDeleteClick={() => {
-            handleDeleteClick(project.key);
-          }}
-          updateClosure={updateClosure(project.key)}
+          getUser={getUser}
           key={index}
         />
       ))}
@@ -69,13 +47,13 @@ function Projects({ portfolioOwnerId, isEditable }) {
           <Button
             variant='primary'
             className='text-center'
-            onClick={handleEditClick}>
+            onClick={handleIsEditing}>
             +
           </Button>
         )}
       </div>
       {isEditing && (
-        <ProjectAddForm onClick={handleEditClick} getUser={getUser} />
+        <ProjectAddForm onClick={handleIsEditing} getUser={getUser} />
       )}
     </div>
   );

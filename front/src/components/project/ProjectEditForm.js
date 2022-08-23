@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
+import { postProject } from './dev/mockApiProject';
 
-function ProjectEditForm({ project, onClick, updateClosure }) {
+function ProjectEditForm({ project, editClick, getUser }) {
   const [name, setName] = useState(project.name);
   const [description, setDescription] = useState(project.description);
   const [date, setDate] = useState(project.date);
 
-  const { setUpdate, postUpdate } = updateClosure;
-
-  const handleEditClick = () => {
-    setUpdate({ ...project, name, description, date });
-    postUpdate();
-    onClick();
+  const handlePostProject = async () => {
+    await postProject(project.key, { name, description, date });
+    getUser();
+    editClick();
   };
 
   return (
@@ -51,10 +50,10 @@ function ProjectEditForm({ project, onClick, updateClosure }) {
         </Row>
       </Form.Group>
       <Form.Group className='d-flex justify-content-center'>
-        <Button variant='primary' className='me-3' onClick={handleEditClick}>
+        <Button variant='primary' className='me-3' onClick={handlePostProject}>
           확인
         </Button>
-        <Button variant='secondary' onClick={onClick}>
+        <Button variant='secondary' onClick={editClick}>
           취소
         </Button>
       </Form.Group>

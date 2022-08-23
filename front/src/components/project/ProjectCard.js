@@ -1,7 +1,13 @@
 import React from 'react';
 import { Button, ButtonGroup, Card, Row } from 'react-bootstrap';
+import { deleteProject } from './dev/mockApiProject';
 
-function ProjectCard({ project, isEditable, editClick, deleteClick }) {
+function ProjectCard({ project, isEditable, editClick, getUser }) {
+  const handleDeleteProject = async () => {
+    await deleteProject(project.key);
+    getUser();
+  };
+
   return (
     <div className='d-flex justify-content-between align-items-center'>
       <Row>
@@ -30,7 +36,7 @@ function ProjectCard({ project, isEditable, editClick, deleteClick }) {
             style={{
               height: '30px',
             }}
-            onClick={deleteClick}>
+            onClick={handleDeleteProject}>
             삭제
           </Button>
         </ButtonGroup>

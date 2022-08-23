@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectEditForm from './ProjectEditForm';
 
-function Project({ project, isEditable, handleDeleteClick, updateClosure }) {
+function Project({ project, isEditable, getUser }) {
   const [isEditing, setIsEditing] = useState(false);
-  const handleOnClick = () => {
+  const handleIsEditing = () => {
     setIsEditing(!isEditing);
   };
   return (
@@ -12,15 +12,15 @@ function Project({ project, isEditable, handleDeleteClick, updateClosure }) {
       {isEditing ? (
         <ProjectEditForm
           project={project}
-          onClick={handleOnClick}
-          updateClosure={updateClosure}
+          editClick={handleIsEditing}
+          getUser={getUser}
         />
       ) : (
         <ProjectCard
           project={project}
           isEditable={isEditable}
-          editClick={handleOnClick}
-          deleteClick={handleDeleteClick}
+          editClick={handleIsEditing}
+          getUser={getUser}
         />
       )}
     </>

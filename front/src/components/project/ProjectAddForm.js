@@ -7,8 +7,8 @@ function ProjectAddForm({ onClick, getUser }) {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState({ start: '', end: '' });
 
-  const handleCreateClick = async () => {
-    const key = Math.random() * 10000;
+  const handlePutProject = async () => {
+    const key = Math.random() * 100000;
     await putProject({ name, description, date, key });
     getUser();
     setName('');
@@ -53,7 +53,7 @@ function ProjectAddForm({ onClick, getUser }) {
         </Row>
       </Form.Group>
       <Form.Group className='d-flex justify-content-center'>
-        <Button variant='primary' className='me-3' onClick={handleCreateClick}>
+        <Button variant='primary' className='me-3' onClick={handlePutProject}>
           확인
         </Button>
         <Button variant='secondary' onClick={onClick}>
