@@ -62,10 +62,11 @@ function CertificateEditForm({ currentCertificate, setCertificates, setIsEditing
                 />
             </Form.Group>
             <Form.Group controlId="certificateEditDate" className="mt-3">
-            <DatePicker selected={certificateDate} onChange={(date) => {
-                    setCertificateDate(date)
-                    console.log(certificateDate)
-                }}/>
+                <DatePicker 
+                    selected={certificateDate}
+                    onChange={(date) => setCertificateDate(date)}
+                    dateFormat="yyyy-MM-d"
+                />
             </Form.Group>
             <Form.Group as={Row} className="mt-3 text-center mb-4">
                 <Col sm={{ span: 20 }}>
