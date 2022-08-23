@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
+import EducationDelete from "./EducationDelete";
 
-function EducationCard({ isEditable, setIsEditing, education }) {
+function EducationCard({ isEditable, setIsEditing, education, setEducations }) {
   const { school, major, position } = education;
   return (
     <Card.Text>
@@ -14,7 +15,17 @@ function EducationCard({ isEditable, setIsEditing, education }) {
         </Col>
         {isEditable && (
           <Col>
-            <Button onClick={() => setIsEditing((cur) => !cur)}>편집</Button>
+            <Button
+              size="sm"
+              className="me-3"
+              onClick={() => setIsEditing((cur) => !cur)}
+            >
+              편집
+            </Button>
+            <EducationDelete
+              education={education}
+              setEducations={setEducations}
+            />
           </Col>
         )}
       </Row>

@@ -19,7 +19,7 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   return (
     <Card>
       <Card.Body>
-        <Card.Title className="mb-3">학력</Card.Title>
+        <Card.Title className="mb-4">학력</Card.Title>
         {educations.map((education) => (
           <Education
             key={education.id}
@@ -39,7 +39,9 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
         {isEditable && (
           <Row className="text-center mb-4">
             <Col>
-              <Button onClick={() => setAddEducation(true)}>+</Button>
+              <Button size="md" onClick={() => setAddEducation(true)}>
+                +
+              </Button>
             </Col>
           </Row>
         )}

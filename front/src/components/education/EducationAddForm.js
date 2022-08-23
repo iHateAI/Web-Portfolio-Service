@@ -17,7 +17,7 @@ function EducationAddForm({
     const user_id = portfolioOwnerId;
     // "education/add" end-point로 post요청
     await Api.post("education/add", {
-      user_id: portfolioOwnerId,
+      user_id,
       school,
       major,
       position,
