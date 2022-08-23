@@ -27,15 +27,25 @@ AwardTestData.createAward = async function (userId, newAwardObj) {
 }
 
 AwardTestData.updateAward = async function (userId, editedAward) {
-    return AwardTestData[userId].awardArray.map((item) => {
-        if (parseInt(item.id) === parseInt(editedAward.id)) {
-            return {
-                userId: userId,
-                ...editedAward,
+    AwardTestData[userId].awardArray = AwardTestData[userId].awardArray.map(
+        (item) => {
+            if (parseInt(item.id) === parseInt(editedAward.id)) {
+                return {
+                    userId: userId,
+                    ...editedAward,
+                }
             }
+            return item
         }
-        return item
-    })
+    )
+    return AwardTestData[userId].awardArray
+}
+
+AwardTestData.deleteAward = async function (userId, target) {
+    AwardTestData[userId].awardArray = AwardTestData[userId].awardArray.filter(
+        (item) => item.id !== target.id
+    )
+    return AwardTestData[userId].awardArray
 }
 
 export default AwardTestData

@@ -2,7 +2,12 @@ import React, { useState } from "react"
 import AwardCard from "./AwardCard"
 import AwardCardEdit from "./AwardCardEdit"
 
-const AwardCardPresenter = ({ award, isEditable, onEditButtonClickEvent }) => {
+const AwardCardPresenter = ({
+    award,
+    isEditable,
+    onEditButtonClickEvent,
+    onDeleteButtonClickEvent,
+}) => {
     const [isEditMode, setIsEditMode] = useState(false)
 
     const onAwardEditButtonClickEventHandler = (editedAward) => {
@@ -16,6 +21,10 @@ const AwardCardPresenter = ({ award, isEditable, onEditButtonClickEvent }) => {
 
     const onEnterEditModeButtonClickEventHandler = () => {
         setIsEditMode((prev) => !prev)
+    }
+
+    const onDeleteButtonClickEventHandler = (targetAward) => {
+        onDeleteButtonClickEvent(targetAward)
     }
 
     return (
@@ -35,6 +44,7 @@ const AwardCardPresenter = ({ award, isEditable, onEditButtonClickEvent }) => {
                     onEnterEditModeButtonClickEvent={
                         onEnterEditModeButtonClickEventHandler
                     }
+                    onDeleteButtonClickEvent={onDeleteButtonClickEventHandler}
                 />
             )}
         </React.Fragment>

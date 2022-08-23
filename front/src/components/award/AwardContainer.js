@@ -1,12 +1,23 @@
 import { useState, useEffect } from "react"
 import { Card, Row, Col, Button } from "react-bootstrap"
+
+import useModal from "../../hooks/useModal"
+
 import AwardCardPresenter from "./AwardCardPresenter"
 import AwardCardAddForm from "./AwardCardAddForm"
 import AwardTestData from "../../dev/testData"
+import ConfirmModal from "../modal/ConfirmModal"
 
 const AwardContainer = ({ userId, isEditable }) => {
     const [awardArray, setAwardArray] = useState([])
     const [isAddMode, setIsAddMode] = useState(false)
+    const [deleteAward, setDeleteAward] = useState(null)
+
+    const [
+        isShow,
+        onShowButtonClickEventHandler,
+        onCloseButtonClickEventHandler,
+    ] = useModal(false)
 
     useEffect(() => {
         // GET: awards/:userId
@@ -40,6 +51,20 @@ const AwardContainer = ({ userId, isEditable }) => {
         setIsAddMode(isCanceled)
     }
 
+    const onConfirmCheckButtonClickEventHandler = async (checked) => {
+        // POST: awards/delete/:id
+        if (checked) {
+            const result = await AwardTestData.deleteAward(userId, deleteAward)
+            setAwardArray(result)
+            setDeleteAward(null)
+        }
+    }
+
+    const onDeleteButtonClickEventHanlder = async (award) => {
+        onShowButtonClickEventHandler(true)
+        setDeleteAward(award)
+    }
+
     return (
         <Card>
             <Card.Body>
@@ -50,6 +75,9 @@ const AwardContainer = ({ userId, isEditable }) => {
                         award={award}
                         isEditable={isEditable}
                         onEditButtonClickEvent={onEditButtonClickEventHandler}
+                        onDeleteButtonClickEvent={
+                            onDeleteButtonClickEventHanlder
+                        }
                     />
                 ))}
                 {isEditable && (
@@ -70,6 +98,12 @@ const AwardContainer = ({ userId, isEditable }) => {
                     />
                 )}
             </Card.Body>
+            <ConfirmModal
+                msg="정말 삭제 하시겠습니까?"
+                isShow={isShow}
+                onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+                onCheckButtonClickEvent={onConfirmCheckButtonClickEventHandler}
+            />
         </Card>
     )
 }
