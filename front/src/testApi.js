@@ -1,5 +1,3 @@
-import Education from "./components/education/Education";
-
 const userMock1 = {
   id: "abcde-1",
   email: "ktkim@elicer.com",
@@ -52,7 +50,7 @@ const userMock4 = {
   description: "Strongest Avenger",
   educations: [
     {
-      id: "12",
+      id: "1234",
       school: "한기대",
       major: "컴공",
       position: "학사",
@@ -67,7 +65,7 @@ const userMock5 = {
   description: "Strongest Agent",
   educations: [
     {
-      id: "12",
+      id: "12345",
       school: "서시대",
       major: "기계",
       position: "학사",
@@ -178,7 +176,25 @@ async function put(endpoint, data) {
     return response;
   }
 }
+async function del(endpoint) {
+  const urlAndId = endpoint.split("/");
+  const req = urlAndId.shift(); // 요청한 mvp
+  const req_id = urlAndId[0]; // 요청 mvp id
+  if (req === "educations") {
+    const matchingUser = userlist.find(
+      (user) => user.educations.find((education) => education.id === req_id) //user educations 찾기
+    );
+    matchingUser.educations = matchingUser.educations.filter(
+      // education id와 같은 education 필터해서 삭제
+      (education) => education.id !== req_id
+    );
+    console.log(userlist);
+    const response = { endpoint };
+
+    return response;
+  }
+}
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.put 로 쓸 수 있음.
-export { get, post, put };
+export { get, post, put, del };
