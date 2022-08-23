@@ -12,7 +12,7 @@ function EducationDelete({ education, setEducations }) {
   const handleDelete = async () => {
     const user_id = education.user_id;
 
-    await Api.del(`educations/${education.id}`);
+    await Api.delete("educations", education.id);
 
     const res = await Api.get("educationlist", user_id);
     const updatedAward = res.data;

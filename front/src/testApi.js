@@ -176,19 +176,21 @@ async function put(endpoint, data) {
     return response;
   }
 }
-async function del(endpoint) {
-  const urlAndId = endpoint.split("/");
-  const req = urlAndId.shift(); // 요청한 mvp
-  const req_id = urlAndId[0]; // 요청 mvp id
-  if (req === "educations") {
+async function del(endpoint, params = "") {
+  console.log(
+    `%cDELETE 요청 ${"/" + endpoint + "/" + params}`,
+    "color: #a25cd1;"
+  );
+
+  if (endpoint === "educations") {
     const matchingUser = userlist.find(
-      (user) => user.educations.find((education) => education.id === req_id) //user educations 찾기
+      (user) => user.educations.find((education) => education.id === params) //user educations 찾기
     );
     matchingUser.educations = matchingUser.educations.filter(
       // education id와 같은 education 필터해서 삭제
-      (education) => education.id !== req_id
+      (education) => education.id !== params
     );
-    console.log(userlist);
+
     const response = { endpoint };
 
     return response;
@@ -197,4 +199,4 @@ async function del(endpoint) {
 
 // 아래처럼 export한 후, import * as A 방식으로 가져오면,
 // A.get, A.put 로 쓸 수 있음.
-export { get, post, put, del };
+export { get, post, put, del as delete };
