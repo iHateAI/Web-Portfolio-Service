@@ -17,11 +17,11 @@ class awardService {
     return award;
   }
 
-  // static async setAwardInfo(data) {
-  //   console.log('서비스' + data);
-  //   const award = await Award.updateByAwardId(data);
-  //   return award;
-  // }
+  static async setAwardInfo(data) {
+    console.log('서비스' + data);
+    const award = await Award.updateByAwardId(data);
+    return award;
+  }
 
 }
 

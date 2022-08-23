@@ -31,16 +31,16 @@ awardRouter.get('/', async (req, res, next) => {
   }
 });
 
-// awardRouter.put('/:awardId', async (req, res, next) => {
-//   try {
-//     const { awardId } = req.params;
-//     const data = { ...req.body, awardId };
-//     const modifiedAward = await awardService.setAwardInfo(data);
+awardRouter.put('/:awardId', async (req, res, next) => {
+  try {
+    const { awardId } = req.params;
+    const data = { ...req.body, awardId };
+    const modifiedAward = await awardService.setAwardInfo(data);
 
-//     res.status(200).send(modifiedAward);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+    res.status(200).send(modifiedAward);
+  } catch (err) {
+    next(err);
+  }
+});
 
 export { awardRouter };
