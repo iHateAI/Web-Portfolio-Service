@@ -1,4 +1,5 @@
 import { Modal, Button } from "react-bootstrap"
+import ErrorUtil from "../../util/errorUtil"
 
 /**
  * props
@@ -19,13 +20,8 @@ const ConfirmModal = ({
     // 전달받은 onCheckButtonClickEvent함수 props를 true의 값을 전달한다.
     // 그냥 Modal을 닫은 경우, 상위 컴포넌트에게 전달되는 값은 없다.
     const onCheckButtonClickEventHandler = () => {
-        if (
-            typeof onCheckButtonClickEvent !== "function" ||
-            typeof onCloseButtonClickEvent !== "function"
-        ) {
-            console.log("The props is not a function")
-            debugger
-        }
+        ErrorUtil.typeCheck(onCloseButtonClickEvent, "function")
+        ErrorUtil.typeCheck(onCheckButtonClickEvent, "function")
         onCheckButtonClickEvent(true)
         onCloseButtonClickEvent(false)
     }
