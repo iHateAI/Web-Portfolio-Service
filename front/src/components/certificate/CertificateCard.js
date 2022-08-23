@@ -12,12 +12,17 @@ function CertificateCard({ certificate, isEditable, setIsEditing }) {
                     <span className="text-muted">{certificate.certificateDate}</span>
                 </Col>
                 {isEditable && (
-                    <Col xs lg="1">
+                    <Col xs="4" className="text-end">
                         <Button
+                            className="me-3"
                             variant="outline-info"
                             size='sm'
                             onClick={() => setIsEditing(true)}
                         >편집</Button>
+                        <Button
+                            variant="danger"
+                            size='sm'
+                        >삭제</Button>
                     </Col>
                 )}
             </Row>
