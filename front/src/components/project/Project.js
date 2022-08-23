@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ProjectCard from './ProjectCard';
 import ProjectEditForm from './ProjectEditForm';
 
-function Project({ project, portfolioOwnerId, isEditable }) {
+function Project({ project, isEditable, handleDeleteClick, updateClosure }) {
   const [isEditing, setIsEditing] = useState(false);
   const handleOnClick = () => {
     setIsEditing(!isEditing);
@@ -13,13 +13,14 @@ function Project({ project, portfolioOwnerId, isEditable }) {
         <ProjectEditForm
           project={project}
           onClick={handleOnClick}
-          portfolioOwnerId={portfolioOwnerId}
+          updateClosure={updateClosure}
         />
       ) : (
         <ProjectCard
           project={project}
           isEditable={isEditable}
-          onClick={handleOnClick}
+          editClick={handleOnClick}
+          deleteClick={handleDeleteClick}
         />
       )}
     </>

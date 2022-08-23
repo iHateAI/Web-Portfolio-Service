@@ -1,7 +1,7 @@
 import React from 'react';
-import { Button, Card, Row } from 'react-bootstrap';
+import { Button, ButtonGroup, Card, Row } from 'react-bootstrap';
 
-function ProjectCard({ project, isEditable, onClick }) {
+function ProjectCard({ project, isEditable, editClick, deleteClick }) {
   return (
     <div className='d-flex justify-content-between align-items-center'>
       <Row>
@@ -14,15 +14,26 @@ function ProjectCard({ project, isEditable, onClick }) {
         </Card.Body>
       </Row>
       {isEditable && (
-        <Button
-          variant='outline-info'
-          size='sm'
-          style={{
-            height: '30px',
-          }}
-          onClick={onClick}>
-          편집
-        </Button>
+        <ButtonGroup>
+          <Button
+            variant='outline-info'
+            size='sm'
+            style={{
+              height: '30px',
+            }}
+            onClick={editClick}>
+            편집
+          </Button>
+          <Button
+            variant='outline-danger'
+            size='sm'
+            style={{
+              height: '30px',
+            }}
+            onClick={deleteClick}>
+            삭제
+          </Button>
+        </ButtonGroup>
       )}
     </div>
   );

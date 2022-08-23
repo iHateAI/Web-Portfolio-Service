@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
+import { putProject } from './dev/mockApiProject';
 
-function ProjectAddForm({ portfolioOwnerId, onClick }) {
+function ProjectAddForm({ onClick, getUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState({ start: '', end: '' });
+
+  const handleCreateClick = async () => {
+    const key = Math.random() * 10000;
+    await putProject({ name, description, date, key });
+    getUser();
+    setName('');
+    setDescription('');
+    setDate({ start: '', end: '' });
+  };
 
   return (
     <Form className='mt-3 mb-3 w-100'>
@@ -13,7 +23,7 @@ function ProjectAddForm({ portfolioOwnerId, onClick }) {
           type='text'
           placeholder='프로젝트 제목'
           value={name}
-          onChange={(e) => setName(e.target.name)}
+          onChange={(e) => setName(e.target.value)}
         />
       </Form.Group>
       <Form.Group className='mb-3'>
@@ -43,7 +53,7 @@ function ProjectAddForm({ portfolioOwnerId, onClick }) {
         </Row>
       </Form.Group>
       <Form.Group className='d-flex justify-content-center'>
-        <Button variant='primary' type='submit' className='me-3'>
+        <Button variant='primary' className='me-3' onClick={handleCreateClick}>
           확인
         </Button>
         <Button variant='secondary' onClick={onClick}>
