@@ -5,14 +5,12 @@ import useAwardValidation from "../../hooks/useAwardValidation"
 import { Form, Row, Col, Button } from "react-bootstrap"
 import AlertModal from "../modal/AlertModal"
 
-import Validation from "../../util/validation/validation"
-
 const AwardCardAddForm = ({
     onAddSubmitEvent,
     onAddCancelButtonClickEvent,
 }) => {
     const [awardTitle, setAwardTitle] = useState("")
-    const [awardDescription, setAwardDescription] = useState("")
+    const [awardDetail, setAwardDetail] = useState("")
 
     const [
         isShow,
@@ -20,22 +18,19 @@ const AwardCardAddForm = ({
         onCloseButtonClickEventHandler,
     ] = useModal(false)
 
-    const [
-        checkValidationTitle,
-        checkValidationDescription,
-        checkValidationAll,
-    ] = useAwardValidation()
+    const [checkValidationTitle, checkValidationDetail, checkValidationAll] =
+        useAwardValidation()
 
     const isValidTitle = checkValidationTitle(awardTitle)
-    const isValidDescription = checkValidationDescription(awardDescription)
-    const isValid = checkValidationAll(isValidTitle, isValidDescription)
+    const isValidDetail = checkValidationDetail(awardDetail)
+    const isValid = checkValidationAll(isValidTitle, isValidDetail)
 
     const onAddAwardTitleChangeEventHandler = useCallback((e) => {
         setAwardTitle(e.target.value)
     }, [])
 
-    const onAddAwardDescriptionChangeEventHandler = useCallback((e) => {
-        setAwardDescription(e.target.value)
+    const onAddAwardDetailChangeEventHandler = useCallback((e) => {
+        setAwardDetail(e.target.value)
     }, [])
 
     const onAddSubmitEventHandler = (e) => {
@@ -46,7 +41,7 @@ const AwardCardAddForm = ({
         }
         const awardObj = {
             title: awardTitle,
-            description: awardDescription,
+            description: awardDetail,
         }
         onAddSubmitEvent(awardObj)
     }
@@ -71,14 +66,14 @@ const AwardCardAddForm = ({
                         </Form.Text>
                     )}
                 </Form.Group>
-                <Form.Group controlId="formAddAwardDescription">
+                <Form.Group controlId="formAddAwardDetail">
                     <Form.Control
                         type="text"
                         placeholder="수상내역 설명"
-                        value={awardDescription}
-                        onChange={onAddAwardDescriptionChangeEventHandler}
+                        value={awardDetail}
+                        onChange={onAddAwardDetailChangeEventHandler}
                     />
-                    {!isValidDescription && (
+                    {!isValidDetail && (
                         <Form.Text className="text-danger">
                             수상내역 설명이 올바르지 않습니다.
                         </Form.Text>
