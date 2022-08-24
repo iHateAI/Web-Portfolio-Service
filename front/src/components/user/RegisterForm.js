@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Col, Row, Form, Button, Fade } from "react-bootstrap";
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
 
 import * as Api from "../../api";
 
@@ -15,10 +15,6 @@ function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
   //useState로 name 상태를 생성함.
   const [name, setName] = useState("");
-
-  // fade-up
-  const [fade, setFade] = useState(false);
-  const [fade2, setFade2] = useState(false);
 
   //이메일이 abc@example.com 형태인지 regex를 이용해 확인함.
   const validateEmail = (email) => {
@@ -59,106 +55,93 @@ function RegisterForm() {
       console.log("회원가입에 실패하였습니다.", err);
     }
   };
-  useEffect(() => {
-    setTimeout(() => setFade(true), 300);
-    setTimeout(() => setFade2(true), 600);
-  }, []);
+
   return (
     <section className="section pb-5">
+      <div className="register-content">
+        <h2 className="register-title">Register</h2>
+        <p className="register-sub-title">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+          necessitatibus incidunt ut officiis explicabo inventore.
+        </p>
+      </div>
       <Container>
-        <Row md={5} className="align-items-end">
-          <Fade in={fade}>
-            <Col md={6}>
-              <h2 className="register-title">Register</h2>
-              <p className="register-sub-title">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam necessitatibus incidunt ut officiis explicabo
-                inventore.
-              </p>
-            </Col>
-          </Fade>
-        </Row>
         <Row className="justify-content-md-center mt-5">
-          <Fade in={fade2}>
-            <Col lg={8}>
-              <Form onSubmit={handleSubmit}>
-                <Form.Group controlId="formBasicEmail">
-                  <Form.Label>이메일 주소</Form.Label>
-                  <Form.Control
-                    type="email"
-                    autoComplete="off"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  {!isEmailValid && (
-                    <Form.Text className="text-success">
-                      이메일 형식이 올바르지 않습니다.
-                    </Form.Text>
-                  )}
-                </Form.Group>
+          <Col lg={8}>
+            <Form onSubmit={handleSubmit}>
+              <Form.Group controlId="formBasicEmail">
+                <Form.Label>이메일 주소</Form.Label>
+                <Form.Control
+                  type="email"
+                  autoComplete="off"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                {!isEmailValid && (
+                  <Form.Text className="text-success">
+                    이메일 형식이 올바르지 않습니다.
+                  </Form.Text>
+                )}
+              </Form.Group>
 
-                <Form.Group controlId="formBasicPassword" className="mt-3">
-                  <Form.Label>비밀번호</Form.Label>
-                  <Form.Control
-                    type="password"
-                    autoComplete="off"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  {!isPasswordValid && (
-                    <Form.Text className="text-success">
-                      비밀번호는 4글자 이상으로 설정해 주세요.
-                    </Form.Text>
-                  )}
-                </Form.Group>
+              <Form.Group controlId="formBasicPassword" className="mt-3">
+                <Form.Label>비밀번호</Form.Label>
+                <Form.Control
+                  type="password"
+                  autoComplete="off"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                {!isPasswordValid && (
+                  <Form.Text className="text-success">
+                    비밀번호는 4글자 이상으로 설정해 주세요.
+                  </Form.Text>
+                )}
+              </Form.Group>
 
-                <Form.Group
-                  controlId="formBasicPasswordConfirm"
-                  className="mt-3"
-                >
-                  <Form.Label>비밀번호 재확인</Form.Label>
-                  <Form.Control
-                    type="password"
-                    autoComplete="off"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                  {!isPasswordSame && (
-                    <Form.Text className="text-success">
-                      비밀번호가 일치하지 않습니다.
-                    </Form.Text>
-                  )}
-                </Form.Group>
+              <Form.Group controlId="formBasicPasswordConfirm" className="mt-3">
+                <Form.Label>비밀번호 재확인</Form.Label>
+                <Form.Control
+                  type="password"
+                  autoComplete="off"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+                {!isPasswordSame && (
+                  <Form.Text className="text-success">
+                    비밀번호가 일치하지 않습니다.
+                  </Form.Text>
+                )}
+              </Form.Group>
 
-                <Form.Group controlId="formBasicName" className="mt-3">
-                  <Form.Label>이름</Form.Label>
-                  <Form.Control
-                    type="text"
-                    autoComplete="off"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                  />
-                  {!isNameValid && (
-                    <Form.Text className="text-success">
-                      이름은 2글자 이상으로 설정해 주세요.
-                    </Form.Text>
-                  )}
-                </Form.Group>
+              <Form.Group controlId="formBasicName" className="mt-3">
+                <Form.Label>이름</Form.Label>
+                <Form.Control
+                  type="text"
+                  autoComplete="off"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {!isNameValid && (
+                  <Form.Text className="text-success">
+                    이름은 2글자 이상으로 설정해 주세요.
+                  </Form.Text>
+                )}
+              </Form.Group>
 
-                <Form.Group as={Row} className="mt-3 text-center">
-                  <Col sm={{ span: 20 }}>
-                    <Button
-                      variant="primary"
-                      type="submit"
-                      disabled={!isFormValid}
-                    >
-                      회원가입
-                    </Button>
-                  </Col>
-                </Form.Group>
-              </Form>
-            </Col>
-          </Fade>
+              <Form.Group as={Row} className="mt-3 text-center">
+                <Col sm={{ span: 20 }}>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    disabled={!isFormValid}
+                  >
+                    회원가입
+                  </Button>
+                </Col>
+              </Form.Group>
+            </Form>
+          </Col>
         </Row>
       </Container>
     </section>

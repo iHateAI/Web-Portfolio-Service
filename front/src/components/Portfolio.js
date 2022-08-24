@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
@@ -55,24 +55,13 @@ function Portfolio() {
   return (
     <Container fluid>
       <section className="section site-portfolio">
-        <Container>
-          <Row mb={5} className="align-items-center">
-            <Col md={12} lg={6} className="mb-4 mb-lg-0">
-              <h2 className="portfolio-title">Hey, I'm Johan Stanworth</h2>
-              <p className="portfolio-sub-title">
-                Freelance Creative &amp; Professional Graphics Designer
-              </p>
-            </Col>
-            <Col md={12} lg={6} className="text-start text-lg-end">
-              <div id="filters" class="filters">
-                <Link to="#" className="active">
-                  All
-                </Link>
-                <Link to="#">Web</Link>
-              </div>
-            </Col>
-          </Row>
-        </Container>
+        <div className="portfolio-content">
+          <h2 className="portfolio-title">Hey, I'm Johan Stanworth</h2>
+          <p className="portfolio-sub-title">
+            Freelance Creative &amp; Professional Graphics Designer
+          </p>
+        </div>
+
         <Row>
           <Col md={6} lg={4} className="item web  mb-4">
             <User
@@ -80,7 +69,7 @@ function Portfolio() {
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </Col>
-          <Col md={7} lg={8} className="item photography ">
+          <Col>
             <EducationContainer
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}

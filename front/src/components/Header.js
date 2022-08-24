@@ -5,7 +5,6 @@ import "./style/app.css";
 
 function HeaderTest() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
