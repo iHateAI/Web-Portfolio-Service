@@ -44,7 +44,7 @@ const AwardContainer = ({ userId, isEditable }) => {
         const newAwardObj = {
             id: awardArray.length + 1,
             title: awardObj.title,
-            detail: awardObj.description,
+            detail: awardObj.detail,
         }
         const result = await Api.post("api/award", newAwardObj)
         result.user_id = userId
