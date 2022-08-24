@@ -32,13 +32,12 @@ const storage = multer.diskStorage({
 
 const limits = {
   //최대 용량 10MB (초과하면 404 에러)
-
   fileSize: 10 * 1024 * 1024, // x * kilo * mega
 };
 
 const upload = multer({ storage, limits });
 
-profileRouter.post('/', upload.single('image'), (req, res) => {
+profileRouter.post('/', login_required, upload.single('image'), (req, res) => {
   res.send({ url: `/api/profile/${req.file.filename}` });
 }); // 프론트엔드에서 input 태그 name속성값을 image로 해야됨
 
