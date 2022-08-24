@@ -1,10 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { Container, Col, Row } from "react-bootstrap";
 
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
+import EducationContainer from "./education/EducationContainer";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -53,19 +54,40 @@ function Portfolio() {
 
   return (
     <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
-          <User
-            portfolioOwnerId={portfolioOwner.id}
-            isEditable={portfolioOwner.id === userState.user?.id}
-          />
-        </Col>
-        <Col>
-          <div style={{ textAlign: "center" }}>
-            학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
-          </div>
-        </Col>
-      </Row>
+      <section className="section site-portfolio">
+        <Container>
+          <Row mb={5} className="align-items-center">
+            <Col md={12} lg={6} className="mb-4 mb-lg-0">
+              <h2 className="portfolio-title">Hey, I'm Johan Stanworth</h2>
+              <p className="portfolio-sub-title">
+                Freelance Creative &amp; Professional Graphics Designer
+              </p>
+            </Col>
+            <Col md={12} lg={6} className="text-start text-lg-end">
+              <div id="filters" class="filters">
+                <Link to="#" className="active">
+                  All
+                </Link>
+                <Link to="#">Web</Link>
+              </div>
+            </Col>
+          </Row>
+        </Container>
+        <Row>
+          <Col md={6} lg={4} className="item web  mb-4">
+            <User
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </Col>
+          <Col md={7} lg={8} className="item photography ">
+            <EducationContainer
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </Col>
+        </Row>
+      </section>
     </Container>
   );
 }
