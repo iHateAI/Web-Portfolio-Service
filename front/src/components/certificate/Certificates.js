@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react"
 import { Card, Button, Row, Col } from "react-bootstrap"
-// import * as Db from "./db"
 // import TestData from "../../dev/testData"
 import * as Api from "../../api";
 import Certificate from "./Certificate"
@@ -9,9 +8,6 @@ import CertificateAddForm from "./CertificateAddForm"
 function Certificates({ portfolioOwnerId, isEditable }) {
     const [certificates, setCertificates] = useState([])
     const [isAdding, setIsAdding] = useState(false)
-
-    // test를 위한 설정
-    // isEditable = true
 
     useEffect(() => {
         Api.get("api/certification").then(res => setCertificates(res.data))

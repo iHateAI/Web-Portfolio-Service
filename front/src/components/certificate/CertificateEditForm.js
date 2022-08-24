@@ -2,7 +2,6 @@ import React, { useState } from "react"
 import { Button, Form, Col, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
 import * as Api from "../../api";
-// import * as Db from "./db";
 // import TestData from "../../dev/testData"
 
 function CertificateEditForm({
@@ -11,10 +10,10 @@ function CertificateEditForm({
     setIsEditing,
 }) {
     const [title, setTitle] = useState(currentCertificate.title)
-    const [description, setDescription] = useState(
+    const [detail, setDetail] = useState(
         currentCertificate.detail
     )
-    const [certificateDate, setCertificateDate] = useState(
+    const [certificationDate, setCertificationDate] = useState(
         new Date(currentCertificate.certificationDate)
     )
 
@@ -33,20 +32,11 @@ function CertificateEditForm({
 
         await Api.put(`api/certification/${currentCertificate._id}`, {
             title,
-            detail: description,
-            certificationDate: formatDate(certificateDate)
+            detail,
+            certificationDate: formatDate(certificationDate)
         });
 
         const res = await Api.get("api/certification");
-
-        // put test
-        // const res = Db.put(currentCertificate.id, {
-        //     user_id,
-        //     id: 1,
-        //     title,
-        //     description,
-        //     certificateDate: formatDate(certificateDate)
-        // })
 
         // const res = await TestData.updateCertificate(TestData.userId, {
         //     user_id,
@@ -72,12 +62,12 @@ function CertificateEditForm({
                     onChange={(e) => setTitle(e.target.value)}
                 />
             </Form.Group>
-            <Form.Group controlId="certificateEditDescripiton" className="mt-3">
+            <Form.Group controlId="certificateEditDetail" className="mt-3">
                 <Form.Control
                     type="text"
-                    value={description}
+                    value={detail}
                     placeholder="상세내역"
-                    onChange={(e) => setDescription(e.target.value)}
+                    onChange={(e) => setDetail(e.target.value)}
                 />
             </Form.Group>
             <Form.Group
@@ -87,8 +77,8 @@ function CertificateEditForm({
             >
                 <Col xs="auto">
                     <DatePicker
-                        selected={certificateDate}
-                        onChange={(date) => setCertificateDate(date)}
+                        selected={certificationDate}
+                        onChange={(date) => setCertificationDate(date)}
                         dateFormat="yyyy-MM-dd"
                     />
                 </Col>
