@@ -3,7 +3,7 @@ import { Button, Form, Col } from "react-bootstrap";
 // import * as Api from "../../testApi";
 import * as Api from "../../api";
 import useModal from "../../hooks/useModal";
-import useAwardValidation from "../../hooks/useAwardValidation";
+import useEducationValidation from "../../hooks/useEducationValidation";
 import AlertModal from "../modal/AlertModal";
 
 function EducationAddForm({
@@ -27,7 +27,7 @@ function EducationAddForm({
     checkValidationMajor,
     checkValidationStatus,
     checkValidationEducationAll,
-  } = useAwardValidation();
+  } = useEducationValidation();
 
   const isValidUniversity = checkValidationUniversity(university);
   const isValidMajor = checkValidationMajor(major);
