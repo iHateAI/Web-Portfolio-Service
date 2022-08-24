@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Button, Form, Col, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
-// import * as Api from "../../api";
+import * as Api from "../../api";
 // import * as Db from "./db";
-import TestData from "../../dev/testData"
+// import TestData from "../../dev/testData"
 
 function CertificateAddForm({
     portfolioOwnerId,
@@ -15,25 +15,25 @@ function CertificateAddForm({
     const [certificateDate, setCertificateDate] = useState(new Date())
 
     const formatDate = (date) => {
-        const yyyy = date.getFullYear()
-        const mm = date.getMonth() + 1
-        const dd = date.getDate()
+        const yyyy = date.getFullYear();
+        const mm = ("0" + (date.getMonth() + 1)).slice(-2);
+        const dd = ("0" + date.getDate()).slice(-2);
 
-        return yyyy + "-" + mm + "-" + dd
+        return yyyy + '-' + mm + '-' + dd
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        // const user_id = portfolioOwnerId;
+        const user_id = portfolioOwnerId;
 
-        // await Api.post("certificates/create", {
-        //     user_id: portfolioOwnerId,
-        //     title,
-        //     description,
-        // });
+        await Api.post("api/certification", {
+            title,
+            detail: description,
+            certificationDate: formatDate(certificateDate)
+        });
 
-        // const res = await Api.get("certificates", user_id);
+        const res = await Api.get("api/certification");
 
         // post test
         // const res = Db.post(1, {
@@ -41,15 +41,17 @@ function CertificateAddForm({
         //     description,
         //     certificateDate: formatDate(certificateDate)
         // })
-        const res = await TestData.createCertificate(TestData.userId, {
-            user_id: TestData.userId,
-            id: TestData[TestData.userId].certificates.length + 1,
-            title,
-            description,
-            certificateDate: formatDate(certificateDate),
-        })
-        // setCertificates(res.data)
-        setCertificates(res)
+        // const res = await TestData.createCertificate(TestData.userId, {
+        //     user_id: TestData.userId,
+        //     id: TestData[TestData.userId].certificates.length + 1,
+        //     title,
+        //     description,
+        //     certificateDate: formatDate(certificateDate),
+        // })
+
+        // setCertificates(res)
+
+        setCertificates(res.data)
 
         setIsAdding(false)
     }

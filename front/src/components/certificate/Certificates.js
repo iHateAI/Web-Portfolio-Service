@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import { Card, Button, Row, Col } from "react-bootstrap"
 // import * as Db from "./db"
-import TestData from "../../dev/testData"
+// import TestData from "../../dev/testData"
+import * as Api from "../../api";
 import Certificate from "./Certificate"
 import CertificateAddForm from "./CertificateAddForm"
 
@@ -13,15 +14,15 @@ function Certificates({ portfolioOwnerId, isEditable }) {
     // isEditable = true
 
     useEffect(() => {
-        // Api.get("certificates", portfolioOwnerId).then(res => setCertificates(res.data))
+        Api.get("api/certification").then(res => setCertificates(res.data))
 
         // get test
         // const res = Db.get(1);
         // console.log(res.data)
         // setCertificates(res.data)
-        TestData.getCertificates(TestData.userId).then((res) =>
-            setCertificates(res)
-        )
+        // TestData.getCertificates(TestData.userId).then((res) =>
+        //     setCertificates(res)
+        // )
     }, [portfolioOwnerId])
 
     return (

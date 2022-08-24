@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import { Button, Form, Col, Row } from "react-bootstrap"
 import DatePicker from "react-datepicker"
-// import * as Api from "../../api";
+import * as Api from "../../api";
 // import * as Db from "./db";
-import TestData from "../../dev/testData"
+// import TestData from "../../dev/testData"
 
 function CertificateEditForm({
     currentCertificate,
@@ -12,18 +12,18 @@ function CertificateEditForm({
 }) {
     const [title, setTitle] = useState(currentCertificate.title)
     const [description, setDescription] = useState(
-        currentCertificate.description
+        currentCertificate.detail
     )
     const [certificateDate, setCertificateDate] = useState(
-        new Date(currentCertificate.certificateDate)
+        new Date(currentCertificate.certificationDate)
     )
 
     const formatDate = (date) => {
-        const yyyy = date.getFullYear()
-        const mm = date.getMonth() + 1
-        const dd = date.getDate()
+        const yyyy = date.getFullYear();
+        const mm = ("0" + (date.getMonth() + 1)).slice(-2);
+        const dd = ("0" + date.getDate()).slice(-2);
 
-        return yyyy + "-" + mm + "-" + dd
+        return yyyy + '-' + mm + '-' + dd
     }
 
     const handleSubmit = async (e) => {
@@ -31,13 +31,13 @@ function CertificateEditForm({
 
         const user_id = currentCertificate.user_id
 
-        // await Api.put(`certificates/${currentCertificate.id}`, {
-        //     user_id,
-        //     title,
-        //     description
-        // });
+        await Api.put(`api/certification/${currentCertificate._id}`, {
+            title,
+            detail: description,
+            certificationDate: formatDate(certificateDate)
+        });
 
-        // const res = await Api.get("certificates", user_id);
+        const res = await Api.get("api/certification");
 
         // put test
         // const res = Db.put(currentCertificate.id, {
@@ -48,17 +48,18 @@ function CertificateEditForm({
         //     certificateDate: formatDate(certificateDate)
         // })
 
-        const res = await TestData.updateCertificate(TestData.userId, {
-            user_id,
-            id: currentCertificate.id,
-            title,
-            description,
-            certificateDate: formatDate(certificateDate),
-        })
+        // const res = await TestData.updateCertificate(TestData.userId, {
+        //     user_id,
+        //     id: currentCertificate.id,
+        //     title,
+        //     description,
+        //     certificateDate: formatDate(certificateDate),
+        // })
 
-        // setCertificates(res.data);
-        setCertificates(res)
+        // setCertificates(res)
 
+        setCertificates(res.data);
+        
         setIsEditing(false)
     }
     return (

@@ -7,9 +7,9 @@ function CertificateCard({ certificate, isEditable, setIsEditing }) {
                 <Col>
                     <span>{certificate.title}</span>
                     <br />
-                    <span className="text-muted">{certificate.description}</span>
+                    <span className="text-muted">{certificate.detail}</span>
                     <br />
-                    <span className="text-muted">{certificate.certificateDate}</span>
+                    <span className="text-muted">{(certificate.certificationDate).split("T")[0]}</span>
                 </Col>
                 {isEditable && (
                     <Col xs="4" className="text-end">
