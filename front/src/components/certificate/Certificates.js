@@ -1,31 +1,34 @@
-import React, { useState, useEffect }  from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
-import * as Api from "../../api";
-import * as Db from "./db";
-import Certificate from "./Certificate";
-import CertificateAddForm from "./CertificateAddForm";
+import React, { useState, useEffect } from "react"
+import { Card, Button, Row, Col } from "react-bootstrap"
+// import * as Db from "./db"
+import TestData from "../../dev/testData"
+import Certificate from "./Certificate"
+import CertificateAddForm from "./CertificateAddForm"
 
 function Certificates({ portfolioOwnerId, isEditable }) {
-    const [certificates, setCertificates] = useState([]);
-    const [isAdding, setIsAdding] = useState(false);
+    const [certificates, setCertificates] = useState([])
+    const [isAdding, setIsAdding] = useState(false)
 
     // test를 위한 설정
-    isEditable = true
+    // isEditable = true
 
     useEffect(() => {
         // Api.get("certificates", portfolioOwnerId).then(res => setCertificates(res.data))
 
         // get test
-        const res = Db.get(1);
-        console.log(res.data)
-        setCertificates(res.data)
-    }, [portfolioOwnerId]);
+        // const res = Db.get(1);
+        // console.log(res.data)
+        // setCertificates(res.data)
+        TestData.getCertificates(TestData.userId).then((res) =>
+            setCertificates(res)
+        )
+    }, [portfolioOwnerId])
 
     return (
         <Card>
             <Card.Body>
                 <Card.Title>자격증</Card.Title>
-                {certificates.map(certificate => (
+                {certificates.map((certificate) => (
                     <Certificate
                         key={certificate.id}
                         certificate={certificate}
@@ -41,7 +44,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
                     </Row>
                 )}
                 {isAdding && (
-                    <CertificateAddForm 
+                    <CertificateAddForm
                         portfolioOwnerId={portfolioOwnerId}
                         setCertificates={setCertificates}
                         setIsAdding={setIsAdding}
@@ -49,7 +52,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
                 )}
             </Card.Body>
         </Card>
-    );
+    )
 }
 
-export default Certificates;
+export default Certificates

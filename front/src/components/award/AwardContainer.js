@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal"
 
 import AwardCardPresenter from "./AwardCardPresenter"
 import AwardCardAddForm from "./AwardCardAddForm"
-import AwardTestData from "../../dev/testData"
+import TestData from "../../dev/testData"
 import ConfirmModal from "../modal/ConfirmModal"
 
 const AwardContainer = ({ userId, isEditable }) => {
@@ -21,12 +21,12 @@ const AwardContainer = ({ userId, isEditable }) => {
 
     useEffect(() => {
         // GET: awards/:userId
-        AwardTestData.getAwards(userId).then((data) => setAwardArray(data))
+        TestData.getAwards(userId).then((data) => setAwardArray(data))
     }, [userId])
 
     const onEditButtonClickEventHandler = async (editedAward) => {
         // PUT: awards/:award_id
-        const result = await AwardTestData.updateAward(userId, editedAward)
+        const result = await TestData.updateAward(userId, editedAward)
         setAwardArray(result)
     }
 
@@ -41,8 +41,8 @@ const AwardContainer = ({ userId, isEditable }) => {
             id: awardArray.length + 1,
             ...awardObj,
         }
-        await AwardTestData.createAward(userId, newAwardObj)
-        const result = await AwardTestData.getAwards(userId)
+        await TestData.createAward(userId, newAwardObj)
+        const result = await TestData.getAwards(userId)
         setAwardArray(result)
         setIsAddMode(false)
     }
@@ -54,7 +54,7 @@ const AwardContainer = ({ userId, isEditable }) => {
     const onConfirmCheckButtonClickEventHandler = async (checked) => {
         // POST: awards/delete/:id
         if (checked) {
-            const result = await AwardTestData.deleteAward(userId, deleteAward)
+            const result = await TestData.deleteAward(userId, deleteAward)
             setAwardArray(result)
             setDeleteAward(null)
         }
