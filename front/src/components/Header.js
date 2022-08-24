@@ -1,14 +1,11 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { Container, Row, Col, Navbar } from "react-bootstrap";
-import Collapse from "react-bootstrap/Collapse";
+import { useNavigate, useLocation } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import "./style/app.css";
 
-function Header() {
+function HeaderTest() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -27,73 +24,50 @@ function Header() {
 
   return (
     <>
-      <Collapse in={open}>
-        <div className="custom-navmenu" id="main-navbar">
-          <Container className="py-md-4">
-            <Row className="lign-items-start">
-              <Col md={2}>
-                <ul className="custom-menu">
-                  <li>
-                    <Nav.Link onClick={() => navigate("/network")}>
-                      My page
-                    </Nav.Link>
-                  </li>
-                  <li>
-                    <Nav.Link onClick={() => navigate("/network")}>
-                      Network
-                    </Nav.Link>
-                  </li>
-                  {isLogin && (
-                    <li>
-                      <Nav.Link onClick={logout}>Logout</Nav.Link>
-                    </li>
-                  )}
-                </ul>
-              </Col>
-              <Col md={6} className="d-none d-md-block mr-auto ">
-                <div className="tweet d-flex ">
-                  <span className="text-white mt-2 mr-3"></span>
-                  <div>
-                    <p>
-                      <em>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Quisquam necessitatibus incidunt ut officiis explicabo
-                        inventore. <br />
-                      </em>
-                    </p>
-                  </div>
-                </div>
-              </Col>
-              <Col md={4} className="d-none d-md-block">
-                <h3>Hire Me</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam necessitatibus incidunt ut officiisexplicabo
-                  inventore. <br />
-                  <Link to="#">myemail@gmail.com</Link>
-                </p>
-              </Col>
-            </Row>
-          </Container>
+      <div class={`navmenu ${open ? "active" : ""}`}>
+        <div class="navmenu-container">
+          <div class="menu">
+            <ul class="menu-list">
+              <li onClick={() => navigate("/")}>Mypage</li>
+              <li onClick={() => navigate("/network")}>Network</li>
+              {isLogin && <li onClick={logout}>Logout</li>}
+            </ul>
+          </div>
+          <div class="content">
+            <p>
+              <em>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam necessitatibus incidunt ut officiis explicabo
+                inventore. <br />
+              </em>
+            </p>
+          </div>
+          <div class="content">
+            <h3>Hire Me</h3>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+              necessitatibus incidunt ut officiisexplicabo inventore. <br />
+              <a href="#">myemail@gmail.com</a>
+            </p>
+          </div>
         </div>
-      </Collapse>
-      <Navbar className="custom-navbar">
-        <Container>
-          <Navbar.Brand onClick={() => navigate("/")}>
-            MyPortfolio.
-          </Navbar.Brand>
+      </div>
 
-          <Link
-            to="#"
-            className={`burger ${open ? "active" : ""}`}
+      <nav class="header-navbar">
+        <div class="navbar-container">
+          <div class="navbar-brand" onClick={() => navigate("/")}>
+            MyPortfolio.
+          </div>
+          <div
+            class={`burger-menu ${open ? "active" : ""}`}
             onClick={() => setOpen(!open)}
           >
             <span></span>
-          </Link>
-        </Container>
-      </Navbar>
+          </div>
+        </div>
+      </nav>
     </>
   );
 }
 
-export default Header;
+export default HeaderTest;
