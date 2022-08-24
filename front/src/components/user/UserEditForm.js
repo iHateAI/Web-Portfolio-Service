@@ -1,4 +1,8 @@
 import { useState, useCallback } from "react";
+import useModal from "../../hooks/useModal";
+import useUserValidation from "../../hooks/useUserValidation";
+import { Form } from "react-bootstrap";
+import AlertModal from "../modal/AlertModal";
 import * as Api from "../../api";
 import {
     varColors,
@@ -14,6 +18,18 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     const [description, setDescription] = useState(user.description);
     const [imageSrc, setImageSrc] = useState(user.url);
     const [imagePreview, setImagePreview] = useState(user.url);
+
+    const [
+        isShow,
+        onShowButtonClickEventHandler,
+        onCloseButtonClickEventHandler,
+    ] = useModal(false);
+    const [checkValidationEmail, _, checkValidationDescription] =
+        useUserValidation();
+
+    const isValidEmail = checkValidationEmail(email);
+    const isValidDescription = checkValidationDescription(description);
+    const isValid = isValidEmail && isValidDescription;
 
     const acceptedFile = ["image/jpg", "image/png", "image/jpeg"];
 
@@ -40,6 +56,10 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
 
     const handleSubmitClick = async (e) => {
         e.preventDefault();
+        if (!isValid) {
+            onShowButtonClickEventHandler();
+            return;
+        }
         const res = await Api.put(`users/${user.id}`, {
             name,
             email,
@@ -73,6 +93,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
                     value={email}
                     onChange={handlerEmailChange}
                 />
+                {!isValidEmail && (
+                    <Form.Text className="text-danger">
+                        Please check your email.
+                    </Form.Text>
+                )}
                 <input
                     type="text"
                     placeholder="Description..."
@@ -80,6 +105,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
                     value={description}
                     onChange={handlerDescriptionChange}
                 />
+                {!isValidDescription && (
+                    <Form.Text className="text-danger">
+                        Please check your description.
+                    </Form.Text>
+                )}
                 <label htmlFor="image-input" style={imageLabelStyle}>
                     Image upload
                 </label>
@@ -110,6 +140,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
                     CANCEL
                 </button>
             </form>
+            <AlertModal
+                msg="Please check your information."
+                isShow={isShow}
+                onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+            />
         </div>
     );
 };
