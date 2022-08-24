@@ -1,6 +1,14 @@
 import { Card, Button, Row, Col } from "react-bootstrap";
+import useModal from "../../hooks/useModal";
+import ConfirmModal from "../modal/ConfirmModal";
 
 function CertificateCard({ certificate, isEditable, setIsEditing }) {
+    const [ 
+        isShow,
+        onShowButtonClickEventHandler,
+        onCloseButtonClickEventHandler,
+    ] = useModal(false)
+
     return (
         <Card.Text>
             <Row className="align-items-center">
@@ -22,10 +30,20 @@ function CertificateCard({ certificate, isEditable, setIsEditing }) {
                         <Button
                             variant="danger"
                             size='sm'
+                            onClick={onShowButtonClickEventHandler}
                         >삭제</Button>
                     </Col>
                 )}
             </Row>
+            { isShow && (
+                <ConfirmModal
+                    msg="정말 삭제하시겠습니까?"
+                    isShow={isShow}
+                    onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+                    onCheckButtonClickEvent={onCloseButtonClickEventHandler}
+                />
+            )}
+            
         </Card.Text>
     );
 }
