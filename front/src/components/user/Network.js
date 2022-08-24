@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
+import { useNavigate, Link } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
 import * as Api from "../../api";
 import UserCard from "./UserCard";
@@ -24,11 +24,29 @@ function Network() {
 
   return (
     <Container fluid>
-      <Row xs="auto" className="jusify-content-center">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork />
-        ))}
-      </Row>
+      <section className="section site-network">
+        <Row mb={5} className="align-items-center">
+          <Col md={12} lg={6} className="mb-4 mb-lg-0">
+            <h2 className="network-title">Hey, I'm Johan Stanworth</h2>
+            <p className="network-sub-title">
+              Freelance Creative &amp; Professional Graphics Designer
+            </p>
+          </Col>
+          <Col md={12} lg={6} className="text-start text-lg-end">
+            <div id="filters" class="filters">
+              <Link to="#" className="active">
+                All
+              </Link>
+              <Link to="#">Web</Link>
+            </div>
+          </Col>
+        </Row>
+        <Row xs="auto" className="jusify-content-cente">
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} isNetwork />
+          ))}
+        </Row>
+      </section>
     </Container>
   );
 }
