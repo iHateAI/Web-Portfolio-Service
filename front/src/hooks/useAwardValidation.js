@@ -5,19 +5,15 @@ const useAwardValidation = () => {
         return Validation.validateAwardTitle(title)
     }
 
-    const checkValidationDescription = (description) => {
-        return Validation.validateAwardDescription(description)
+    const checkValidationDetail = (detail) => {
+        return Validation.validateAwardDetail(detail)
     }
 
-    const checkValidationAll = (title, description) => {
-        return [title, description].every((v) => v === true)
+    const checkValidationAll = (title, detail) => {
+        return [title, detail].every((v) => v === true)
     }
 
-    return [
-        checkValidationTitle,
-        checkValidationDescription,
-        checkValidationAll,
-    ]
+    return [checkValidationTitle, checkValidationDetail, checkValidationAll]
 }
 
 export default useAwardValidation

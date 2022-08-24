@@ -9,9 +9,9 @@ class Validation {
         return true
     }
 
-    static validateAwardDescription(description) {
-        const checkDescription = description.trim()
-        if (checkDescription.length < 5) return false
+    static validateAwardDetail(detail) {
+        const checkDetail = detail.trim()
+        if (checkDetail.length < 5) return false
         return true
     }
 }
