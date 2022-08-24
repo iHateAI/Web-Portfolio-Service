@@ -1,19 +1,20 @@
-import React, { useContext } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
+import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Nav } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import { Container, Row, Col, Navbar } from "react-bootstrap";
+import Collapse from "react-bootstrap/Collapse";
 import { UserStateContext, DispatchContext } from "../App";
+import "./style/app.css";
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
 
   // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
-
-  // 로그아웃 클릭 시 실행되는 함수
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
@@ -22,24 +23,76 @@ function Header() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
+  const [open, setOpen] = useState(false);
 
   return (
-    <Nav activeKey={location.pathname}>
-      <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-      </Nav.Item>
-      {isLogin && (
-        <Nav.Item>
-          <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-        </Nav.Item>
-      )}
-    </Nav>
+    <>
+      <Collapse in={open}>
+        <div className="custom-navmenu" id="main-navbar">
+          <Container className="py-md-4">
+            <Row className="lign-items-start">
+              <Col md={2}>
+                <ul className="custom-menu">
+                  <li>
+                    <Nav.Link onClick={() => navigate("/network")}>
+                      My page
+                    </Nav.Link>
+                  </li>
+                  <li>
+                    <Nav.Link onClick={() => navigate("/network")}>
+                      Network
+                    </Nav.Link>
+                  </li>
+                  {isLogin && (
+                    <li>
+                      <Nav.Link onClick={logout}>Logout</Nav.Link>
+                    </li>
+                  )}
+                </ul>
+              </Col>
+              <Col md={6} className="d-none d-md-block mr-auto ">
+                <div className="tweet d-flex ">
+                  <span className="text-white mt-2 mr-3"></span>
+                  <div>
+                    <p>
+                      <em>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam necessitatibus incidunt ut officiis explicabo
+                        inventore. <br />
+                      </em>
+                    </p>
+                  </div>
+                </div>
+              </Col>
+              <Col md={4} className="d-none d-md-block">
+                <h3>Hire Me</h3>
+                <p>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam necessitatibus incidunt ut officiisexplicabo
+                  inventore. <br />
+                  <Link to="#">myemail@gmail.com</Link>
+                </p>
+              </Col>
+            </Row>
+          </Container>
+        </div>
+      </Collapse>
+      <Navbar className="custom-navbar">
+        <Container>
+          <Navbar.Brand onClick={() => navigate("/")}>
+            MyPortfolio.
+          </Navbar.Brand>
+
+          <Link
+            to="#"
+            className={`burger ${open ? "active" : ""}`}
+            onClick={() => setOpen(!open)}
+          >
+            <span></span>
+          </Link>
+        </Container>
+      </Navbar>
+    </>
   );
 }
 
