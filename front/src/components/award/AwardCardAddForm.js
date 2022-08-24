@@ -41,7 +41,7 @@ const AwardCardAddForm = ({
         }
         const awardObj = {
             title: awardTitle,
-            description: awardDetail,
+            detail: awardDetail,
         }
         onAddSubmitEvent(awardObj)
     }
