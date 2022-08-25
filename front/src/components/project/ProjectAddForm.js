@@ -1,43 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
-// import { putProject } from './dev/mockApiProject';
-//import TestData from "../../dev/testData"
 import * as Api from '../../api';
-import useValidation from '../../hooks/useValidation';
+import { useForm } from '../../hooks/useForm';
 
 function ProjectAddForm({ onClick, getUser }) {
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-
-    const [
-        checkValidationTitle,
-        checkValidationDescription,
-        checkValidationDate,
-        checkValidationAll,
-    ] = useValidation();
-
-    const isValidTitle = checkValidationTitle(title);
-    const isValidDescription = checkValidationDescription(description);
-    const isValidDate =
-        checkValidationDate(startDate) && checkValidationDate(endDate);
-    const isValid = checkValidationAll(
-        isValidTitle,
-        isValidDescription,
-        isValidDate
-    );
+    const [values, isValid, handleChange] = useForm({
+        title: '',
+        detail: '',
+        startDate: '',
+        endDate: '',
+    });
 
     const handlePutProject = async () => {
-        // await putProject({ name, description, date, key });
-        // await TestData.createProject({ name, description, date, key })
-        if (isValid) {
-            await Api.post('api/project', {
-                title,
-                detail: description,
-                startDate,
-                endDate,
-            });
+        console.log(isValid);
+        if (isValid.all) {
+            await Api.post('api/project', { ...values });
             getUser();
             onClick();
         }
@@ -49,16 +26,16 @@ function ProjectAddForm({ onClick, getUser }) {
                 <Form.Control
                     type="text"
                     placeholder="프로젝트 제목"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    name="title"
+                    onChange={handleChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Control
                     type="text"
                     placeholder="상세내역"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    name="detail"
+                    onChange={handleChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3 w-50">
@@ -66,15 +43,15 @@ function ProjectAddForm({ onClick, getUser }) {
                     <Col>
                         <Form.Control
                             type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
+                            name="startDate"
+                            onChange={handleChange}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
+                            name="endDate"
+                            onChange={handleChange}
                         />
                     </Col>
                 </Row>
@@ -84,7 +61,7 @@ function ProjectAddForm({ onClick, getUser }) {
                     variant="primary"
                     className="me-3"
                     onClick={handlePutProject}
-                    disabled={isValid}
+                    disabled={!isValid.all}
                 >
                     확인
                 </Button>

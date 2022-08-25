@@ -6,7 +6,12 @@ export const useForm = (initialState) => {
     const [isValid, setIsValid] = useState({ all: false });
 
     const handleChange = useCallback(
-        (e) => {
+        (e, date) => {
+            if (date) {
+                const name = 'certificationDate';
+                setValues({ ...values, [name]: date });
+                return;
+            }
             const { name, value } = e.target;
             setValues({ ...values, [name]: value });
         },

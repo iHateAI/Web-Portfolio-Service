@@ -1,16 +1,12 @@
 import React from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
-// import { postProject } from './dev/mockApiProject';
-//import TestData from '../../dev/testData';
 import * as Api from '../../api';
 import { useForm } from '../../hooks/useForm';
 
 function ProjectEditForm({ project, editClick, getUser }) {
-    const [values, isValid, handleChange] = useForm(project);
+    const [values, isValid, handleChange] = useForm({ ...project });
 
     const handlePostProject = async () => {
-        // await postProject(project.key, { name, description, date });
-        // await TestData.updateProject(project.key, { name, description, date });
         if (isValid.all) {
             await Api.put(`api/project/${project._id}`, {
                 title: values.title,
