@@ -4,6 +4,14 @@ class certificationService {
   static async addCertificationInfo(data) {
     console.log('서비스', data);
     const certification = await Certification.create(data);
+
+    const tempDate = certification.certificationDate;
+    const year = tempDate.getFullYear();
+    const month = ('0' + (1 + tempDate.getMonth())).slice(-2);
+    const day = ('0' + tempDate.getDate()).slice(-2);
+
+    certification.certificationDate = `${year}-${month}-${day}`;
+
     return certification;
   }
 

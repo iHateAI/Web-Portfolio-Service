@@ -1,6 +1,7 @@
 // 패키지 임포트
 import cors from 'cors';
 import express from 'express';
+import fs from 'fs';
 import path from 'path';
 
 // 라우터 임포트
@@ -9,7 +10,6 @@ import { educationRouter } from './routers/educationRouter';
 import { awardRouter } from './routers/awardRouter';
 import { certificationRouter } from './routers/certificationRouter';
 import { projectRouter } from './routers/projectRouter';
-import { profileRouter } from './routers/profileRouter';
 
 import { errorMiddleware } from './middlewares/errorMiddleware';
 
@@ -24,7 +24,16 @@ app.use(cors());
 // express.static:
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/api/profile', express.static(path.join(__dirname, 'uploads')));
+app.use('/user/profileImage', express.static(path.join(__dirname, 'uploads')));
+
+/**
+ * uploads 파일 생성
+ */
+ try {
+  fs.readdirSync('src/uploads');
+} catch (err) {
+  fs.mkdirSync('src/uploads');
+}
 
 // 기본 페이지
 app.get('/', (req, res) => {
@@ -37,7 +46,6 @@ app.use('/api/education', educationRouter);
 app.use('/api/award', awardRouter);
 app.use('/api/certification', certificationRouter);
 app.use('/api/project', projectRouter);
-app.use('/api/profile', profileRouter);
 
 
 
