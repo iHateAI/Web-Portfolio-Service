@@ -1,24 +1,47 @@
-import React, { useState } from "react"
-import { Button, Form, Col, Row } from "react-bootstrap"
+import React, { useState } from 'react';
+import { Button, Form, Col, Row } from 'react-bootstrap';
 // import { putProject } from './dev/mockApiProject';
-import TestData from "../../dev/testData"
+//import TestData from "../../dev/testData"
+import * as Api from '../../api';
+import useValidation from '../../hooks/useValidation';
 
 function ProjectAddForm({ onClick, getUser }) {
-    const [name, setName] = useState("")
-    const [description, setDescription] = useState("")
-    const [date, setDate] = useState({ start: "", end: "" })
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
+    const [
+        checkValidationTitle,
+        checkValidationDescription,
+        checkValidationDate,
+        checkValidationAll,
+    ] = useValidation();
+
+    const isValidTitle = checkValidationTitle(title);
+    const isValidDescription = checkValidationDescription(description);
+    const isValidDate =
+        checkValidationDate(startDate) && checkValidationDate(endDate);
+    const isValid = checkValidationAll(
+        isValidTitle,
+        isValidDescription,
+        isValidDate
+    );
 
     const handlePutProject = async () => {
-        const key = Math.random() * 100000
         // await putProject({ name, description, date, key });
-        await TestData.createProject({ name, description, date, key })
-        getUser()
-        setName("")
-        setDescription("")
-        setDate({ start: "", end: "" })
-        // + 버튼 비활성화
-        onClick(true)
-    }
+        // await TestData.createProject({ name, description, date, key })
+        if (isValid) {
+            await Api.post('api/project', {
+                title,
+                detail: description,
+                startDate,
+                endDate,
+            });
+            getUser();
+            onClick();
+        }
+    };
 
     return (
         <Form className="mt-3 mb-3 w-100">
@@ -26,8 +49,8 @@ function ProjectAddForm({ onClick, getUser }) {
                 <Form.Control
                     type="text"
                     placeholder="프로젝트 제목"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -43,19 +66,15 @@ function ProjectAddForm({ onClick, getUser }) {
                     <Col>
                         <Form.Control
                             type="date"
-                            value={date.start}
-                            onChange={(e) =>
-                                setDate({ ...date, start: e.target.value })
-                            }
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             type="date"
-                            value={date.end}
-                            onChange={(e) =>
-                                setDate({ ...date, end: e.target.value })
-                            }
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
                         />
                     </Col>
                 </Row>
@@ -65,6 +84,7 @@ function ProjectAddForm({ onClick, getUser }) {
                     variant="primary"
                     className="me-3"
                     onClick={handlePutProject}
+                    disabled={isValid}
                 >
                     확인
                 </Button>
@@ -73,7 +93,7 @@ function ProjectAddForm({ onClick, getUser }) {
                 </Button>
             </Form.Group>
         </Form>
-    )
+    );
 }
 
-export default ProjectAddForm
+export default ProjectAddForm;

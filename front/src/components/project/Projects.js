@@ -1,42 +1,47 @@
-import React, { useState, useEffect } from "react"
-import { Button } from "react-bootstrap"
-import Project from "./Project"
-import ProjectAddForm from "./ProjectAddForm"
-import { getProjects } from "./dev/mockApiProject"
-import TestData from "../../dev/testData"
-
-// Projects.defaultProps = {
-//   portfolioOwnerId: 'dhekgus1122',
-//   isEditable: true,
-// };
-//테스트용 props 기본값
+import React, { useState, useEffect } from 'react';
+import { Button, Card } from 'react-bootstrap';
+import Project from './Project';
+import ProjectAddForm from './ProjectAddForm';
+//import TestData from '../../dev/testData';
+import * as Api from '../../api';
 
 function Projects({ portfolioOwnerId, isEditable }) {
     //api 요청에 사용할 값, 편집 가능 여부
-    const [isEditing, setIsEditing] = useState(false)
-    const [user, setUser] = useState(null)
+    const [isEditing, setIsEditing] = useState(false);
+    const [user, setUser] = useState(null);
     //state
 
     const handleIsEditing = () => {
-        setIsEditing(!isEditing)
-    }
+        setIsEditing(!isEditing);
+    };
     //버튼 및 ProjectAddForm에 넘겨줄 isEditing 변경함수
 
     const getUser = async () => {
         // const fetchUser = await getProjects();
-        const fetchUser = await TestData.getProjects(portfolioOwnerId)
-        setUser({ ...fetchUser.data })
-    }
+        try {
+            const fetchUser = await Api.get('api/project').then(
+                (res) => res.data
+            );
+            const users = fetchUser.map((obj) => {
+                const startDate = obj.startDate.slice(0, 10);
+                const endDate = obj.endDate.slice(0, 10);
+                return { ...obj, startDate, endDate };
+            });
+            setUser([...users]);
+        } catch (e) {
+            console.log(e);
+        }
+    };
 
     useEffect(() => {
-        getUser()
-    }, [])
+        getUser();
+    }, []);
     //컴포넌트 mount시 모의 데이터 호출
 
     return (
-        <div className="px-3 w-75">
+        <Card className="px-3 w-75 py-3">
             <h3>프로젝트</h3>
-            {user?.projects?.map((project, index) => (
+            {user?.map((project, index) => (
                 <Project
                     project={project}
                     isEditable={isEditable}
@@ -58,8 +63,8 @@ function Projects({ portfolioOwnerId, isEditable }) {
             {isEditing && (
                 <ProjectAddForm onClick={handleIsEditing} getUser={getUser} />
             )}
-        </div>
-    )
+        </Card>
+    );
 }
 
-export default Projects
+export default Projects;
