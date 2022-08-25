@@ -1,0 +1,365 @@
+@import url("https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Inconsolata:400,500,600,700|Raleway:400,400i,500,500i,600,600i,700,700i");
+
+/*--------------------------------------------------------------
+# base
+--------------------------------------------------------------*/
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+}
+
+body > * {
+  font-family: "Inconsolata", monospace;
+  color: #0d1e2d;
+}
+
+a > * {
+  color: #777;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #000;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
+  font-family: "Raleway", sans-serif;
+}
+
+.section {
+  padding: 6rem 0;
+}
+
+/*--------------------------------------------------------------
+  # Header
+  --------------------------------------------------------------*/
+/* Custom Navmenu */
+
+.navmenu {
+  background: #0d1e2d;
+
+  visibility: hidden;
+  height: 0vh;
+  transition: all 0.2s;
+}
+
+.navmenu.active {
+  visibility: visible;
+  height: 25vh;
+}
+
+.navmenu-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 3rem 13rem;
+}
+
+.navmenu .menu-list,
+.navmenu .menu-list li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.navmenu .menu-list li {
+  color: #fff;
+  margin-bottom: 0;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.menu-list li:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
+}
+.menu-list li:hover::after {
+  transform: scale(1.5);
+  opacity: 0;
+}
+.menu-list li:active {
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
+}
+
+.navmenu .menu-list li a {
+  color: #fff;
+  padding: 1rem 0 !important;
+}
+
+.navmenu .menu-list li a:hover {
+  text-decoration: none;
+}
+
+.navmenu .menu-list li.active a {
+  text-decoration: underline;
+}
+
+.navmenu h3 {
+  font-size: 2rem;
+  color: #fff;
+}
+.navmenu .content {
+  width: 40%;
+}
+
+.navmenu p {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+}
+
+.navmenu a {
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+}
+
+.navmenu a:hover {
+  color: #fff;
+}
+
+/* Custom Navbar */
+.header-navbar {
+  padding: 5rem 13rem;
+  width: 100%;
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+}
+
+.header-navbar .navbar-container {
+  display: flex;
+  justify-content: space-between;
+}
+.header-navbar .navbar-brand {
+  font-size: 3.2rem;
+  cursor: pointer;
+}
+.navbar-brand:hover {
+  transform: translateY(-0.3rem);
+  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
+}
+.navbar-brand:hover::after {
+  transform: scale(1.5);
+  opacity: 0;
+}
+.navbar-brand:active {
+  transform: translateY(-0.1rem);
+  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
+}
+
+/* Burger */
+.burger-menu {
+  width: 2.8rem;
+  height: 32px;
+  cursor: pointer;
+  position: relative;
+}
+
+.burger-menu:before,
+.burger-menu span,
+.burger-menu:after {
+  width: 100%;
+  height: 2px;
+  display: block;
+  background: #000;
+  border-radius: 2px;
+  position: absolute;
+  opacity: 1;
+}
+
+.burger-menu:before,
+.burger-menu:after {
+  transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1);
+  -webkit-transition: top 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    -webkit-transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+    background-color 1.15s cubic-bezier(0.86, 0, 0.07, 1);
+  content: "";
+}
+
+.burger-menu:before {
+  top: 4px;
+}
+
+.burger-menu span {
+  top: 15px;
+}
+
+.burger-menu:after {
+  top: 26px;
+}
+
+/* Hover */
+.burger-menu:hover:before {
+  top: 7px;
+}
+
+.burger-menu:hover:after {
+  top: 23px;
+}
+
+/* Click */
+.burger-menu.active span {
+  opacity: 0;
+}
+
+.burger-menu.active:before,
+.burger-menu.active:after {
+  top: 40%;
+}
+
+.burger-menu.active:before {
+  transform: rotate(45deg);
+}
+
+.burger-menu.active:after {
+  transform: rotate(-45deg);
+}
+
+.burger-menu:focus {
+  outline: none;
+}
+
+/*--------------------------------------------------------------
+# Login
+--------------------------------------------------------------*/
+.login-content {
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  padding: 0 13rem;
+}
+
+.login-title {
+  font-size: 3rem;
+}
+
+.login-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/*--------------------------------------------------------------
+# Login
+--------------------------------------------------------------*/
+.register-content {
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  padding: 0 13rem;
+}
+
+.register-title {
+  font-size: 3rem;
+}
+
+.register-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+/*--------------------------------------------------------------
+# Portfolio
+--------------------------------------------------------------*/
+.portfolio-content {
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  padding: 0 13rem;
+}
+
+.portfolio-title {
+  font-size: 3rem;
+}
+
+.portfolio-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/*--------------------------------------------------------------
+# Network
+--------------------------------------------------------------*/
+
+.network-content {
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  padding: 0 13rem;
+}
+
+.network-title {
+  font-size: 3rem;
+}
+
+.network-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/*--------------------------------------------------------------
+# animation
+--------------------------------------------------------------*/
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-moz-keyframes fadein {
+  /* Firefox */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-webkit-keyframes fadein {
+  /* Safari and Chrome */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@-o-keyframes fadein {
+  /* Opera */
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
