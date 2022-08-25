@@ -55,7 +55,8 @@ h6,
 
 .navmenu {
   background: #0d1e2d;
-
+  display: flex;
+  justify-content: center;
   visibility: hidden;
   height: 0vh;
   transition: all 0.2s;
@@ -68,8 +69,9 @@ h6,
 
 .navmenu-container {
   display: flex;
+  max-width: 1320px;
   justify-content: space-between;
-  padding: 3rem 13rem;
+  padding: 5rem 1.8rem;
 }
 
 .navmenu .menu-list,
@@ -88,7 +90,6 @@ h6,
 
 .menu-list li:hover {
   transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
 }
 .menu-list li:hover::after {
   transform: scale(1.5);
@@ -96,7 +97,6 @@ h6,
 }
 .menu-list li:active {
   transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
 }
 
 .navmenu .menu-list li a {
@@ -136,17 +136,20 @@ h6,
 
 /* Custom Navbar */
 .header-navbar {
-  padding: 5rem 13rem;
+  display: flex;
+  justify-content: center;
+}
+
+.header-navbar .navbar-container {
+  padding: 1.8rem;
   width: 100%;
+  max-width: 1320px;
+  display: flex;
+  justify-content: space-between;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-}
-
-.header-navbar .navbar-container {
-  display: flex;
-  justify-content: space-between;
 }
 .header-navbar .navbar-brand {
   font-size: 3.2rem;
@@ -154,7 +157,6 @@ h6,
 }
 .navbar-brand:hover {
   transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
 }
 .navbar-brand:hover::after {
   transform: scale(1.5);
@@ -162,7 +164,6 @@ h6,
 }
 .navbar-brand:active {
   transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
 }
 
 /* Burger */
@@ -261,9 +262,37 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
+.network-container {
+  display: flex;
+  justify-content: center;
+}
+.network-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1320px;
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  margin-bottom: 4rem;
+}
+.network-content .title-container {
+  width: 100%;
+  padding: 1.8rem;
+}
+.network-title {
+  font-size: 3rem;
+}
+
+.network-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
 
 /*--------------------------------------------------------------
-# Login
+# Register
 --------------------------------------------------------------*/
 .register-content {
   animation: fadein 3s;
@@ -282,6 +311,7 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
+
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
@@ -306,15 +336,25 @@ h6,
 /*--------------------------------------------------------------
 # Network
 --------------------------------------------------------------*/
-
+.network-container {
+  display: flex;
+  justify-content: center;
+}
 .network-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  margin-bottom: 4rem;
 }
-
+.network-content .title-container {
+  width: 100%;
+  padding: 1.8rem;
+}
 .network-title {
   font-size: 3rem;
 }
@@ -323,6 +363,75 @@ h6,
   width: 40%;
   margin-top: 2rem;
   font-size: 1.5rem;
+}
+/*  usercard  */
+
+.usercard {
+  display: flex;
+
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.item-box {
+  border: none;
+  padding: 1.8rem;
+  width: 33%;
+}
+
+.item-wrap {
+  display: block;
+
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.item-wrap:hover {
+  transform: translateY(-0.4rem);
+}
+.item-wrap:active {
+  transform: translateY(-0.1rem);
+}
+.item-info-style {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  color: #fff;
+  visibility: hidden;
+  transition: 0.3s transform ease;
+}
+.item-info-style .title-style {
+  font-size: 1.8rem;
+  top: 0;
+  bottom: 0;
+}
+
+.item-info-style .des-style {
+  padding: 0.8rem 1.3rem;
+  border: none;
+}
+.item-info-style .button-style {
+  font-size: 1.2rem;
+}
+.item-wrap:hover > .item-info-style {
+  transform: translateY(-50%);
+  visibility: visible;
+}
+.item-img-style {
+  width: 40rem;
+  max-width: 100%;
+  height: auto;
+  transition: 0.3s transform ease;
+  transform: scale(1);
+  filter: brightness(100%);
+}
+.item-img-style:hover {
+  transform: scale(1.05);
+  filter: brightness(70%);
 }
 
 /*--------------------------------------------------------------
