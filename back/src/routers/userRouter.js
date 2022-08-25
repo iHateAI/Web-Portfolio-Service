@@ -1,15 +1,18 @@
-import is from "@sindresorhus/is";
-import { Router } from "express";
-import { login_required } from "../middlewares/login_required";
-import { userAuthService } from "../services/userService";
+import is from '@sindresorhus/is';
+import { Router } from 'express';
+import { login_required } from '../middlewares/login_required';
+import { userAuthService } from '../services/userService';
+import getmulter from '../utils/multer';
 
 const userAuthRouter = Router();
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+const profileImageUpload = getmulter('src/uploads', 10);
+
+userAuthRouter.post('/user/register', async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        "headers의 Content-Type을 application/json으로 설정해주세요"
+        'headers의 Content-Type을 application/json으로 설정해주세요'
       );
     }
 
@@ -35,7 +38,7 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
   }
 });
 
-userAuthRouter.post("/user/login", async function (req, res, next) {
+userAuthRouter.post('/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -55,7 +58,7 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
 });
 
 userAuthRouter.get(
-  "/userlist",
+  '/userlist',
   login_required,
   async function (req, res, next) {
     try {
@@ -69,7 +72,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  "/user/current",
+  '/user/current',
   login_required,
   async function (req, res, next) {
     try {
@@ -91,8 +94,9 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  "/users/:id",
+  '/users/:id',
   login_required,
+  profileImageUpload.single('image'),
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
@@ -103,10 +107,19 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      // 프로필 이미지 데이터 가져오기
+      const profileImage = req.file ?? null;
+
+      const toUpdate = { name, email, password, description, profileImage };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      let updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+
+      // 프로필 이미지 url 반환
+      if (profileImage) {
+        const profileImageUrl = `/user/profileImage/${req.file.filename}`; 
+        updatedUser = {profileImageUrl, ...updatedUser._doc};
+      }
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
@@ -120,7 +133,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  "/users/:id",
+  '/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -139,7 +152,7 @@ userAuthRouter.get(
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
+userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
   res
     .status(200)
     .send(
