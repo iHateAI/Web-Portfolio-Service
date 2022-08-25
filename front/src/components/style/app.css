@@ -55,7 +55,8 @@ h6,
 
 .navmenu {
   background: #0d1e2d;
-
+  display: flex;
+  justify-content: center;
   visibility: hidden;
   height: 0vh;
   transition: all 0.2s;
@@ -68,8 +69,9 @@ h6,
 
 .navmenu-container {
   display: flex;
+  max-width: 1320px;
   justify-content: space-between;
-  padding: 3rem 13rem;
+  padding: 5rem 1.8rem;
 }
 
 .navmenu .menu-list,
@@ -88,7 +90,6 @@ h6,
 
 .menu-list li:hover {
   transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
 }
 .menu-list li:hover::after {
   transform: scale(1.5);
@@ -96,7 +97,6 @@ h6,
 }
 .menu-list li:active {
   transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
 }
 
 .navmenu .menu-list li a {
@@ -136,17 +136,20 @@ h6,
 
 /* Custom Navbar */
 .header-navbar {
-  padding: 5rem 13rem;
+  display: flex;
+  justify-content: center;
+}
+
+.header-navbar .navbar-container {
+  padding: 1.8rem;
   width: 100%;
+  max-width: 1320px;
+  display: flex;
+  justify-content: space-between;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-}
-
-.header-navbar .navbar-container {
-  display: flex;
-  justify-content: space-between;
 }
 .header-navbar .navbar-brand {
   font-size: 3.2rem;
@@ -154,7 +157,6 @@ h6,
 }
 .navbar-brand:hover {
   transform: translateY(-0.3rem);
-  box-shadow: 0 1rem 2rem rgba(#000, 0.2);
 }
 .navbar-brand:hover::after {
   transform: scale(1.5);
@@ -162,7 +164,6 @@ h6,
 }
 .navbar-brand:active {
   transform: translateY(-0.1rem);
-  box-shadow: 0 0.5rem 1rem rgba(#000, 0.2);
 }
 
 /* Burger */
@@ -244,12 +245,19 @@ h6,
 /*--------------------------------------------------------------
 # Login
 --------------------------------------------------------------*/
+.login-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .login-content {
+  width: 100%;
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  padding: 6rem 1.8rem;
 }
 
 .login-title {
@@ -261,16 +269,50 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
-
-/*--------------------------------------------------------------
-# Login
---------------------------------------------------------------*/
-.register-content {
+.network-container {
+  display: flex;
+  justify-content: center;
+}
+.network-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  margin-bottom: 4rem;
+}
+.network-content .title-container {
+  width: 100%;
+  padding: 1.8rem;
+}
+.network-title {
+  font-size: 3rem;
+}
+
+.network-sub-title {
+  width: 40%;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+}
+
+/*--------------------------------------------------------------
+# Register
+--------------------------------------------------------------*/
+.regiser-container {
+  display: flex;
+  justify-content: center;
+}
+.register-content {
+  width: 100%;
+  max-width: 1320px;
+  animation: fadein 3s;
+  -moz-animation: fadein 3s; /* Firefox */
+  -webkit-animation: fadein 3s; /* Safari and Chrome */
+  -o-animation: fadein 3s; /* Opera */
+  padding: 6rem 1.8rem;
 }
 
 .register-title {
@@ -282,17 +324,30 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
+
 /*--------------------------------------------------------------
 # Portfolio
 --------------------------------------------------------------*/
+
+.portfolio-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
 .portfolio-content {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  padding: 6rem 0rem;
 }
-
+.portfolio-content .title-container {
+  padding: 1.8rem;
+}
 .portfolio-title {
   font-size: 3rem;
 }
@@ -302,19 +357,175 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
+.title-container {
+  margin-bottom: 4rem;
+}
+.user-container {
+  width: 100%;
+  display: flex;
 
+  margin-bottom: 4rem;
+}
+
+.singlepage-item-box .item-wrap {
+  display: flex;
+}
+.singlepage-item-box .item-img {
+  padding: 0 1.8rem;
+  width: 40rem;
+  max-width: 100%;
+  display: flex;
+  margin-right: 4rem;
+}
+.single-user-item-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0 2rem;
+  width: 70%;
+}
+.single-user-item-info .user-name {
+  font-size: 2.3rem;
+}
+.single-user-item-info .user-email {
+  font-size: 1.8rem;
+}
+.single-user-item-info .user-description {
+  font-size: 1.5rem;
+}
+.skill-title {
+  font-size: 2.2rem;
+}
+.skill-list li {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  list-style: none;
+}
+.skill-list > * {
+  margin-bottom: 10px;
+  position: relative;
+  padding-left: 30px;
+}
+.skill-list li:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1rem;
+  width: 10px;
+  height: 2px;
+  background: #000;
+}
+.edit-button {
+  display: inline-block;
+  width: 10rem;
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 10px 15px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  color: #000;
+  transition: 0.2s all ease;
+  font-weight: 700;
+}
+.edit-button:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+/*--------------------------------------------------------------
+# mvp
+--------------------------------------------------------------*/
+.mvps-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.mvp-content {
+  width: 50%;
+  padding: 1.8rem;
+}
+.mvp-container {
+  overflow: scroll;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #eceff2;
+  padding: 3rem;
+}
+.mvp-title {
+  font-size: 3rem;
+  letter-spacing: 0.3rem;
+}
+.mvp-content-detail {
+  display: flex;
+  justify-content: space-between;
+}
+.mvp-info .title {
+  font-size: 2.2rem;
+  margin-left: 1rem;
+}
+
+.mvp-info .sub-title {
+  font-size: 1.5rem;
+  margin-left: 2rem;
+}
+.mvp-edit-button {
+  display: inline-block;
+  width: 5rem;
+  background-color: #085ed6;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.6rem 0.7rem;
+  font-size: 1remx;
+  text-transform: uppercase;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+
+.mvp-delete-button {
+  display: inline-block;
+  width: 5rem;
+  background-color: #eb5462;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.6rem 0.7rem;
+  font-size: 1remx;
+  text-transform: uppercase;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+.mvp-management button:hover {
+  transform: translateY(-0.3rem);
+}
+.mvp-management button::after {
+  transform: scale(1.5);
+  opacity: 0;
+}
+.mvp-management button:active {
+  transform: translateY(-0.1rem);
+}
 /*--------------------------------------------------------------
 # Network
 --------------------------------------------------------------*/
-
+.network-container {
+  display: flex;
+  justify-content: center;
+}
 .network-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  margin-bottom: 4rem;
 }
-
+.network-content .title-container {
+  width: 100%;
+  padding: 1.8rem;
+}
 .network-title {
   font-size: 3rem;
 }
@@ -323,6 +534,78 @@ h6,
   width: 40%;
   margin-top: 2rem;
   font-size: 1.5rem;
+}
+/*  usercard  */
+
+.usercard {
+  display: flex;
+
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.item-box {
+  border: none;
+  padding: 1.8rem;
+  width: 33%;
+}
+
+.item-wrap {
+  display: block;
+
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s;
+}
+.item-wrap:hover {
+  transform: translateY(-0.4rem);
+}
+.item-wrap:active {
+  transform: translateY(-0.1rem);
+}
+.network-item-info {
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 3;
+  color: #fff;
+  visibility: hidden;
+  transition: 0.3s transform ease;
+}
+.network-item-info .user-title {
+  font-size: 2rem;
+  top: 0;
+  bottom: 0;
+}
+.network-item-info .user-email {
+  font-size: 1.5rem;
+}
+
+.network-item-info .user-descriptiom {
+  border: none;
+  text-align: center;
+  width: 70%;
+  font-size: 1.3rem;
+}
+
+.item-wrap:hover > .network-item-info {
+  transform: translateY(-50%);
+  visibility: visible;
+}
+.item-img-style {
+  width: 40rem;
+  max-width: 100%;
+  height: auto;
+  transition: 0.3s transform ease;
+  transform: scale(1);
+  filter: brightness(100%);
+}
+.item-img-style:hover {
+  transform: scale(1.05);
+  filter: brightness(70%);
 }
 
 /*--------------------------------------------------------------
