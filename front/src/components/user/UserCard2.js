@@ -1,19 +1,9 @@
-import { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/app.css";
 
 function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
-  const [isHover, setIsHover] = useState(false);
-
   const navigate = useNavigate();
-
-  const handlerMouseEnter = () => {
-    setIsHover(true);
-  };
-
-  const handlerMouseLeave = () => {
-    setIsHover(false);
-  };
 
   const handlerEditClick = () => {
     setIsEditing(true);
@@ -29,10 +19,10 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
   // jsx 부분의 코드 길이가 길어지므로 이렇게 사용.
   const UserInformation = () => {
     return (
-      <div className="item-info-style">
-        <h3 className="title-style">{user?.name}</h3>
-        <h3 className="title-style">{user?.email}</h3>
-        <span className="des-style">{user?.description}</span>
+      <div className="network-item-info">
+        <h3 className="user-title">{user?.name}</h3>
+        <h3 className="user-emil">{user?.email}</h3>
+        <span className="user-descriptiom">{user?.description}</span>
         {isEditable && (
           <button className="button-style" onClick={handlerEditClick}>
             EDIT
@@ -48,7 +38,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
         <UserInformation />
         <img
           className="item-img-style"
-          src="http://placekitten.com/350/350"
+          src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
           alt="userImg"
         />
       </div>

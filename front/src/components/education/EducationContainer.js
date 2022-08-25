@@ -17,36 +17,33 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   }, []);
 
   return (
-    <Card>
-      <Card.Body>
-        <Card.Title className="mb-4">학력</Card.Title>
-        {educations.map((education) => (
-          <Education
-            key={education._id}
-            education={education}
-            setEducations={setEducations}
-            isEditable={isEditable}
-          />
-        ))}
-
-        {addEducation && (
-          <EducationAddForm
-            portfolioOwnerId={portfolioOwnerId}
-            setEducations={setEducations}
-            setAddEducation={setAddEducation}
-          />
-        )}
-        {isEditable && (
-          <Row className="text-center mb-4">
-            <Col>
-              <Button size="md" onClick={() => setAddEducation(true)}>
-                +
-              </Button>
-            </Col>
-          </Row>
-        )}
-      </Card.Body>
-    </Card>
+    <div className="mvp-container">
+      <h3 className="mvp-title">Education</h3>
+      {educations.map((education) => (
+        <Education
+          key={education._id}
+          education={education}
+          setEducations={setEducations}
+          isEditable={isEditable}
+        />
+      ))}
+      {addEducation && (
+        <EducationAddForm
+          portfolioOwnerId={portfolioOwnerId}
+          setEducations={setEducations}
+          setAddEducation={setAddEducation}
+        />
+      )}
+      {isEditable && (
+        <Row className="text-center mb-4">
+          <Col>
+            <Button size="md" onClick={() => setAddEducation(true)}>
+              +
+            </Button>
+          </Col>
+        </Row>
+      )}
+    </div>
   );
 }
 

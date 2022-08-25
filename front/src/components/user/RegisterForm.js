@@ -57,94 +57,99 @@ function RegisterForm() {
   };
 
   return (
-    <section className="section pb-5">
-      <div className="register-content">
-        <h2 className="register-title">Register</h2>
-        <p className="register-sub-title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-          necessitatibus incidunt ut officiis explicabo inventore.
-        </p>
-      </div>
-      <Container>
-        <Row className="justify-content-md-center mt-5">
-          <Col lg={8}>
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formBasicEmail">
-                <Form.Label>이메일 주소</Form.Label>
-                <Form.Control
-                  type="email"
-                  autoComplete="off"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                {!isEmailValid && (
-                  <Form.Text className="text-success">
-                    이메일 형식이 올바르지 않습니다.
-                  </Form.Text>
-                )}
-              </Form.Group>
+    <div className="regiser-container">
+      <section className="section register-content">
+        <div className="title-container">
+          <h2 className="register-title">Register</h2>
+          <p className="register-sub-title">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            necessitatibus incidunt ut officiis explicabo inventore.
+          </p>
+        </div>
+        <Container>
+          <Row className="justify-content-md-center mt-5">
+            <Col lg={8}>
+              <Form onSubmit={handleSubmit}>
+                <Form.Group controlId="formBasicEmail">
+                  <Form.Label>이메일 주소</Form.Label>
+                  <Form.Control
+                    type="email"
+                    autoComplete="off"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  {!isEmailValid && (
+                    <Form.Text className="text-success">
+                      이메일 형식이 올바르지 않습니다.
+                    </Form.Text>
+                  )}
+                </Form.Group>
 
-              <Form.Group controlId="formBasicPassword" className="mt-3">
-                <Form.Label>비밀번호</Form.Label>
-                <Form.Control
-                  type="password"
-                  autoComplete="off"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                {!isPasswordValid && (
-                  <Form.Text className="text-success">
-                    비밀번호는 4글자 이상으로 설정해 주세요.
-                  </Form.Text>
-                )}
-              </Form.Group>
+                <Form.Group controlId="formBasicPassword" className="mt-3">
+                  <Form.Label>비밀번호</Form.Label>
+                  <Form.Control
+                    type="password"
+                    autoComplete="off"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  {!isPasswordValid && (
+                    <Form.Text className="text-success">
+                      비밀번호는 4글자 이상으로 설정해 주세요.
+                    </Form.Text>
+                  )}
+                </Form.Group>
 
-              <Form.Group controlId="formBasicPasswordConfirm" className="mt-3">
-                <Form.Label>비밀번호 재확인</Form.Label>
-                <Form.Control
-                  type="password"
-                  autoComplete="off"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                {!isPasswordSame && (
-                  <Form.Text className="text-success">
-                    비밀번호가 일치하지 않습니다.
-                  </Form.Text>
-                )}
-              </Form.Group>
+                <Form.Group
+                  controlId="formBasicPasswordConfirm"
+                  className="mt-3"
+                >
+                  <Form.Label>비밀번호 재확인</Form.Label>
+                  <Form.Control
+                    type="password"
+                    autoComplete="off"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                  />
+                  {!isPasswordSame && (
+                    <Form.Text className="text-success">
+                      비밀번호가 일치하지 않습니다.
+                    </Form.Text>
+                  )}
+                </Form.Group>
 
-              <Form.Group controlId="formBasicName" className="mt-3">
-                <Form.Label>이름</Form.Label>
-                <Form.Control
-                  type="text"
-                  autoComplete="off"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                {!isNameValid && (
-                  <Form.Text className="text-success">
-                    이름은 2글자 이상으로 설정해 주세요.
-                  </Form.Text>
-                )}
-              </Form.Group>
+                <Form.Group controlId="formBasicName" className="mt-3">
+                  <Form.Label>이름</Form.Label>
+                  <Form.Control
+                    type="text"
+                    autoComplete="off"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  {!isNameValid && (
+                    <Form.Text className="text-success">
+                      이름은 2글자 이상으로 설정해 주세요.
+                    </Form.Text>
+                  )}
+                </Form.Group>
 
-              <Form.Group as={Row} className="mt-3 text-center">
-                <Col sm={{ span: 20 }}>
-                  <Button
-                    variant="primary"
-                    type="submit"
-                    disabled={!isFormValid}
-                  >
-                    회원가입
-                  </Button>
-                </Col>
-              </Form.Group>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    </section>
+                <Form.Group as={Row} className="mt-3 text-center">
+                  <Col sm={{ span: 20 }}>
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      disabled={!isFormValid}
+                    >
+                      회원가입
+                    </Button>
+                  </Col>
+                </Form.Group>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </section>
+    </div>
   );
 }
 
