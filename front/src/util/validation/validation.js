@@ -51,6 +51,11 @@ class Validation {
         return password.match(/^[A-Za-z0-9]{6,12}$/);
     }
 
+    static validateUserDescription(description) {
+        if (description.length < 1) return false;
+        return true;
+    }
+
     // Certificate
     // Certificate의 title, detail은 2글자 이상이어야 한다.
     static validateCertificateTitle(title) {

@@ -10,7 +10,7 @@ const useUserValidation = () => {
     };
 
     const checkValidationDescription = (description) => {
-        return Validation.validUserDescription(description);
+        return Validation.validateUserDescription(description);
     };
 
     return [
