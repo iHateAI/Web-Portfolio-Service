@@ -21,7 +21,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
     return (
       <div className="network-item-info">
         <h3 className="user-title">{user?.name}</h3>
-        <h3 className="user-emil">{user?.email}</h3>
+        <h3 className="user-email">{user?.email}</h3>
         <span className="user-descriptiom">{user?.description}</span>
         {isEditable && (
           <button className="button-style" onClick={handlerEditClick}>

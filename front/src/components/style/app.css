@@ -245,12 +245,16 @@ h6,
 /*--------------------------------------------------------------
 # Login
 --------------------------------------------------------------*/
+.login-container {
+  width: 100%;
+}
 .login-content {
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  padding: 6rem 1.8rem;
 }
 
 .login-title {
@@ -295,11 +299,12 @@ h6,
 # Register
 --------------------------------------------------------------*/
 .register-content {
+  max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
   -webkit-animation: fadein 3s; /* Safari and Chrome */
   -o-animation: fadein 3s; /* Opera */
-  padding: 0 13rem;
+  padding: 6rem 1.8rem;
 }
 
 .register-title {
@@ -330,7 +335,9 @@ h6,
   -o-animation: fadein 3s; /* Opera */
   padding: 6rem 0rem;
 }
-
+.portfolio-content .title-container {
+  padding: 1.8rem;
+}
 .portfolio-title {
   font-size: 3rem;
 }
@@ -344,10 +351,9 @@ h6,
   margin-bottom: 4rem;
 }
 .user-container {
-  padding: 0 1.8rem;
   width: 100%;
   display: flex;
-  justify-content: center;
+
   margin-bottom: 4rem;
 }
 
@@ -355,22 +361,24 @@ h6,
   display: flex;
 }
 .singlepage-item-box .item-img {
+  padding: 0 1.8rem;
   width: 40rem;
   max-width: 100%;
   display: flex;
   margin-right: 4rem;
 }
 .single-user-item-info {
-  width: 50%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  padding: 0 2rem;
+  width: 70%;
 }
 .single-user-item-info .user-name {
   font-size: 2.3rem;
 }
 .single-user-item-info .user-email {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
 }
 .single-user-item-info .user-description {
   font-size: 1.5rem;
@@ -403,7 +411,7 @@ h6,
   background-color: #fff;
   border: 1px solid #000;
   padding: 10px 15px;
-  font-size: 12px;
+  font-size: 1.2rem;
   text-transform: uppercase;
   color: #000;
   transition: 0.2s all ease;
@@ -426,7 +434,65 @@ h6,
   padding: 1.8rem;
 }
 .mvp-container {
+  overflow: scroll;
+  height: 40rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #eceff2;
+  padding: 3rem;
+}
+.mvp-title {
+  font-size: 3rem;
+  letter-spacing: 0.3rem;
+}
+.mvp-content-detail {
+  display: flex;
+  justify-content: space-between;
+}
+.mvp-info .title {
+  font-size: 2.2rem;
+  margin-left: 1rem;
+}
+
+.mvp-info .sub-title {
+  font-size: 1.5rem;
+  margin-left: 2rem;
+}
+.mvp-edit-button {
+  display: inline-block;
+  width: 5rem;
+  background-color: #085ed6;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.6rem 0.7rem;
+  font-size: 1remx;
+  text-transform: uppercase;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+
+.mvp-delete-button {
+  display: inline-block;
+  width: 5rem;
+  background-color: #eb5462;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.6rem 0.7rem;
+  font-size: 1remx;
+  text-transform: uppercase;
+  color: #fff;
+  margin-right: 1.5rem;
+}
+.mvp-management button:hover {
+  transform: translateY(-0.3rem);
+}
+.mvp-management button::after {
+  transform: scale(1.5);
+  opacity: 0;
+}
+.mvp-management button:active {
+  transform: translateY(-0.1rem);
 }
 /*--------------------------------------------------------------
 # Network
@@ -500,22 +566,21 @@ h6,
   transition: 0.3s transform ease;
 }
 .network-item-info .user-title {
-  font-size: 1.8rem;
+  font-size: 2rem;
   top: 0;
   bottom: 0;
 }
 .network-item-info .user-email {
   font-size: 1.5rem;
-  width: 40%;
 }
 
 .network-item-info .user-descriptiom {
-  padding: 0.8rem 1.3rem;
   border: none;
+  text-align: center;
+  width: 70%;
+  font-size: 1.3rem;
 }
-.network-item-info .button-style {
-  font-size: 1.2rem;
-}
+
 .item-wrap:hover > .network-item-info {
   transform: translateY(-50%);
   visibility: visible;
