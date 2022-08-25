@@ -31,6 +31,11 @@ class Validation {
     if (checkStatus.length < 1) return false;
     return true;
   }
+  static validateAwardDetail(detail) {
+    const checkDetail = detail.trim();
+    if (checkDetail.length < 5) return false;
+    return true;
+  }
 }
 
 Object.freeze(Validation);

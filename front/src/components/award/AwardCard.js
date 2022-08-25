@@ -20,7 +20,7 @@ const AwardCard = ({
                 <Col>
                     <Card.Title>{award.title}</Card.Title>
                     <br />
-                    <Card.Subtitle>{award.description}</Card.Subtitle>
+                    <Card.Subtitle>{award.detail}</Card.Subtitle>
                 </Col>
                 {isEditable && (
                     <Col xs lg="1">

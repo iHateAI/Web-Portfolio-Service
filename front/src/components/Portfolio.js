@@ -6,6 +6,7 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
+import AwardContainer from "./award/AwardContainer";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -74,6 +75,14 @@ function Portfolio() {
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
+          </Col>
+          <Col>
+            <div style={{ textAlign: "center" }}>
+              <AwardContainer
+                userId={portfolioOwner.id}
+                isEditable={portfolioOwner.id === userState.user?.id}
+              />
+            </div>
           </Col>
         </Row>
       </section>

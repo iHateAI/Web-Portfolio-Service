@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 
 import * as Api from "../../api";
-import UserCard from "./UserCard";
+// import UserCard from "./UserCard";
+import UserCard2 from "./UserCard2";
 import { UserStateContext } from "../../App";
 
 function Network() {

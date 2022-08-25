@@ -5,6 +5,7 @@ import useModal from "../../hooks/useModal"
 
 import AwardCardPresenter from "./AwardCardPresenter"
 import AwardCardAddForm from "./AwardCardAddForm"
+import * as Api from "../../api"
 import TestData from "../../dev/testData"
 import ConfirmModal from "../modal/ConfirmModal"
 
@@ -20,14 +21,18 @@ const AwardContainer = ({ userId, isEditable }) => {
     ] = useModal(false)
 
     useEffect(() => {
-        // GET: awards/:userId
-        TestData.getAwards(userId).then((data) => setAwardArray(data))
+        // GET: api/award
+        Api.get(`api/award`).then((res) => setAwardArray(res.data))
     }, [userId])
 
     const onEditButtonClickEventHandler = async (editedAward) => {
-        // PUT: awards/:award_id
-        const result = await TestData.updateAward(userId, editedAward)
-        setAwardArray(result)
+        // PUT: api/award/awardId
+        await Api.put(`api/award/${editedAward._id}`, {
+            title: editedAward.title,
+            detail: editedAward.detail,
+        })
+        const res = await Api.get("api/award")
+        setAwardArray(res.data)
     }
 
     const onClickAddButtonEventHandler = () => {
@@ -35,15 +40,16 @@ const AwardContainer = ({ userId, isEditable }) => {
     }
 
     const onAddSubmitButtonClickEventHandler = async (awardObj) => {
-        // POST: awards/create
+        // POST: api/award
         const newAwardObj = {
-            user_id: userId,
             id: awardArray.length + 1,
-            ...awardObj,
+            title: awardObj.title,
+            detail: awardObj.detail,
         }
-        await TestData.createAward(userId, newAwardObj)
-        const result = await TestData.getAwards(userId)
-        setAwardArray(result)
+        const result = await Api.post("api/award", newAwardObj)
+        result.user_id = userId
+        const res = await Api.get("api/award")
+        setAwardArray(res.data)
         setIsAddMode(false)
     }
 
@@ -71,7 +77,7 @@ const AwardContainer = ({ userId, isEditable }) => {
                 <Card.Title>수상이력</Card.Title>
                 {awardArray.map((award) => (
                     <AwardCardPresenter
-                        key={award.id}
+                        key={award._id}
                         award={award}
                         isEditable={isEditable}
                         onEditButtonClickEvent={onEditButtonClickEventHandler}
