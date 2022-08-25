@@ -7,6 +7,7 @@ import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
+import "./style/app.css";
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -84,9 +85,6 @@ function Portfolio() {
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
-
-          <div className="mvp-content"></div>
-          <div className="mvp-content"></div>
         </div>
 
         <div style={{ textAlign: "center" }}></div>
