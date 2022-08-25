@@ -246,9 +246,12 @@ h6,
 # Login
 --------------------------------------------------------------*/
 .login-container {
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 .login-content {
+  width: 100%;
   max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
@@ -298,7 +301,12 @@ h6,
 /*--------------------------------------------------------------
 # Register
 --------------------------------------------------------------*/
+.regiser-container {
+  display: flex;
+  justify-content: center;
+}
 .register-content {
+  width: 100%;
   max-width: 1320px;
   animation: fadein 3s;
   -moz-animation: fadein 3s; /* Firefox */
@@ -322,6 +330,8 @@ h6,
 --------------------------------------------------------------*/
 
 .portfolio-container {
+  display: flex;
+  justify-content: center;
   width: 100%;
 }
 .portfolio-content {
