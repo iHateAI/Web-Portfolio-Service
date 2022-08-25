@@ -1,42 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Col, Row } from 'react-bootstrap';
 // import { postProject } from './dev/mockApiProject';
 //import TestData from '../../dev/testData';
 import * as Api from '../../api';
-import useValidation from '../../hooks/useValidation';
+import { useForm } from '../../hooks/useForm';
 
 function ProjectEditForm({ project, editClick, getUser }) {
-    const [title, setTitle] = useState(project.title);
-    const [description, setDescription] = useState(project.detail);
-    const [startDate, setStartDate] = useState(project.startDate);
-    const [endDate, setEndDate] = useState(project.endDate);
-
-    const [
-        checkValidationTitle,
-        checkValidationDescription,
-        checkValidationDate,
-        checkValidationAll,
-    ] = useValidation();
-
-    const isValidTitle = checkValidationTitle(title);
-    const isValidDescription = checkValidationDescription(description);
-    const isValidDate =
-        checkValidationDate(startDate) && checkValidationDate(endDate);
-    const isValid = checkValidationAll(
-        isValidTitle,
-        isValidDescription,
-        isValidDate
-    );
+    const [values, isValid, handleChange] = useForm(project);
 
     const handlePostProject = async () => {
         // await postProject(project.key, { name, description, date });
         // await TestData.updateProject(project.key, { name, description, date });
-        if (isValid) {
+        if (isValid.all) {
             await Api.put(`api/project/${project._id}`, {
-                title,
-                detail: description,
-                start_date: startDate,
-                end_date: endDate,
+                title: values.title,
+                detail: values.detail,
+                start_date: values.startDate,
+                end_date: values.endDate,
             });
             getUser();
             editClick();
@@ -49,16 +29,18 @@ function ProjectEditForm({ project, editClick, getUser }) {
                 <Form.Control
                     type="text"
                     placeholder="프로젝트 제목"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
+                    name="title"
+                    value={values?.title}
+                    onChange={handleChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Control
                     type="text"
                     placeholder="상세내역"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
+                    name="detail"
+                    value={values?.detail}
+                    onChange={handleChange}
                 />
             </Form.Group>
             <Form.Group className="mb-3 w-50">
@@ -66,15 +48,17 @@ function ProjectEditForm({ project, editClick, getUser }) {
                     <Col>
                         <Form.Control
                             type="date"
-                            value={startDate}
-                            onChange={(e) => setStartDate(e.target.value)}
+                            name="startDate"
+                            value={values?.startDate}
+                            onChange={handleChange}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             type="date"
-                            value={endDate}
-                            onChange={(e) => setEndDate(e.target.value)}
+                            name="endDate"
+                            value={values?.endDate}
+                            onChange={handleChange}
                         />
                     </Col>
                 </Row>
