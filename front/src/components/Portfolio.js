@@ -6,7 +6,10 @@ import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
+<<<<<<< HEAD
 import AwardContainer from "./award/AwardContainer";
+=======
+>>>>>>> 3348c1b62f36e42654dad1a1d1defe6fe9fd56bb
 
 function Portfolio() {
   const navigate = useNavigate();
