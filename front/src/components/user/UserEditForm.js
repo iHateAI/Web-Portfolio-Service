@@ -16,8 +16,8 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
     const [description, setDescription] = useState(user.description);
-    const [imageSrc, setImageSrc] = useState(user.url);
     const [imagePreview, setImagePreview] = useState(user.profileUrl);
+    const [uploadedImg, setUploadedImg] = useState(null);
 
     const [
         isShow,
@@ -46,12 +46,12 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     }, []);
 
     const handlerImageUpload = (e) => {
+        setUploadedImg(e.target.files[0]);
         const preview = new FileReader();
         preview.readAsDataURL(e.target.files[0]);
         preview.onload = () => {
             setImagePreview(preview.result);
         };
-        setImageSrc(e.target.files[0]);
     };
 
     const handleSubmitClick = async (e) => {
@@ -60,21 +60,25 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
             onShowButtonClickEventHandler();
             return;
         }
-        const formData = new FormData();
-        formData.append("image", imageSrc);
-        const res = await Api.put(
-            `users/${user.id}`,
-            // {
-            //     name,
-            //     email,
-            //     description,
-            //     formData,
-            // },
-            formData
-        );
-        console.log(res);
-        const updatedUser = res.data;
-        setUser(updatedUser);
+        if (!uploadedImg) {
+            const res = await Api.put(`users/${user.id}`, {
+                name,
+                email,
+                description,
+            });
+            const updatedUser = res.data;
+            setUser({
+                ...updatedUser,
+                profileUrl: user?.profileUrl,
+            });
+        } else {
+            const formData = new FormData();
+            formData.append("image", uploadedImg);
+            const res = await Api.imageUpload(`users/${user.id}`, formData);
+            const updatedUser = res.data;
+            console.log(updatedUser);
+            setUser(updatedUser);
+        }
         setIsEditing(false);
     };
 
