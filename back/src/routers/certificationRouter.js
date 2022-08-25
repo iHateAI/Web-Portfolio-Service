@@ -8,10 +8,7 @@ const certificationRouter = Router();
 certificationRouter.post('/', login_required, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-
-    // const castingStringToDate = new Date(req.body.certificationDate);
-    // req.body.certificationDate = castingStringToDate;
-
+    
     const data = { ...req.body, userId };
     const registeredCertification =
       await certificationService.addCertificationInfo(data);

@@ -1,6 +1,8 @@
 import 'dotenv/config'
 import { app } from "./src/app";
+import path from 'path';
 
+console.log(path.join(__dirname, '/src/uploads'))
 const PORT = process.env.SERVER_PORT || 5000;
 
 app.listen(PORT, () => {
