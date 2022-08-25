@@ -3,14 +3,14 @@ import { Card, Button, Row, Col } from "react-bootstrap";
 import EducationDelete from "./EducationDelete";
 
 function EducationCard({ isEditable, setIsEditing, education, setEducations }) {
-  const { school, major, position } = education;
+  const { university, major, status } = education;
   return (
     <Card.Text>
       <Row className="align-items-center">
         <Col>
-          <span>{school}</span>
+          <span>{university}</span>
           <br />
-          <span>{`${major} (${position})`}</span>
+          <span>{`${major} (${status})`}</span>
           <br />
         </Col>
         {isEditable && (
