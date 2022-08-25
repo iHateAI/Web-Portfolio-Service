@@ -1,78 +1,229 @@
-import React, { useState } from "react";
-import { Button, Form, Card, Col, Row } from "react-bootstrap";
+import { useState, useCallback } from "react";
+import useModal from "../../hooks/useModal";
+import useUserValidation from "../../hooks/useUserValidation";
+import { Form } from "react-bootstrap";
+import AlertModal from "../modal/AlertModal";
 import * as Api from "../../api";
+import {
+    varColors,
+    varFontSize,
+    varFontWeight,
+    varLineHeight,
+    varSpacing,
+} from "../../util/theme/theme";
 
-function UserEditForm({ user, setIsEditing, setUser }) {
-  //useState로 name 상태를 생성함.
-  const [name, setName] = useState(user.name);
-  //useState로 email 상태를 생성함.
-  const [email, setEmail] = useState(user.email);
-  //useState로 description 상태를 생성함.
-  const [description, setDescription] = useState(user.description);
+const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
+    const [name, setName] = useState(user.name);
+    const [email, setEmail] = useState(user.email);
+    const [description, setDescription] = useState(user.description);
+    const [imageSrc, setImageSrc] = useState(user.url);
+    const [imagePreview, setImagePreview] = useState(user.url);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const [
+        isShow,
+        onShowButtonClickEventHandler,
+        onCloseButtonClickEventHandler,
+    ] = useModal(false);
+    const [checkValidationEmail, _, checkValidationDescription] =
+        useUserValidation();
 
-    // "users/유저id" 엔드포인트로 PUT 요청함.
-    const res = await Api.put(`users/${user.id}`, {
-      name,
-      email,
-      description,
-    });
-    // 유저 정보는 response의 data임.
-    const updatedUser = res.data;
-    // 해당 유저 정보로 user을 세팅함.
-    setUser(updatedUser);
+    const isValidEmail = checkValidationEmail(email);
+    const isValidDescription = checkValidationDescription(description);
+    const isValid = isValidEmail && isValidDescription;
 
-    // isEditing을 false로 세팅함.
-    setIsEditing(false);
-  };
+    const acceptedFile = ["image/jpg", "image/png", "image/jpeg"];
 
-  return (
-    <Card className="mb-2">
-      <Card.Body>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group controlId="useEditName" className="mb-3">
-            <Form.Control
-              type="text"
-              placeholder="이름"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+    const hanlderNameChange = useCallback((e) => {
+        setName(e.target.value);
+    }, []);
+
+    const handlerEmailChange = useCallback((e) => {
+        setEmail(e.target.value);
+    }, []);
+
+    const handlerDescriptionChange = useCallback((e) => {
+        setDescription(e.target.value);
+    }, []);
+
+    const handlerImageUpload = (e) => {
+        const preview = new FileReader();
+        preview.readAsDataURL(e.target.files[0]);
+        preview.onload = () => {
+            setImagePreview(preview.result);
+        };
+        setImageSrc(e.target.files[0]);
+    };
+
+    const handleSubmitClick = async (e) => {
+        e.preventDefault();
+        if (!isValid) {
+            onShowButtonClickEventHandler();
+            return;
+        }
+        const res = await Api.put(`users/${user.id}`, {
+            name,
+            email,
+            description,
+            image: imageSrc,
+        });
+        const updatedUser = res.data;
+        setUser(updatedUser);
+        setIsEditing(false);
+    };
+
+    const handlerCancelClick = () => {
+        setIsEditing(false);
+    };
+
+    return (
+        <div style={containerStyle}>
+            <form style={formStyle}>
+                <div style={titleStyle}>EDIT USER INFORMATION</div>
+                <input
+                    type="text"
+                    placeholder="Name..."
+                    style={inputStyle}
+                    value={name}
+                    onChange={hanlderNameChange}
+                />
+                <input
+                    type="email"
+                    placeholder="Email..."
+                    style={inputStyle}
+                    value={email}
+                    onChange={handlerEmailChange}
+                />
+                {!isValidEmail && (
+                    <Form.Text className="text-danger">
+                        Please check your email.
+                    </Form.Text>
+                )}
+                <input
+                    type="text"
+                    placeholder="Description..."
+                    style={inputStyle}
+                    value={description}
+                    onChange={handlerDescriptionChange}
+                />
+                {!isValidDescription && (
+                    <Form.Text className="text-danger">
+                        Please check your description.
+                    </Form.Text>
+                )}
+                <label htmlFor="image-input" style={imageLabelStyle}>
+                    Image upload
+                </label>
+                <input
+                    type="file"
+                    id="image-input"
+                    accept={acceptedFile.join(", ")}
+                    style={imageInputStyle}
+                    onChange={handlerImageUpload}
+                />
+                {imagePreview && (
+                    <div style={previewWrapperStyle}>
+                        <img
+                            style={previewStyle}
+                            src={imagePreview}
+                            alt="profile-image"
+                        />{" "}
+                    </div>
+                )}
+                <button
+                    type="submit"
+                    style={buttonStyle}
+                    onClick={handleSubmitClick}
+                >
+                    CONFIRM
+                </button>
+                <button style={buttonCancelStyle} onClick={handlerCancelClick}>
+                    CANCEL
+                </button>
+            </form>
+            <AlertModal
+                msg="Please check your information."
+                isShow={isShow}
+                onCloseButtonClickEvent={onCloseButtonClickEventHandler}
             />
-          </Form.Group>
+        </div>
+    );
+};
 
-          <Form.Group controlId="userEditEmail" className="mb-3">
-            <Form.Control
-              type="email"
-              placeholder="이메일"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </Form.Group>
+const containerStyle = {
+    width: "100%",
+};
 
-          <Form.Group controlId="userEditDescription">
-            <Form.Control
-              type="text"
-              placeholder="정보, 인사말"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-          </Form.Group>
+const titleStyle = {
+    fontSize: varFontSize.bp1024(5),
+    lineHeight: varLineHeight.bp1024(8),
+    fontWeight: varFontWeight.bold,
+    textAlign: "center",
+    marginBottom: "10px",
+};
 
-          <Form.Group as={Row} className="mt-3 text-center">
-            <Col sm={{ span: 20 }}>
-              <Button variant="primary" type="submit" className="me-3">
-                확인
-              </Button>
-              <Button variant="secondary" onClick={() => setIsEditing(false)}>
-                취소
-              </Button>
-            </Col>
-          </Form.Group>
-        </Form>
-      </Card.Body>
-    </Card>
-  );
-}
+const formStyle = {
+    margin: "auto",
+    color: varColors.light.coolBlack,
+    fontFamily: "system-ui",
+};
 
-export default UserEditForm;
+const inputStyle = {
+    backgroundColor: varColors.light.coolWhiteGray,
+    width: "100%",
+    height: varSpacing.bp1024(5),
+    outline: "none",
+    border: "0px",
+    fontSize: varFontSize.bp1024(4),
+    lineHeight: varLineHeight.bp1024(4),
+    padding: varSpacing.bp1024(1),
+    borderRadius: "4px",
+    "&:hover": {
+        backgroundColor: varColors.light.coolLightGray,
+    },
+    marginBottom: "10px",
+};
+
+const imageLabelStyle = {
+    width: "100%",
+    backgroundColor: varColors.light.coolLightGray,
+    color: varColors.light.coolBlack,
+    border: "0px",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    padding: varSpacing.bp1024(1),
+    cursor: "pointer",
+};
+
+const imageInputStyle = {
+    display: "none",
+};
+
+const previewWrapperStyle = {
+    textAlign: "center",
+};
+
+const previewStyle = {
+    width: "30%",
+    height: "30%",
+};
+
+const buttonStyle = {
+    width: "100%",
+    backgroundColor: varColors.light.lightSky,
+    color: varColors.light.white,
+    border: "0px",
+    borderRadius: "4px",
+    marginBottom: "10px",
+    padding: varSpacing.bp1024(1),
+};
+
+const buttonCancelStyle = {
+    width: "100%",
+    backgroundColor: varColors.light.sky,
+    color: varColors.light.white,
+    border: "0px",
+    borderRadius: "4px",
+    padding: varSpacing.bp1024(1),
+};
+
+export default UserEditForm2;
