@@ -34,22 +34,23 @@ function Network() {
     }, [userState, navigate]);
 
     return (
-        <Container fluid>
-            <section className="section site-network">
-                <div className="network-content">
+        <div className="network-container">
+            <section className="section network-content">
+                <div className="title-container">
                     <h2 className="network-title">Hey, I'm Johan Stanworth</h2>
                     <p className="network-sub-title">
                         Freelance Creative &amp; Professional Graphics Designer
                     </p>
                 </div>
-
-                <Row xs="auto" className="jusify-content-cente">
-                    {users.map((user) => (
-                        <UserCard2 key={user.id} user={user} isNetwork />
-                    ))}
-                </Row>
+                <div className="usercard-container">
+                    <div className="usercard">
+                        {users.map((user) => (
+                            <UserCard2 key={user.id} user={user} isNetwork />
+                        ))}
+                    </div>
+                </div>
             </section>
-        </Container>
+        </div>
     );
 }
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import UserEditForm from "./UserEditForm";
 // import UserCard from "./UserCard";
-import UserCard2 from "./UserCard2";
+import UserCard from "./UserCard";
 import * as Api from "../../api";
 
 function User({ portfolioOwnerId, isEditable }) {
@@ -30,7 +30,7 @@ function User({ portfolioOwnerId, isEditable }) {
                     setUser={setUser}
                 />
             ) : (
-                <UserCard2
+                <UserCard
                     user={user}
                     setIsEditing={setIsEditing}
                     isEditable={isEditable}

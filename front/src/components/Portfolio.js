@@ -54,44 +54,49 @@ function Portfolio() {
     }
 
     return (
-        <Container fluid>
-            <section className="section site-portfolio">
-                <div className="portfolio-content">
-                    <h2 className="portfolio-title">
-                        Hey, I'm Johan Stanworth
-                    </h2>
+        <div className="portfolio-container">
+            <section className="section portfolio-content">
+                <div className="title-container">
+                    <h2 className="portfolio-title">Work Single Page</h2>
                     <p className="portfolio-sub-title">
-                        Freelance Creative &amp; Professional Graphics Designer
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Quisquam necessitatibus incidunt ut officiis explicabo
+                        inventore.
                     </p>
                 </div>
-                <Row>
-                    <Col md={6} lg={4} className="item web  mb-4">
-                        <User
-                            portfolioOwnerId={portfolioOwner.id}
-                            isEditable={
-                                portfolioOwner.id === userState.user?.id
-                            }
-                        />
-                    </Col>
-                    <Col>
+                <div className="user-container">
+                    <User
+                        portfolioOwnerId={portfolioOwner.id}
+                        isEditable={portfolioOwner.id === userState.user?.id}
+                    />
+                </div>
+
+                <div className="mvps-container">
+                    <div className="mvp-content">
                         <EducationContainer
                             portfolioOwnerId={portfolioOwner.id}
                             isEditable={
                                 portfolioOwner.id === userState.user?.id
                             }
                         />
-                    </Col>
-                    <Col>
+                    </div>
+                    <div className="mvp-content">
+                        {" "}
                         <AwardContainer
                             userId={portfolioOwner.id}
                             isEditable={
                                 portfolioOwner.id === userState.user?.id
                             }
                         />
-                    </Col>
-                </Row>
+                    </div>
+
+                    <div className="mvp-content"></div>
+                    <div className="mvp-content"></div>
+                </div>
+
+                <div style={{ textAlign: "center" }}></div>
             </section>
-        </Container>
+        </div>
     );
 }
 

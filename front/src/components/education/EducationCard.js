@@ -5,31 +5,28 @@ import EducationDelete from "./EducationDelete";
 function EducationCard({ isEditable, setIsEditing, education, setEducations }) {
   const { university, major, status } = education;
   return (
-    <Card.Text>
-      <Row className="align-items-center">
-        <Col>
-          <span>{university}</span>
-          <br />
+    <div className="mvp-content-detail">
+      <div className="mvp-info">
+        <h3 className="title">{university}</h3>
+        <p className="sub-title">
           <span>{`${major} (${status})`}</span>
-          <br />
-        </Col>
-        {isEditable && (
-          <Col>
-            <Button
-              size="sm"
-              className="me-3"
-              onClick={() => setIsEditing((cur) => !cur)}
-            >
-              편집
-            </Button>
-            <EducationDelete
-              education={education}
-              setEducations={setEducations}
-            />
-          </Col>
-        )}
-      </Row>
-    </Card.Text>
+        </p>
+      </div>
+      {isEditable && (
+        <div className="mvp-management">
+          <button
+            className="mvp-edit-button"
+            onClick={() => setIsEditing((cur) => !cur)}
+          >
+            EDIT
+          </button>
+          <EducationDelete
+            education={education}
+            setEducations={setEducations}
+          />
+        </div>
+      )}
+    </div>
   );
 }
 

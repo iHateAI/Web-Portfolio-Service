@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Container } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import "./style/app.css";
@@ -23,36 +24,38 @@ function HeaderTest() {
 
   return (
     <>
-      <div class={`navmenu ${open ? "active" : ""}`}>
-        <div class="navmenu-container">
-          <div class="menu">
-            <ul class="menu-list">
-              <li onClick={() => navigate("/")}>Mypage</li>
-              <li onClick={() => navigate("/network")}>Network</li>
-              {isLogin && <li onClick={logout}>Logout</li>}
-            </ul>
-          </div>
-          <div class="content">
-            <p>
-              <em>
+      <div flex-container>
+        <div class={`navmenu ${open ? "active" : ""}`}>
+          <div class="navmenu-container">
+            <div class="menu">
+              <ul class="menu-list">
+                <li onClick={() => navigate("/")}>Mypage</li>
+                <li onClick={() => navigate("/network")}>Network</li>
+                {isLogin && <li onClick={logout}>Logout</li>}
+              </ul>
+            </div>
+            <div class="content">
+              <p>
+                <em>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam necessitatibus incidunt ut officiis explicabo
+                  inventore. <br />
+                </em>
+              </p>
+            </div>
+            <div class="content">
+              <h3>Hire Me</h3>
+              <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam necessitatibus incidunt ut officiis explicabo
-                inventore. <br />
-              </em>
-            </p>
-          </div>
-          <div class="content">
-            <h3>Hire Me</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-              necessitatibus incidunt ut officiisexplicabo inventore. <br />
-              <a href="#">myemail@gmail.com</a>
-            </p>
+                Quisquam necessitatibus incidunt ut officiisexplicabo inventore.{" "}
+                <br />
+                <a href="#">myemail@gmail.com</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-
-      <nav class="header-navbar">
+      <div class="header-navbar">
         <div class="navbar-container">
           <div class="navbar-brand" onClick={() => navigate("/")}>
             MyPortfolio.
@@ -64,7 +67,7 @@ function HeaderTest() {
             <span></span>
           </div>
         </div>
-      </nav>
+      </div>
     </>
   );
 }
