@@ -73,7 +73,7 @@ function EducationAddForm({
         />
         {!isValidUniversity && (
           <Form.Text className="text-danger">
-            학교 이름을 4글자 이상 기입해주세요.
+            학교 이름을 4글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>
@@ -87,7 +87,7 @@ function EducationAddForm({
         />
         {!isValidMajor && (
           <Form.Text className="text-danger">
-            전공을 4글자 이상 기입해주세요.
+            전공을 4글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>
