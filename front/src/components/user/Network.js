@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { Container, Row } from "react-bootstrap";
 
 import * as Api from "../../api";
-import UserCard from "./UserCard";
+// import UserCard from "./UserCard";
+import UserCard2 from "./UserCard2";
 import { UserStateContext } from "../../App";
 
 function Network() {
@@ -24,11 +25,20 @@ function Network() {
 
   return (
     <Container fluid>
-      <Row xs="auto" className="jusify-content-center">
-        {users.map((user) => (
-          <UserCard key={user.id} user={user} isNetwork />
-        ))}
-      </Row>
+      <section className="section site-network">
+        <div className="network-content">
+          <h2 className="network-title">Hey, I'm Johan Stanworth</h2>
+          <p className="network-sub-title">
+            Freelance Creative &amp; Professional Graphics Designer
+          </p>
+        </div>
+
+        <Row xs="auto" className="jusify-content-cente">
+          {users.map((user) => (
+            <UserCard key={user.id} user={user} isNetwork />
+          ))}
+        </Row>
+      </section>
     </Container>
   );
 }
