@@ -11,7 +11,7 @@ const AwardCardEdit = ({
     onCancelButtonClickEvent,
 }) => {
     const [awardTitle, setAwardTitle] = useState(award.title)
-    const [awardDescription, setAwardDescription] = useState(award.description)
+    const [awardDetail, setAwardDetail] = useState(award.detail)
 
     const [
         isShow,
@@ -19,15 +19,12 @@ const AwardCardEdit = ({
         onCloseButtonClickEventHandler,
     ] = useModal(false)
 
-    const [
-        checkValidationTitle,
-        checkValidationDescription,
-        checkValidationAll,
-    ] = useAwardValidation()
+    const [checkValidationTitle, checkValidationDetail, checkValidationAll] =
+        useAwardValidation()
 
     const isValidTitle = checkValidationTitle(awardTitle)
-    const isValidDescription = checkValidationDescription(awardDescription)
-    const isValid = checkValidationAll(isValidTitle, isValidDescription)
+    const isValidDetail = checkValidationDetail(awardDetail)
+    const isValid = checkValidationAll(isValidTitle, isValidDetail)
 
     const onSubmitEventHander = (e) => {
         e.preventDefault()
@@ -36,9 +33,9 @@ const AwardCardEdit = ({
             return
         }
         const editedAward = {
-            id: award.id,
+            _id: award._id,
             title: awardTitle,
-            description: awardDescription,
+            detail: awardDetail,
         }
         onAwardEditButtonClickEvent(editedAward)
     }
@@ -47,8 +44,8 @@ const AwardCardEdit = ({
         setAwardTitle(e.target.value)
     }, [])
 
-    const onAwardDescriptionChangeEventHandler = useCallback((e) => {
-        setAwardDescription(e.target.value)
+    const onAwardDetailChangeEventHandler = useCallback((e) => {
+        setAwardDetail(e.target.value)
     }, [])
 
     const onCancelButtonClickEventHandler = () => {
@@ -71,14 +68,14 @@ const AwardCardEdit = ({
                         </Form.Text>
                     )}
                 </Form.Group>
-                <Form.Group controlled="formAwardDescription">
+                <Form.Group controlled="formAwardDetail">
                     <Form.Control
                         type="text"
                         placeholder="수상내역 설명"
-                        value={awardDescription}
-                        onChange={onAwardDescriptionChangeEventHandler}
+                        value={awardDetail}
+                        onChange={onAwardDetailChangeEventHandler}
                     />
-                    {!isValidDescription && (
+                    {!isValidDetail && (
                         <Form.Text className="text-danger">
                             수상내역 설명이 올바르지 않습니다.
                         </Form.Text>
