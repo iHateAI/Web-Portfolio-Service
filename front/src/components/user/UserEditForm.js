@@ -17,7 +17,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     const [email, setEmail] = useState(user.email);
     const [description, setDescription] = useState(user.description);
     const [imageSrc, setImageSrc] = useState(user.url);
-    const [imagePreview, setImagePreview] = useState(user.url);
+    const [imagePreview, setImagePreview] = useState(user.profileUrl);
 
     const [
         isShow,
@@ -60,12 +60,19 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
             onShowButtonClickEventHandler();
             return;
         }
-        const res = await Api.put(`users/${user.id}`, {
-            name,
-            email,
-            description,
-            image: imageSrc,
-        });
+        const formData = new FormData();
+        formData.append("image", imageSrc);
+        const res = await Api.put(
+            `users/${user.id}`,
+            // {
+            //     name,
+            //     email,
+            //     description,
+            //     formData,
+            // },
+            formData
+        );
+        console.log(res);
         const updatedUser = res.data;
         setUser(updatedUser);
         setIsEditing(false);
@@ -117,6 +124,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
                     type="file"
                     id="image-input"
                     accept={acceptedFile.join(", ")}
+                    name="image"
                     style={imageInputStyle}
                     onChange={handlerImageUpload}
                 />

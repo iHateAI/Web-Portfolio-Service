@@ -51,7 +51,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
                 <UserInformation />
                 <img
                     style={imgStyle(isHover)}
-                    src="http://placekitten.com/350/350"
+                    src={user?.profileUrl}
                     alt="userImg"
                 />
             </div>
