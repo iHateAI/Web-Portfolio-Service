@@ -1,19 +1,47 @@
-import React, { useState } from "react"
-import { Button, Form, Col, Row } from "react-bootstrap"
+import React, { useState } from 'react';
+import { Button, Form, Col, Row } from 'react-bootstrap';
 // import { postProject } from './dev/mockApiProject';
-import TestData from "../../dev/testData"
+//import TestData from '../../dev/testData';
+import * as Api from '../../api';
+import useValidation from '../../hooks/useValidation';
 
 function ProjectEditForm({ project, editClick, getUser }) {
-    const [name, setName] = useState(project.name)
-    const [description, setDescription] = useState(project.description)
-    const [date, setDate] = useState(project.date)
+    const [title, setTitle] = useState(project.title);
+    const [description, setDescription] = useState(project.detail);
+    const [startDate, setStartDate] = useState(project.startDate);
+    const [endDate, setEndDate] = useState(project.endDate);
+
+    const [
+        checkValidationTitle,
+        checkValidationDescription,
+        checkValidationDate,
+        checkValidationAll,
+    ] = useValidation();
+
+    const isValidTitle = checkValidationTitle(title);
+    const isValidDescription = checkValidationDescription(description);
+    const isValidDate =
+        checkValidationDate(startDate) && checkValidationDate(endDate);
+    const isValid = checkValidationAll(
+        isValidTitle,
+        isValidDescription,
+        isValidDate
+    );
 
     const handlePostProject = async () => {
         // await postProject(project.key, { name, description, date });
-        await TestData.updateProject(project.key, { name, description, date })
-        getUser()
-        editClick()
-    }
+        // await TestData.updateProject(project.key, { name, description, date });
+        if (isValid) {
+            await Api.put(`api/project/${project._id}`, {
+                title,
+                detail: description,
+                start_date: startDate,
+                end_date: endDate,
+            });
+            getUser();
+            editClick();
+        }
+    };
 
     return (
         <Form className="mt-3 mb-3">
@@ -21,8 +49,8 @@ function ProjectEditForm({ project, editClick, getUser }) {
                 <Form.Control
                     type="text"
                     placeholder="프로젝트 제목"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -38,19 +66,15 @@ function ProjectEditForm({ project, editClick, getUser }) {
                     <Col>
                         <Form.Control
                             type="date"
-                            value={date.start}
-                            onChange={(e) =>
-                                setDate({ ...date, start: e.target.value })
-                            }
+                            value={startDate}
+                            onChange={(e) => setStartDate(e.target.value)}
                         />
                     </Col>
                     <Col>
                         <Form.Control
                             type="date"
-                            value={date.end}
-                            onChange={(e) =>
-                                setDate({ ...date, end: e.target.value })
-                            }
+                            value={endDate}
+                            onChange={(e) => setEndDate(e.target.value)}
                         />
                     </Col>
                 </Row>
@@ -68,7 +92,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
                 </Button>
             </Form.Group>
         </Form>
-    )
+    );
 }
 
-export default ProjectEditForm
+export default ProjectEditForm;
