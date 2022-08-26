@@ -1,7 +1,17 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
+import useModal from "../../hooks/useModal";
+import UserModal from "../modal/UserModal";
+import UserImageProfileUpload from "./UserImageProfile";
+import * as Api from "../../api";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+  const [
+    isShow,
+    onShowButtonClickEventHandler,
+    onCloseButtonClickEventHandler,
+  ] = useModal(false);
+
   const navigate = useNavigate();
 
   const handlerEditClick = () => {
@@ -11,6 +21,16 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   const handlerPortfolioClick = () => {
     if (!isNetwork) return;
     navigate(`/users/${user.id}`);
+  };
+
+  const handleImgClick = () => {
+    onShowButtonClickEventHandler(true);
+  };
+
+  const handleImageUpload = async (uploadedImage) => {
+    const res = fetchUpdaeUserImage.call(this, uploadedImage, user);
+    // 서버 API가 수정이 완료되면 기능을 완성하도록 합니다.
+    console.log(res);
   };
 
   // UserInformation Component
@@ -44,21 +64,37 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   };
 
   return (
-    <div className="singlepage-item-box">
-      <div className="item-wrap" onClick={handlerPortfolioClick}>
-        <div>
-          <img
-            className="item-img"
-            // src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
-            src={user?.profileImageUrl}
-            alt="userImg"
-          />
+    <React.Fragment>
+      <div className="singlepage-item-box">
+        <div className="item-wrap" onClick={handlerPortfolioClick}>
+          <div onClick={handleImgClick}>
+            <img
+              className="item-img"
+              src={user?.profileImageUrl}
+              alt="userImg"
+            />
+          </div>
+          <UserInformation />
         </div>
-
-        <UserInformation />
       </div>
-    </div>
+      <UserModal
+        isShow={isShow}
+        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+      >
+        <UserImageProfileUpload
+          user={user}
+          onChangeImageUploadEvent={handleImageUpload}
+        />
+      </UserModal>
+    </React.Fragment>
   );
+}
+
+async function fetchUpdaeUserImage(uploadedImg, user) {
+  const formData = new FormData();
+  formData.append("image", uploadedImg);
+  const res = await Api.imageUpload(`users/${user.id}`, formData);
+  return res.data;
 }
 
 export default UserCard;

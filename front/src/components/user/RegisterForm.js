@@ -1,17 +1,18 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Container, Col, Row, Form, Button } from 'react-bootstrap';
-import { useForm } from '../../hooks/useForm';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Container, Col, Row, Form, Button } from "react-bootstrap";
+import { useForm } from "../../hooks/useForm";
 
-import * as Api from '../../api';
+import * as Api from "../../api";
 
 function RegisterForm() {
   const navigate = useNavigate();
   const [values, isValid, handleChange] = useForm({
-    email: '',
-    password: '',
-    confirmPassword: '',
-    name: '',
+    email: "",
+    password: "",
+    confirmPassword: "",
+    name: "",
+    nickname: "",
   });
 
   const isPasswordSame = values.password === values.confirmPassword;
@@ -21,17 +22,18 @@ function RegisterForm() {
 
     try {
       // "user/register" 엔드포인트로 post요청함.
-      const { email, password, name } = values;
-      await Api.post('user/register', {
+      const { email, password, name, nickname } = values;
+      await Api.post("user/register", {
         email,
         password,
         name,
+        nickname,
       });
 
       // 로그인 페이지로 이동함.
-      navigate('/login');
+      navigate("/login");
     } catch (err) {
-      console.log('회원가입에 실패하였습니다.', err);
+      console.log("회원가입에 실패하였습니다.", err);
     }
   };
 
@@ -58,7 +60,7 @@ function RegisterForm() {
                     onChange={handleChange}
                   />
                   {!isValid.email && (
-                    <Form.Text className="text-success">
+                    <Form.Text className="text-danger">
                       이메일 형식이 올바르지 않습니다.
                     </Form.Text>
                   )}
@@ -73,7 +75,7 @@ function RegisterForm() {
                     onChange={handleChange}
                   />
                   {!isValid.password && (
-                    <Form.Text className="text-success">
+                    <Form.Text className="text-danger">
                       비밀번호는 4글자 이상으로 설정해 주세요.
                     </Form.Text>
                   )}
@@ -91,7 +93,7 @@ function RegisterForm() {
                     onChange={handleChange}
                   />
                   {!isPasswordSame && (
-                    <Form.Text className="text-success">
+                    <Form.Text className="text-danger">
                       비밀번호가 일치하지 않습니다.
                     </Form.Text>
                   )}
@@ -106,8 +108,23 @@ function RegisterForm() {
                     onChange={handleChange}
                   />
                   {!isValid.name && (
-                    <Form.Text className="text-success">
+                    <Form.Text className="text-danger">
                       이름은 2글자 이상으로 설정해 주세요.
+                    </Form.Text>
+                  )}
+                </Form.Group>
+
+                <Form.Group controlId="formBasicNickname" className="mt-3">
+                  <Form.Label>닉네임</Form.Label>
+                  <Form.Control
+                    type="text"
+                    autoComplete="off"
+                    name="nickname"
+                    onChange={handleChange}
+                  />
+                  {!isValid.nickname && (
+                    <Form.Text className="text-danger">
+                      닉네임은 1글자 이상으로 설정해 주세요.
                     </Form.Text>
                   )}
                 </Form.Group>
