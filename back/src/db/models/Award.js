@@ -10,7 +10,7 @@ class Award {
   }
 
   static async findByUserId(userId) {
-    console.log('모델' + userId);
+    //console.log('모델' + userId);
     const awardData = await AwardModel.find({ userId }).select(
       '_id title detail'
     );

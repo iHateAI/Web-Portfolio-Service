@@ -19,7 +19,8 @@ awardRouter.post('/', login_required, async (req, res, next) => {
 
 awardRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.query.userId ? req.query.userId : req.currentUserId;
+    
     const award = await awardService.getAwardInfo(userId);
     if (award.error) {
       console.log(award.error.message);

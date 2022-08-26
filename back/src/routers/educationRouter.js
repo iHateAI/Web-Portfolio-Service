@@ -20,7 +20,7 @@ educationRouter.post('/', login_required, async (req, res, next) => {
 // 학력 정보 조회 라우터
 educationRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.query.userId ? req.query.userId : req.currentUserId;
     const education = await educationService.getEducationInfo(userId);
     if (education.error) {
       console.log(education.error.message);
