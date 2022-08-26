@@ -109,8 +109,8 @@ userAuthRouter.put(
 
       // 프로필 이미지 데이터 가져오기
       const profileImage = req.file ?? null;
-
-      const toUpdate = { name, email, password, description, profileImage };
+      console.log(profileImage);
+      const toUpdate = { name, email, password, description };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       let updatedUser = await userAuthService.setUser({ user_id, toUpdate });
@@ -118,12 +118,15 @@ userAuthRouter.put(
       // 프로필 이미지 url 반환
       if (profileImage) {
         const profileImageUrl = `/user/profileImage/${req.file.filename}`; 
-        updatedUser = {profileImageUrl, ...updatedUser._doc};
+        
+        updatedUser = {...updatedUser._doc, profileImageUrl};
       }
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
       }
+
+
 
       res.status(200).json(updatedUser);
     } catch (error) {
