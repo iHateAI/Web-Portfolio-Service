@@ -8,7 +8,7 @@ class awardService {
   }
 
   static async getAwardInfo(userId) {
-    console.log('서비스' + userId);
+    //console.log('서비스' + userId);
     const award = await Award.findByUserId(userId);
     if (!award) {
       const error = new Error('수상 이력 정보가 존재하지 않습니다.');

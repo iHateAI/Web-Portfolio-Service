@@ -22,7 +22,7 @@ certificationRouter.post('/', login_required, async (req, res, next) => {
 // 자격증 정보 조희 라우터
 certificationRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.query.userId ? req.query.userId : req.currentUserId;
     const certification = await certificationService.getCertificationInfo(
       userId
     );

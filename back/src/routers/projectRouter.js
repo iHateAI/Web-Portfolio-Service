@@ -21,7 +21,7 @@ projectRouter.post('/', login_required, async (req, res, next) => {
 // 프로젝트 이력 조회 라우터
 projectRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const userId = req.query.userId ? req.query.userId : req.currentUserId;
     const project = await projectService.getProjectInfo(userId);
     if (project.error) {
       console.log(project.error.message);
