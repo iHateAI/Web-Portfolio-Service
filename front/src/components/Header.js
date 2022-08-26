@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 
 function HeaderTest() {
+  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const userState = useContext(UserStateContext);
@@ -11,6 +13,18 @@ function HeaderTest() {
 
   // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
+
+  const menuItems = [
+    {
+      name: "Mypage",
+      handlerMenuClick: () => navigate("/"),
+    },
+    {
+      name: "Network",
+      handlerMenuClick: () => navigate("/network"),
+    },
+  ];
+
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
@@ -19,7 +33,6 @@ function HeaderTest() {
     // 기본 페이지로 돌아감.
     navigate("/");
   };
-  const [open, setOpen] = useState(false);
 
   return (
     <>
@@ -28,8 +41,11 @@ function HeaderTest() {
           <div className="navmenu-container">
             <div className="menu">
               <ul className="menu-list">
-                <li onClick={() => navigate("/")}>Mypage</li>
-                <li onClick={() => navigate("/network")}>Network</li>
+                {menuItems.map((menu) => (
+                  <li key={menu.name} onClick={menu.handlerMenuClick}>
+                    {menu.name}
+                  </li>
+                ))}
                 {isLogin && <li onClick={logout}>Logout</li>}
               </ul>
             </div>

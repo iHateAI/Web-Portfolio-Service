@@ -49,7 +49,8 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
         <div>
           <img
             className="item-img"
-            src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
+            // src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
+            src={user?.profileUrl}
             alt="userImg"
           />
         </div>

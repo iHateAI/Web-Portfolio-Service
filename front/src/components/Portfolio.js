@@ -1,7 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
-
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
@@ -79,15 +77,12 @@ function Portfolio() {
             />
           </div>
           <div className="mvp-content">
-            {" "}
             <AwardContainer
               userId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
         </div>
-
-        <div style={{ textAlign: "center" }}></div>
       </section>
     </div>
   );

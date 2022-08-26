@@ -20,7 +20,16 @@ function Network() {
       return;
     }
     // "userlist" 엔드포인트로 GET 요청을 하고, users를 response의 data로 세팅함.
-    Api.get("userlist").then((res) => setUsers(res.data));
+    Api.get("userlist").then((res) => {
+      const data = res.data;
+      const userArr = [];
+      data.forEach((v) => {
+        const image =
+          v.profileUrl || `${process.env.PUBLIC_URL}/images/profile.PNG`;
+        userArr.push({ ...v, profileUrl: image });
+      });
+      setUsers(userArr);
+    });
   }, [userState, navigate]);
 
   return (
