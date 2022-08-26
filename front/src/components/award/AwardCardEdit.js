@@ -1,56 +1,39 @@
-import React, { useState, useCallback } from "react"
-import useModal from "../../hooks/useModal"
-import useAwardValidation from "../../hooks/useAwardValidation"
+import React, { useState, useCallback } from 'react';
+import useModal from '../../hooks/useModal';
+import useAwardValidation from '../../hooks/useAwardValidation';
 
-import { Form, Row, Col, Button } from "react-bootstrap"
-import AlertModal from "../modal/AlertModal"
+import { Form, Row, Col, Button } from 'react-bootstrap';
+import AlertModal from '../modal/AlertModal';
+import { useForm } from '../../hooks/useForm';
 
 const AwardCardEdit = ({
     award,
     onAwardEditButtonClickEvent,
     onCancelButtonClickEvent,
 }) => {
-    const [awardTitle, setAwardTitle] = useState(award.title)
-    const [awardDetail, setAwardDetail] = useState(award.detail)
+    const [values, isValid, handleChange] = useForm({ ...award });
 
     const [
         isShow,
         onShowButtonClickEventHandler,
         onCloseButtonClickEventHandler,
-    ] = useModal(false)
-
-    const [checkValidationTitle, checkValidationDetail, checkValidationAll] =
-        useAwardValidation()
-
-    const isValidTitle = checkValidationTitle(awardTitle)
-    const isValidDetail = checkValidationDetail(awardDetail)
-    const isValid = checkValidationAll(isValidTitle, isValidDetail)
+    ] = useModal(false);
 
     const onSubmitEventHander = (e) => {
-        e.preventDefault()
-        if (!isValid) {
-            onShowButtonClickEventHandler()
-            return
+        e.preventDefault();
+        if (!isValid.all) {
+            onShowButtonClickEventHandler();
+            return;
         }
         const editedAward = {
-            _id: award._id,
-            title: awardTitle,
-            detail: awardDetail,
-        }
-        onAwardEditButtonClickEvent(editedAward)
-    }
-
-    const onAwardTitleChangeEventHandler = useCallback((e) => {
-        setAwardTitle(e.target.value)
-    }, [])
-
-    const onAwardDetailChangeEventHandler = useCallback((e) => {
-        setAwardDetail(e.target.value)
-    }, [])
+            ...values,
+        };
+        onAwardEditButtonClickEvent(editedAward);
+    };
 
     const onCancelButtonClickEventHandler = () => {
-        onCancelButtonClickEvent(false)
-    }
+        onCancelButtonClickEvent(false);
+    };
 
     return (
         <React.Fragment>
@@ -59,10 +42,11 @@ const AwardCardEdit = ({
                     <Form.Control
                         type="text"
                         placeholder="수상내역"
-                        value={awardTitle}
-                        onChange={onAwardTitleChangeEventHandler}
+                        value={values?.title}
+                        name="title"
+                        onChange={handleChange}
                     />
-                    {!isValidTitle && (
+                    {!isValid.title && (
                         <Form.Text className="text-danger">
                             수상내역이 올바르지 않습니다.
                         </Form.Text>
@@ -72,10 +56,11 @@ const AwardCardEdit = ({
                     <Form.Control
                         type="text"
                         placeholder="수상내역 설명"
-                        value={awardDetail}
-                        onChange={onAwardDetailChangeEventHandler}
+                        value={values?.detail}
+                        name="detail"
+                        onChange={handleChange}
                     />
-                    {!isValidDetail && (
+                    {!isValid.detail && (
                         <Form.Text className="text-danger">
                             수상내역 설명이 올바르지 않습니다.
                         </Form.Text>
@@ -105,11 +90,11 @@ const AwardCardEdit = ({
                 onCloseButtonClickEvent={onCloseButtonClickEventHandler}
             />
         </React.Fragment>
-    )
-}
+    );
+};
 
 const colStyle = {
     span: 20,
-}
+};
 
-export default AwardCardEdit
+export default AwardCardEdit;
