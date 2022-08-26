@@ -68,7 +68,11 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
       <div className="singlepage-item-box">
         <div className="item-wrap" onClick={handlerPortfolioClick}>
           <div onClick={handleImgClick}>
-            <img className="item-img" src={user?.profileUrl} alt="userImg" />
+            <img
+              className="item-img"
+              src={user?.profileImageUrl}
+              alt="userImg"
+            />
           </div>
           <UserInformation />
         </div>

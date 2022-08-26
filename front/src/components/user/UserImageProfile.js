@@ -11,7 +11,7 @@ const UserImageProfileUpload = ({ user, onChangeImageUploadEvent }) => {
   const [uploadedImg, setUploadedImg] = useState(null);
   const [previewImg, setPreviewImg] = useState(null);
 
-  const previewImageSrc = previewImg ? previewImg : user?.profileUrl;
+  const previewImageSrc = previewImg ? previewImg : user?.profileImageUrl;
   const acceptedFile = ["image/jpg", "image/png", "image/jpeg"];
 
   const handleImageUpload = (e) => {

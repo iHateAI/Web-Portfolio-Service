@@ -1,8 +1,7 @@
-import { useState, useCallback } from "react";
 import useModal from "../../hooks/useModal";
-import useUserValidation from "../../hooks/useUserValidation";
 import { Form } from "react-bootstrap";
 import AlertModal from "../modal/AlertModal";
+import { useForm } from "../../hooks/useForm";
 import * as Api from "../../api";
 import {
   varColors,
@@ -13,33 +12,17 @@ import {
 } from "../../util/theme/theme";
 
 const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [description, setDescription] = useState(user.description);
+  const [values, isValid, handleChange] = useForm({
+    name: user.name,
+    email: user.email,
+    description: user.description,
+  });
 
   const [
     isShow,
     onShowButtonClickEventHandler,
     onCloseButtonClickEventHandler,
   ] = useModal(false);
-  const [checkValidationEmail, _, checkValidationDescription] =
-    useUserValidation();
-
-  const isValidEmail = checkValidationEmail(email);
-  const isValidDescription = checkValidationDescription(description);
-  const isValid = isValidEmail && isValidDescription;
-
-  const hanlderNameChange = useCallback((e) => {
-    setName(e.target.value);
-  }, []);
-
-  const handlerEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handlerDescriptionChange = useCallback((e) => {
-    setDescription(e.target.value);
-  }, []);
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
@@ -48,7 +31,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
       return;
     }
 
-    const userObj = { name, email, description, id: user.id };
+    const userObj = { ...values, id: user.id };
     const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
     setUser({
       ...updatedUser,
@@ -69,17 +52,19 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           type="text"
           placeholder="Name..."
           style={inputStyle}
-          value={name}
-          onChange={hanlderNameChange}
+          value={values?.name}
+          name="name"
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="Email..."
           style={inputStyle}
-          value={email}
-          onChange={handlerEmailChange}
+          value={values?.email}
+          name="email"
+          onChange={handleChange}
         />
-        {!isValidEmail && (
+        {!isValid.email && (
           <Form.Text className="text-danger">
             Please check your email.
           </Form.Text>
@@ -88,10 +73,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           type="text"
           placeholder="Description..."
           style={inputStyle}
-          value={description}
-          onChange={handlerDescriptionChange}
+          value={values?.description}
+          name="description"
+          onChange={handleChange}
         />
-        {!isValidDescription && (
+        {!isValid.description && (
           <Form.Text className="text-danger">
             Please check your description.
           </Form.Text>

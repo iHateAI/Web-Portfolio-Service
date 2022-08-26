@@ -1,4 +1,4 @@
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import useModal from "../../hooks/useModal";
 import ConfirmModal from "../modal/ConfirmModal";
 
