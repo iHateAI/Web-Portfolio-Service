@@ -1,5 +1,4 @@
 import React from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
 import EducationDelete from "./EducationDelete";
 
 function EducationCard({ isEditable, setIsEditing, education, setEducations }) {

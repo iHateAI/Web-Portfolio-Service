@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
-import { Container } from "react-bootstrap";
+
 import { useNavigate, useLocation } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
-import "./style/app.css";
 
 function HeaderTest() {
   const navigate = useNavigate();
@@ -25,16 +24,16 @@ function HeaderTest() {
   return (
     <>
       <div flex-container>
-        <div class={`navmenu ${open ? "active" : ""}`}>
-          <div class="navmenu-container">
-            <div class="menu">
-              <ul class="menu-list">
+        <div className={`navmenu ${open ? "active" : ""}`}>
+          <div className="navmenu-container">
+            <div className="menu">
+              <ul className="menu-list">
                 <li onClick={() => navigate("/")}>Mypage</li>
                 <li onClick={() => navigate("/network")}>Network</li>
                 {isLogin && <li onClick={logout}>Logout</li>}
               </ul>
             </div>
-            <div class="content">
+            <div className="content">
               <p>
                 <em>
                   Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -43,7 +42,7 @@ function HeaderTest() {
                 </em>
               </p>
             </div>
-            <div class="content">
+            <div className="content">
               <h3>Hire Me</h3>
               <p>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -55,13 +54,13 @@ function HeaderTest() {
           </div>
         </div>
       </div>
-      <div class="header-navbar">
-        <div class="navbar-container">
-          <div class="navbar-brand" onClick={() => navigate("/")}>
+      <div className="header-navbar">
+        <div className="navbar-container">
+          <div className="navbar-brand" onClick={() => navigate("/")}>
             MyPortfolio.
           </div>
           <div
-            class={`burger-menu ${open ? "active" : ""}`}
+            className={`burger-menu ${open ? "active" : ""}`}
             onClick={() => setOpen(!open)}
           >
             <span></span>

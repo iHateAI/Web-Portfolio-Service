@@ -3,48 +3,63 @@ import { useNavigate } from "react-router-dom";
 import "../style/app.css";
 
 function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handlerEditClick = () => {
-        setIsEditing(true);
-    };
+  const handlerEditClick = () => {
+    setIsEditing(true);
+  };
 
-    const handlerPortfolioClick = () => {
-        if (!isNetwork) return;
-        navigate(`/users/${user.id}`);
-    };
+  const handlerPortfolioClick = () => {
+    if (!isNetwork) return;
+    navigate(`/users/${user.id}`);
+  };
 
-    // UserInformation Component
-    // 여기서만 한 번 쓰고 사용하지 않음.
-    // jsx 부분의 코드 길이가 길어지므로 이렇게 사용.
-    const UserInformation = () => {
-        return (
-            <div className="network-item-info">
-                <h3 className="user-title">{user?.name}</h3>
-                <h3 className="user-emil">{user?.email}</h3>
-                <span className="user-descriptiom">{user?.description}</span>
-                {isEditable && (
-                    <button className="button-style" onClick={handlerEditClick}>
-                        EDIT
-                    </button>
-                )}
-            </div>
-        );
-    };
-
+  // UserInformation Component
+  // 여기서만 한 번 쓰고 사용하지 않음.
+  // jsx 부분의 코드 길이가 길어지므로 이렇게 사용.
+  const UserInformation = () => {
     return (
-        <div className="item-box">
-            <div className="item-wrap" onClick={handlerPortfolioClick}>
-                <UserInformation />
-                <img
-                    className="item-img-style"
-                    // src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
-                    src={`${process.env.PUBLIC_URL}/images/profile.PNG`}
-                    alt="userImg"
-                />
-            </div>
+      <div className="single-user-item-info">
+        <h3 className="user-name">{user?.name}</h3>
+        <p className="user-email">
+          <span>{user?.email}</span>
+        </p>
+        <div className="user-description">
+          <p>{user?.description}</p>
         </div>
+        <h4 className="skill-title">What I did</h4>
+        <ul className="skill-list">
+          <li>Design</li>
+          <li>HTML5/CSS3</li>
+          <li>CMS</li>
+          <li>Logo</li>
+        </ul>
+
+        {isEditable && (
+          <button className="edit-button" onClick={handlerEditClick}>
+            EDIT
+          </button>
+        )}
+      </div>
     );
+  };
+
+  return (
+    <div className="singlepage-item-box">
+      <div className="item-wrap" onClick={handlerPortfolioClick}>
+        <div>
+          <img
+            className="item-img"
+            // src="https://cdn.pixabay.com/photo/2018/01/10/23/53/rabbit-3075088_1280.png"
+            src={user?.profileUrl}
+            alt="userImg"
+          />
+        </div>
+
+        <UserInformation />
+      </div>
+    </div>
+  );
 }
 
 export default UserCard2;
