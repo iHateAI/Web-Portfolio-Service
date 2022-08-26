@@ -117,8 +117,8 @@ userAuthRouter.put(
 
       // 프로필 이미지 url 반환
       if (profileImage) {
-        const profileImageUrl = `/user/profileImage/${req.file.filename}`; 
-        
+        const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${req.file.filename}`; 
+        console.log(profileImage);
         updatedUser = {...updatedUser._doc, profileImageUrl};
       }
 
