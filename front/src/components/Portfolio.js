@@ -83,7 +83,6 @@ function Portfolio() {
             />
           </div>
         </div>
-        <div style={{ textAlign: "center" }}></div>
       </section>
     </div>
   );
