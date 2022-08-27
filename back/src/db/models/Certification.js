@@ -30,6 +30,11 @@ class Certification {
     ).select('_id title detail certificationDate');
     return modifiedCertificationData;
   }
+
+  static async deleteByCertificationId(certificationId) {
+    const deletedCertification = await CertificationModel.deleteOne({_id: certificationId});
+    return deletedCertification;
+  }
 }
 
 export { Certification };

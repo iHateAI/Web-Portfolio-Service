@@ -48,6 +48,11 @@ class certificationService {
 
     return certification;
   }
+
+  static async deleteCertificationInfo(certificationId) {
+    const certification = await Certification.deleteByCertificationId(certificationId);
+    return certification.deletedCount;
+  }
 }
 
 export { certificationService };

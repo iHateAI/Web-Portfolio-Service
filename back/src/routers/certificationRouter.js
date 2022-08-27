@@ -8,7 +8,7 @@ const certificationRouter = Router();
 certificationRouter.post('/', login_required, async (req, res, next) => {
   try {
     const userId = req.currentUserId;
-    
+
     const data = { ...req.body, userId };
     const registeredCertification =
       await certificationService.addCertificationInfo(data);
@@ -37,17 +37,49 @@ certificationRouter.get('/', login_required, async (req, res, next) => {
 });
 
 // 자격증 정보 수정 라우터
-certificationRouter.put('/:certificationId', login_required, async (req, res, next) => {
-  try {
-    const { certificationId } = req.params;
-    const data = { ...req.body, certificationId };
-    const modifiedCertification =
-      await certificationService.setCertificationInfo(data);
+certificationRouter.put(
+  '/:certificationId',
+  login_required,
+  async (req, res, next) => {
+    try {
+      const { certificationId } = req.params;
+      const data = { ...req.body, certificationId };
+      const modifiedCertification =
+        await certificationService.setCertificationInfo(data);
 
-    res.status(200).send(modifiedCertification);
-  } catch (err) {
-    next(err);
+      res.status(200).send(modifiedCertification);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
+
+certificationRouter.delete(
+  '/:certificationId',
+  login_required,
+  async (req, res, next) => {
+    try {
+      const { certificationId } = req.params;
+      const deletedCount =
+        await certificationService.deleteCertificationInfo(certificationId);
+      if (deletedCount > 0) {
+        res.status(200).send({
+          success: true,
+          deletedCount,
+          message: '데이터 삭제 성공'
+        })
+      }
+      else {
+        res.status(200).send({
+          success: false,
+          deletedCount,
+          message: '존재하지 않는 도큐먼트'
+        })
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 export { certificationRouter };

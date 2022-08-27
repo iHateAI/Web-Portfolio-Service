@@ -23,6 +23,11 @@ class awardService {
     return award;
   }
 
+  static async deleteAwardInfo(awardId) {
+    const award = await Award.deleteByAwardId(awardId);
+    return award.deletedCount;
+  }
+
 }
 
 export { awardService };

@@ -32,6 +32,13 @@ class Award {
     console.log(modifiedAwardData);
     return modifiedAwardData;
   }
+
+  static async deleteByAwardId(awardId) {
+    const deletedAward = await AwardModel.deleteOne({_id: awardId});
+    console.log("모델에서 삭제" + deletedAward);
+    return deletedAward;
+  }
+
 }
 
 export { Award };
