@@ -80,8 +80,7 @@ class userAuthService {
 
     // db에서 찾지 못한 경우, 에러 메시지 반환
     if (!user) {
-      const errorMessage =
-        "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
+      const errorMessage = "가입 내역이 없습니다. 다시 한 번 확인해 주세요.";
       return { errorMessage };
     }
 
@@ -107,6 +106,14 @@ class userAuthService {
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
+      user = await User.update({ user_id, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.bookmarks) {
+      const fieldToUpdate = [toUpdate.bookmarks.option];
+      const newValue = {
+        bookmarks: toUpdate.bookmarks.bookmarkId,
+      };
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
