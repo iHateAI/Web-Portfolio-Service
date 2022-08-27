@@ -10,6 +10,7 @@ import { educationRouter } from './routers/educationRouter';
 import { awardRouter } from './routers/awardRouter';
 import { certificationRouter } from './routers/certificationRouter';
 import { projectRouter } from './routers/projectRouter';
+import { profileImageRouter } from './routers/profileImageRouter';
 
 import { errorMiddleware } from './middlewares/errorMiddleware';
 
@@ -29,7 +30,7 @@ app.use('/user/profileImage', express.static(path.join(__dirname, 'uploads')));
 /**
  * uploads 파일 생성
  */
- try {
+try {
   fs.readdirSync('src/uploads');
 } catch (err) {
   fs.mkdirSync('src/uploads');
@@ -46,8 +47,7 @@ app.use('/api/education', educationRouter);
 app.use('/api/award', awardRouter);
 app.use('/api/certification', certificationRouter);
 app.use('/api/project', projectRouter);
-
-
+app.use('/api/profileImage', profileImageRouter);
 
 // 순서 중요 (router 에서 next() 시 아래의 에러 핸들링  middleware로 전달됨)
 app.use(errorMiddleware);
