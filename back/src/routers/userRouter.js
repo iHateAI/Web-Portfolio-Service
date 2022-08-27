@@ -2,11 +2,8 @@ import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { userAuthService } from '../services/userService';
-import getmulter from '../utils/multer';
 
 const userAuthRouter = Router();
-
-const profileImageUpload = getmulter('src/uploads', 10);
 
 userAuthRouter.post('/user/register', async function (req, res, next) {
   try {
