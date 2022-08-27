@@ -48,6 +48,11 @@ class projectService {
 
     return project;
   }
+
+  static async deleteProjectInfo(projectId) {
+    const project = await Project.deleteByProjectId(projectId);
+    return project.deletedCount;
+  }
 }
 
 export { projectService };

@@ -33,6 +33,13 @@ class Education {
     console.log(modifiedEducationData);
     return modifiedEducationData;
   }
+
+  static async deleteByEducationId(educationId) {
+    const deletedEducation = await EducationModel.deleteOne({_id: educationId});
+    console.log("모델에서 삭제" + deletedEducation);
+    return deletedEducation;
+  }
+
 }
 
 export { Education };

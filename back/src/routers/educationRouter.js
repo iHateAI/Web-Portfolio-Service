@@ -45,12 +45,27 @@ educationRouter.put('/:educationId', login_required, async (req, res, next) => {
   }
 });
 
-// awardRouter.delete('/:awardId', login_required, async (req, res, next) => {
-//   try {
-    
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+educationRouter.delete('/:educationId', login_required, async (req, res, next) => {
+  try {
+    const {educationId} = req.params;
+    const deletedCount =
+        await educationService.deleteEducationInfo(educationId);
+    if (deletedCount > 0) {
+      res.status(200).send({
+        success: true,
+        deletedCount,
+        message: '데이터 삭제 성공'
+      })
+    } else {
+      res.status(200).send({
+        success: false,
+        deletedCount,
+        message: '존재하지 않는 도큐먼트'
+      })
+    }
+  } catch (err) {
+    next(err);
+  }
+})
 
 export { educationRouter };

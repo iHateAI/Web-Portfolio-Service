@@ -22,6 +22,12 @@ class educationService {
     const education = await Education.updateByEducationId(data);
     return education;
   }
+
+  static async deleteEducationInfo(educationId) {
+    const education = await Education.deleteByEducationId(educationId);
+    return education.deletedCount;
+  }
+
 }
 
 export { educationService };
