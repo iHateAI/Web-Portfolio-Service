@@ -1,18 +1,18 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { userAuthService } from '../services/userService';
-import getmulter from '../utils/multer';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { userAuthService } from "../services/userService";
+import getmulter from "../utils/multer";
 
 const userAuthRouter = Router();
 
-const profileImageUpload = getmulter('src/uploads', 10);
+const profileImageUpload = getmulter("src/uploads", 10);
 
-userAuthRouter.post('/user/register', async function (req, res, next) {
+userAuthRouter.post("/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
@@ -38,7 +38,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
   }
 });
 
-userAuthRouter.post('/user/login', async function (req, res, next) {
+userAuthRouter.post("/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -58,7 +58,7 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
 });
 
 userAuthRouter.get(
-  '/userlist',
+  "/userlist",
   login_required,
   async function (req, res, next) {
     try {
@@ -72,7 +72,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  '/user/current',
+  "/user/current",
   login_required,
   async function (req, res, next) {
     try {
@@ -94,9 +94,9 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/users/:id',
+  "/users/:id",
   login_required,
-  profileImageUpload.single('image'),
+  profileImageUpload.single("image"),
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
@@ -117,16 +117,14 @@ userAuthRouter.put(
 
       // 프로필 이미지 url 반환
       if (profileImage) {
-        const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${req.file.filename}`; 
+        const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${req.file.filename}`;
         console.log(profileImage);
-        updatedUser = {...updatedUser._doc, profileImageUrl};
+        updatedUser = { ...updatedUser._doc, profileImageUrl };
       }
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
       }
-
-
 
       res.status(200).json(updatedUser);
     } catch (error) {
@@ -136,7 +134,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  '/users/:id',
+  "/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -154,8 +152,48 @@ userAuthRouter.get(
   }
 );
 
+userAuthRouter.get(
+  "/users/bookmarks/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
+
+      res.status(200).json(currentUserInfo.bookmarks);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userAuthRouter.put(
+  "/users/bookmarks/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const { bookmarkId } = req.body;
+      // bookmark할 유저라면 add, 아니라면 remove
+      const isBookmark = req.query.bookmark;
+      // add라면 $addToSet, remove라면 $pull
+      const toUpdate = {
+        bookmarks: {
+          bookmarkId,
+          option: isBookmark === "add" ? "$addToSet" : "$pull",
+        },
+      };
+
+      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
+userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(
