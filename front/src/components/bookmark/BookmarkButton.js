@@ -10,33 +10,50 @@ const BookmarkButton = ({ user }) => {
   const loginUserId = userState.user.id;
   const userCardId = user.id;
 
-  const setInitialToggleBookmark = () => {
-    const res = DB.get(loginUserId);
+  const setInitialToggleBookmark = async () => {
+    // const res = DB.get(loginUserId);
+    // if (!res) return;
+    // if (res.includes(userCardId)) {
+    //   setToggleBookmark(true);
+    // } else {
+    //   setToggleBookmark(false);
+    // }
+    // console.log("cardId: ", userCardId);
+    // console.log("res: ", res);
 
-    if (!res) return;
+    const res = await Api.get(`users/bookmarks/${loginUserId}`);
+    const bookmarks = res.data;
 
-    if (res.includes(userCardId)) {
+    console.log("bookmarks: ", bookmarks);
+    if (!bookmarks) return;
+
+    if (bookmarks.includes(userCardId)) {
       setToggleBookmark(true);
     } else {
       setToggleBookmark(false);
     }
-    console.log("cardId: ", userCardId);
-    console.log("res: ", res);
   };
 
   useEffect(() => {
     setInitialToggleBookmark();
   }, []);
 
-  console.log("ToggleBookmark: ", toggleBookmark);
+  console.log("ToggleBookmark: ", userCardId, ": ", toggleBookmark);
 
-  const handleToggleBookmark = () => {
-    if (toggleBookmark == true) {
-      DB.remove(loginUserId, userCardId);
+  const handleToggleBookmark = async () => {
+    if (toggleBookmark === true) {
+      // DB.remove(loginUserId, userCardId);
+      await Api.put(`users/bookmarks/${loginUserId}?bookmark=remove`, {
+        bookmarkId: userCardId,
+      });
       setToggleBookmark(false);
       return;
     }
-    DB.push(loginUserId, userCardId);
+
+    // DB.push(loginUserId, userCardId);
+    await Api.put(`users/bookmarks/${loginUserId}?bookmark=add`, {
+      bookmarkId: userCardId,
+    });
     setToggleBookmark(true);
   };
 
@@ -45,7 +62,12 @@ const BookmarkButton = ({ user }) => {
       {userState.user.id !== user.id && (
         <button
           onClick={handleToggleBookmark}
-          style={{ fontSize: "30px", color: "green" }}
+          style={{
+            fontSize: "30px",
+            color: "navy",
+            border: "none",
+            backgroundColor: "white",
+          }}
         >
           {toggleBookmark ? "★" : "☆"}
         </button>
