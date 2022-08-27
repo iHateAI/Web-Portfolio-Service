@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Container, Row } from "react-bootstrap";
 
 import * as Api from "../../api";
 // import UserCard from "./UserCard";
@@ -15,6 +14,7 @@ const shuffle = (array) => {
       array[currentIndex],
     ];
   }
+  return array;
 };
 
 function Network() {
@@ -22,6 +22,8 @@ function Network() {
   const userState = useContext(UserStateContext);
   // useState 훅을 통해 users 상태를 생성함.
   const [users, setUsers] = useState([]);
+  const [pagedUsers, setPagedUsers] = useState([]);
+  const [ioTarget, setIoTarget] = useState(null);
 
   useEffect(() => {
     // 만약 전역 상태의 user가 null이라면, 로그인 페이지로 이동함.
@@ -38,10 +40,34 @@ function Network() {
           v.profileUrl || `${process.env.PUBLIC_URL}/images/profile.PNG`;
         userArr.push({ ...v, profileUrl: image });
       });
-      shuffle(userArr);
-      setUsers(userArr);
+      setUsers(shuffle(userArr));
     });
   }, [userState, navigate]);
+
+  useEffect(() => {
+    let io;
+    let page = 3;
+    if (ioTarget) {
+      const pageControll = (entries, observer) => {
+        entries.forEach(async (entry) => {
+          if (entry.isIntersecting) {
+            observer.unobserve(entry.target);
+            if (page * 3 >= users.length) setPagedUsers([...users]);
+            else {
+              setPagedUsers([...users.slice(0, page * 3)]);
+              page++;
+            }
+            observer.observe(entry.target);
+          }
+        });
+      };
+      io = new IntersectionObserver(pageControll, {
+        threshold: 1,
+      });
+      io.observe(ioTarget);
+    }
+    return () => io && io.disconnect();
+  }, [ioTarget, users]);
 
   return (
     <div className="network-container">
@@ -54,10 +80,11 @@ function Network() {
         </div>
         <div className="usercard-container">
           <div className="usercard">
-            {users.map((user) => (
+            {pagedUsers.map((user) => (
               <UserCard2 key={user.id} user={user} isNetwork />
             ))}
           </div>
+          <div ref={setIoTarget}>...Loading</div>
         </div>
       </section>
     </div>
