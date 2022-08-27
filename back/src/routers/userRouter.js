@@ -96,7 +96,6 @@ userAuthRouter.get(
 userAuthRouter.put(
   '/users/:id',
   login_required,
-  profileImageUpload.single('image'),
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
@@ -107,26 +106,14 @@ userAuthRouter.put(
       const password = req.body.password ?? null;
       const description = req.body.description ?? null;
 
-      // 프로필 이미지 데이터 가져오기
-      const profileImage = req.file ?? null;
-      console.log(profileImage);
       const toUpdate = { name, email, password, description };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      let updatedUser = await userAuthService.setUser({ user_id, toUpdate });
-
-      // 프로필 이미지 url 반환
-      if (profileImage) {
-        const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${req.file.filename}`; 
-        console.log(profileImage);
-        updatedUser = {...updatedUser._doc, profileImageUrl};
-      }
+      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
       }
-
-
 
       res.status(200).json(updatedUser);
     } catch (error) {
