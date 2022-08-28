@@ -1,8 +1,7 @@
-import { useState, useCallback } from "react";
 import useModal from "../../hooks/useModal";
-import useUserValidation from "../../hooks/useUserValidation";
 import { Form } from "react-bootstrap";
 import AlertModal from "../modal/AlertModal";
+import { useForm } from "../../hooks/useForm";
 import * as Api from "../../api";
 import {
   varColors,
@@ -13,46 +12,17 @@ import {
 } from "../../util/theme/theme";
 
 const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
-  const [name, setName] = useState(user.name);
-  const [email, setEmail] = useState(user.email);
-  const [description, setDescription] = useState(user.description);
-  const [imagePreview, setImagePreview] = useState(user.profileUrl);
-  const [uploadedImg, setUploadedImg] = useState(null);
+  const [values, isValid, handleChange] = useForm({
+    name: user.name,
+    email: user.email,
+    description: user.description,
+  });
 
   const [
     isShow,
     onShowButtonClickEventHandler,
     onCloseButtonClickEventHandler,
   ] = useModal(false);
-  const [checkValidationEmail, _, checkValidationDescription] =
-    useUserValidation();
-
-  const isValidEmail = checkValidationEmail(email);
-  const isValidDescription = checkValidationDescription(description);
-  const isValid = isValidEmail && isValidDescription;
-
-  const acceptedFile = ["image/jpg", "image/png", "image/jpeg"];
-
-  const hanlderNameChange = useCallback((e) => {
-    setName(e.target.value);
-  }, []);
-
-  const handlerEmailChange = useCallback((e) => {
-    setEmail(e.target.value);
-  }, []);
-
-  const handlerDescriptionChange = useCallback((e) => {
-    setDescription(e.target.value);
-  }, []);
-
-  const handlerImageUpload = (e) => {
-    setUploadedImg(e.target.files[0]);
-    const preview = new FileReader();
-    preview.readAsDataURL(e.target.files[0]);
-    preview.onload = () => {
-      setImagePreview(preview.result);
-    };
-  };
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
@@ -61,22 +31,12 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
       return;
     }
 
-    // 뭔가 이미지의 경우 image수정 버튼을 따로 만들어서 profile update랑 분리를 해야할 것 같다.
-    const userObj = { name, email, description, id: user.id };
-    if (!uploadedImg) {
-      const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
-      setUser({
-        ...updatedUser,
-        profileUrl: user?.profileUrl,
-      });
-    } else {
-      const updatedUser = await fetchUpdaeUserImage.call(
-        this,
-        uploadedImg,
-        userObj.id
-      );
-      setUser(updatedUser);
-    }
+    const userObj = { ...values, id: user.id };
+    const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
+    setUser({
+      ...updatedUser,
+      profileUrl: user?.profileUrl,
+    });
     setIsEditing(false);
   };
 
@@ -92,17 +52,19 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           type="text"
           placeholder="Name..."
           style={inputStyle}
-          value={name}
-          onChange={hanlderNameChange}
+          value={values?.name}
+          name="name"
+          onChange={handleChange}
         />
         <input
           type="email"
           placeholder="Email..."
           style={inputStyle}
-          value={email}
-          onChange={handlerEmailChange}
+          value={values?.email}
+          name="email"
+          onChange={handleChange}
         />
-        {!isValidEmail && (
+        {!isValid.email && (
           <Form.Text className="text-danger">
             Please check your email.
           </Form.Text>
@@ -111,29 +73,14 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           type="text"
           placeholder="Description..."
           style={inputStyle}
-          value={description}
-          onChange={handlerDescriptionChange}
+          value={values?.description}
+          name="description"
+          onChange={handleChange}
         />
-        {!isValidDescription && (
+        {!isValid.description && (
           <Form.Text className="text-danger">
             Please check your description.
           </Form.Text>
-        )}
-        <label htmlFor="image-input" style={imageLabelStyle}>
-          Image upload
-        </label>
-        <input
-          type="file"
-          id="image-input"
-          accept={acceptedFile.join(", ")}
-          name="image"
-          style={imageInputStyle}
-          onChange={handlerImageUpload}
-        />
-        {imagePreview && (
-          <div style={previewWrapperStyle}>
-            <img style={previewStyle} src={imagePreview} alt="profile-image" />{" "}
-          </div>
         )}
         <button type="submit" style={buttonStyle} onClick={handleSubmitClick}>
           CONFIRM
@@ -157,13 +104,6 @@ async function fetchUpdateUserInformation(user) {
     email: user.email,
     description: user.description,
   });
-  return res.data;
-}
-
-async function fetchUpdaeUserImage(uploadedImg, user) {
-  const formData = new FormData();
-  formData.append("image", uploadedImg);
-  const res = await Api.imageUpload(`users/${user.id}`, formData);
   return res.data;
 }
 
@@ -199,30 +139,6 @@ const inputStyle = {
     backgroundColor: varColors.light.coolLightGray,
   },
   marginBottom: "10px",
-};
-
-const imageLabelStyle = {
-  width: "100%",
-  backgroundColor: varColors.light.coolLightGray,
-  color: varColors.light.coolBlack,
-  border: "0px",
-  borderRadius: "4px",
-  marginBottom: "10px",
-  padding: varSpacing.bp1024(1),
-  cursor: "pointer",
-};
-
-const imageInputStyle = {
-  display: "none",
-};
-
-const previewWrapperStyle = {
-  textAlign: "center",
-};
-
-const previewStyle = {
-  width: "30%",
-  height: "30%",
 };
 
 const buttonStyle = {

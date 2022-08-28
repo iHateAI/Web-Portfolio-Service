@@ -5,6 +5,8 @@ import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
+import Projects from "./project/Projects";
+import Certificates from "./certificate/Certificates";
 import BookmarkButton from "./bookmark/BookmarkButton";
 import "./style/app.css";
 
@@ -81,6 +83,21 @@ function Portfolio() {
           <div className="mvp-content">
             <AwardContainer
               userId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+        </div>
+
+        <div className="mvps-container">
+          <div className="mvp-content">
+            <Certificates
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+          <div className="mvp-content">
+            <Projects
+              portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
