@@ -28,9 +28,9 @@ class certificationService {
       throw new Error('자격증 정보가 존재하지 않습니다.');
     }
 
-    certifications = certifications.map((cer) => {
-      cer.certificationDate = dateToString(cer.certificationDate);
-      return cer;
+    certifications = certifications.map((certification) => {
+      certification.certificationDate = dateToString(certification.certificationDate);
+      return certification;
     })
 
     return certifications;
