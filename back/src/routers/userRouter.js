@@ -50,7 +50,6 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
     }
-
     res.status(200).send(user);
   } catch (error) {
     next(error);
@@ -152,21 +151,6 @@ userAuthRouter.get(
   }
 );
 
-userAuthRouter.get(
-  "/users/bookmarks/:id",
-  login_required,
-  async function (req, res, next) {
-    try {
-      const user_id = req.params.id;
-      const currentUserInfo = await userAuthService.getUserInfo({ user_id });
-
-      res.status(200).json(currentUserInfo.bookmarks);
-    } catch (error) {
-      next(error);
-    }
-  }
-);
-
 userAuthRouter.put(
   "/users/bookmarks/:id",
   login_required,
@@ -185,7 +169,7 @@ userAuthRouter.put(
       };
 
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
-      res.status(200).json(updatedUser);
+      res.status(200).json(updatedUser.bookmarks);
     } catch (error) {
       next(error);
     }
