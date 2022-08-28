@@ -1,10 +1,13 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { Container, Col, Row } from "react-bootstrap";
-
-import { UserStateContext } from "../App";
-import * as Api from "../api";
-import User from "./user/User";
+import React, { useContext, useState, useEffect } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { UserStateContext } from '../App';
+import * as Api from '../api';
+import User from './user/User';
+import EducationContainer from './education/EducationContainer';
+import AwardContainer from './award/AwardContainer';
+import Projects from './project/Projects';
+import Certificates from './certificate/Certificates';
+import './style/app.css';
 
 function Portfolio() {
   const navigate = useNavigate();
@@ -18,7 +21,7 @@ function Portfolio() {
 
   const fetchPorfolioOwner = async (ownerId) => {
     // 유저 id를 가지고 "/users/유저id" 엔드포인트로 요청해 사용자 정보를 불러옴.
-    const res = await Api.get("users", ownerId);
+    const res = await Api.get('users', ownerId);
     // 사용자 정보는 response의 data임.
     const ownerData = res.data;
     // portfolioOwner을 해당 사용자 정보로 세팅함.
@@ -30,7 +33,7 @@ function Portfolio() {
   useEffect(() => {
     // 전역 상태의 user가 null이라면 로그인이 안 된 상태이므로, 로그인 페이지로 돌림.
     if (!userState.user) {
-      navigate("/login", { replace: true });
+      navigate('/login', { replace: true });
       return;
     }
 
@@ -48,27 +51,57 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return 'loading...';
   }
 
   return (
-    <Container fluid>
-      <Row>
-        <Col md="3" lg="3">
+    <div className="portfolio-container">
+      <section className="section portfolio-content">
+        <div className="title-container">
+          <h2 className="portfolio-title">Work Single Page</h2>
+          <p className="portfolio-sub-title">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
+            necessitatibus incidunt ut officiis explicabo inventore.
+          </p>
+        </div>
+        <div className="user-container">
           <User
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-        </Col>
-        <Col>
+        </div>
 
-          <div style={{ textAlign: "center" }}>
-            학력 목록, 수상이력 목록, 프로젝트 목록, 자격증 목록 만들기
+        <div className="mvps-container">
+          <div className="mvp-content">
+            <EducationContainer
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
           </div>
+          <div className="mvp-content">
+            <AwardContainer
+              userId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+        </div>
 
-        </Col>
-      </Row>
-    </Container>
+        <div className="mvps-container">
+          <div className="mvp-content">
+            <Certificates
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+          <div className="mvp-content">
+            <Projects
+              portfolioOwnerId={portfolioOwner.id}
+              isEditable={portfolioOwner.id === userState.user?.id}
+            />
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }
 

@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
+
 import { useNavigate, useLocation } from "react-router-dom";
-import Nav from "react-bootstrap/Nav";
 import { UserStateContext, DispatchContext } from "../App";
 
-function Header() {
+function HeaderTest() {
+  const [open, setOpen] = useState(false);
+
   const navigate = useNavigate();
-  const location = useLocation();
 
   const userState = useContext(UserStateContext);
   const dispatch = useContext(DispatchContext);
@@ -13,7 +14,17 @@ function Header() {
   // 전역상태에서 user가 null이 아니라면 로그인 성공 상태임.
   const isLogin = !!userState.user;
 
-  // 로그아웃 클릭 시 실행되는 함수
+  const menuItems = [
+    {
+      name: "Mypage",
+      handlerMenuClick: () => navigate("/"),
+    },
+    {
+      name: "Network",
+      handlerMenuClick: () => navigate("/network"),
+    },
+  ];
+
   const logout = () => {
     // sessionStorage 에 저장했던 JWT 토큰을 삭제함.
     sessionStorage.removeItem("userToken");
@@ -24,23 +35,56 @@ function Header() {
   };
 
   return (
-    <Nav activeKey={location.pathname}>
-      <Nav.Item className="me-auto mb-5">
-        <Nav.Link disabled>안녕하세요, 포트폴리오 공유 서비스입니다.</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/")}>나의 페이지</Nav.Link>
-      </Nav.Item>
-      <Nav.Item>
-        <Nav.Link onClick={() => navigate("/network")}>네트워크</Nav.Link>
-      </Nav.Item>
-      {isLogin && (
-        <Nav.Item>
-          <Nav.Link onClick={logout}>로그아웃</Nav.Link>
-        </Nav.Item>
-      )}
-    </Nav>
+    <>
+      <div flex-container>
+        <div className={`navmenu ${open ? "active" : ""}`}>
+          <div className="navmenu-container">
+            <div className="menu">
+              <ul className="menu-list">
+                {menuItems.map((menu) => (
+                  <li key={menu.name} onClick={menu.handlerMenuClick}>
+                    {menu.name}
+                  </li>
+                ))}
+                {isLogin && <li onClick={logout}>Logout</li>}
+              </ul>
+            </div>
+            <div className="content">
+              <p>
+                <em>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Quisquam necessitatibus incidunt ut officiis explicabo
+                  inventore. <br />
+                </em>
+              </p>
+            </div>
+            <div className="content">
+              <h3>Hire Me</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Quisquam necessitatibus incidunt ut officiisexplicabo inventore.{" "}
+                <br />
+                <a href="#">myemail@gmail.com</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="header-navbar">
+        <div className="navbar-container">
+          <div className="navbar-brand" onClick={() => navigate("/")}>
+            MyPortfolio.
+          </div>
+          <div
+            className={`burger-menu ${open ? "active" : ""}`}
+            onClick={() => setOpen(!open)}
+          >
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
-export default Header;
+export default HeaderTest;
