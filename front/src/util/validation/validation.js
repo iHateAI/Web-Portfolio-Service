@@ -1,4 +1,4 @@
-const testValidate = (values) => {
+const validation = (values) => {
   const result = { all: true };
   for (const [name, value] of Object.entries(values)) {
     if (name === "_id") continue;
@@ -85,4 +85,4 @@ const validateNickname = (nickname) => {
   return true;
 };
 
-export default testValidate;
+export default validation;
