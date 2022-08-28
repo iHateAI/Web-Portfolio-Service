@@ -33,9 +33,18 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).json(newUser);
-  } catch (error) {
-    next(error);
+    res.status(201).json({
+      success: true,
+      message: '유저 등록 성공',
+      apiPath: '[POST] /api/user/register',
+      data: newUser,
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: '[POST] /api/user/register',
+    });
   }
 });
 
@@ -52,9 +61,18 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
       throw new Error(user.errorMessage);
     }
 
-    res.status(200).send(user);
-  } catch (error) {
-    next(error);
+    res.status(200).send({
+      success: true,
+      message: '로그인 성공',
+      apiPath: '[POST] /api/user/login',
+      data: user,
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: '[POST] /api/user/login',
+    });
   }
 });
 
@@ -65,9 +83,19 @@ userAuthRouter.get(
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
-      res.status(200).send(users);
-    } catch (error) {
-      next(error);
+
+      res.status(200).send({
+        success: true,
+        message: '전체 유저 목록 불러오기 성공',
+        apiPath: '[GET] /api/userlist',
+        data: users,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: '[GET] /api/userlist',
+      });
     }
   }
 );
@@ -87,9 +115,18 @@ userAuthRouter.get(
         throw new Error(currentUserInfo.errorMessage);
       }
 
-      res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: '유저 정보 불러오기 성공',
+        apiPath: '[GET] /api/user/current',
+        data: currentUserInfo,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: '[GET] /api/user/current',
+      });
     }
   }
 );
@@ -116,9 +153,18 @@ userAuthRouter.put(
         throw new Error(updatedUser.errorMessage);
       }
 
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: '유저 정보 업데이트 성공',
+        apiPath: '[PUT] /api/users/:id',
+        data: updatedUser,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: '[PUT] /api/users/:id',
+      });
     }
   }
 );
@@ -135,9 +181,18 @@ userAuthRouter.get(
         throw new Error(currentUserInfo.errorMessage);
       }
 
-      res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: '유저 정보 불러오기 성공',
+        apiPath: '[GET] /api/users/:id',
+        data: currentUserInfo,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: '[GET] /api/users/:id',
+      });
     }
   }
 );
