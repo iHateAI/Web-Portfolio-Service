@@ -35,7 +35,7 @@ function Network() {
 
         <Row xs="auto" className="jusify-content-cente">
           {users.map((user) => (
-            <UserCard key={user.id} user={user} isNetwork />
+            <UserCard2 key={user.id} user={user} isNetwork />
           ))}
         </Row>
       </section>

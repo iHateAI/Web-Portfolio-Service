@@ -2,8 +2,12 @@ import is from '@sindresorhus/is';
 import { Router } from 'express';
 import { login_required } from '../middlewares/login_required';
 import { userAuthService } from '../services/userService';
+import getMulter from '../utils/multer';
 
 const userAuthRouter = Router();
+
+// 프로필 이미지에 변경 대한 multer
+const profileImageUpload = getMulter('src/uploads', 10);
 
 userAuthRouter.post('/user/register', async function (req, res, next) {
   try {
@@ -134,6 +138,40 @@ userAuthRouter.get(
       res.status(200).send(currentUserInfo);
     } catch (error) {
       next(error);
+    }
+  }
+);
+
+userAuthRouter.put(
+  '/users/profileImage/:userId',
+  login_required,
+  profileImageUpload.single('image'),
+  async (req, res, next) => {
+    try {
+      const userId = req.params.userId;
+      const profileImage = req.file;
+
+      if (!profileImage) {
+        throw new Error('이미지 파일을 전송받지 못했습니다.');
+      }
+
+      const updatedUser = await userAuthService.setUserProfileImage({
+        userId,
+        profileImage,
+      });
+
+      res.status(201).send({
+        success: true,
+        updatedUser,
+        message: '프로필 이미지 변경 성공',
+        apiPath: '/api/users/profileImage/:userId',
+      });
+    } catch (err) {
+      res.status(409).send({
+        success: false,
+        message: err.message,
+        apiPath: '/api/users/profileImage/:userId',
+      });
     }
   }
 );
