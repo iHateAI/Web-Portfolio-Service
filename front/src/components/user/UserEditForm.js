@@ -1,4 +1,5 @@
 import useModal from "../../hooks/useModal";
+import UserModal from "../modal/UserModal";
 import { Form } from "react-bootstrap";
 import AlertModal from "../modal/AlertModal";
 import { useForm } from "../../hooks/useForm";
@@ -22,6 +23,12 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     isShow,
     onShowButtonClickEventHandler,
     onCloseButtonClickEventHandler,
+  ] = useModal(false);
+
+  const [
+    isPasswordShow,
+    onPasswordShowButtonClickEventHandler,
+    onPasswordCloseButtonClickEventHandler,
   ] = useModal(false);
 
   const handleSubmitClick = async (e) => {
@@ -57,7 +64,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           onChange={handleChange}
         />
         <input
-          type="email"
+          type="text"
           placeholder="Email..."
           style={inputStyle}
           value={values?.email}
@@ -85,6 +92,13 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
         <button type="submit" style={buttonStyle} onClick={handleSubmitClick}>
           CONFIRM
         </button>
+        <button
+          type="button"
+          style={buttonStyle}
+          onClick={onPasswordShowButtonClickEventHandler}
+        >
+          비밀번호 변경하기
+        </button>
         <button style={buttonCancelStyle} onClick={handlerCancelClick}>
           CANCEL
         </button>
@@ -94,7 +108,81 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
         isShow={isShow}
         onCloseButtonClickEvent={onCloseButtonClickEventHandler}
       />
+      <UserModal
+        isShow={isPasswordShow}
+        onCloseButtonClickEvent={onPasswordCloseButtonClickEventHandler}
+      >
+        <ConfirmPassword user={user} />
+      </UserModal>
     </div>
+  );
+};
+
+const ConfirmPassword = ({ user }) => {
+  const [values, isValid, handleChange] = useForm({
+    currentPassword: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const isPasswordSame = values.password === values.confirmPassword;
+
+  const handleSubmitClick = async (e) => {
+    e.preventDefault();
+    if (!isValid) {
+      return;
+    }
+  };
+
+  return (
+    <form style={formStyle}>
+      <div style={titleStyle}>Change Password</div>
+      <div>
+        <label>기존 비밀번호</label>
+        <input
+          type="password"
+          name="currentPassword"
+          style={inputStyle}
+          onChange={handleChange}
+        />
+        {!isValid.currentPassword && (
+          <Form.Text className="text-danger">
+            기존 비밀번호와 일치하지 않습니다
+          </Form.Text>
+        )}
+      </div>
+      <div>
+        <label>변경할 비밀번호</label>
+        <input
+          type="password"
+          name="password"
+          style={inputStyle}
+          onChange={handleChange}
+        />
+        {!isValid.password && (
+          <Form.Text className="text-danger">
+            비밀번호는 4글자 이상, 12글자 이하여야 합니다
+          </Form.Text>
+        )}
+      </div>
+      <div>
+        <label>비밀번호 확인</label>
+        <input
+          type="password"
+          name="confirmPassword"
+          style={inputStyle}
+          onChange={handleChange}
+        />
+        {!isPasswordSame && (
+          <Form.Text className="text-danger">
+            비밀번호가 일치하지 않습니다.
+          </Form.Text>
+        )}
+      </div>
+      <button type="submit" style={buttonStyle}>
+        CONFIRM
+      </button>
+    </form>
   );
 };
 

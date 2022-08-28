@@ -32,13 +32,10 @@ const testValidate = (values) => {
         result[name] = validateEmail(value);
         break;
 
+      case "currentPassword":
       case "password":
       case "confirmPassword":
         result[name] = validatePassword(value);
-        break;
-
-      case "nickname":
-        result[name] = validateNickname(value);
         break;
 
       default:
@@ -76,12 +73,6 @@ const validatePassword = (password) => {
 const validateDate = (date) => {
   const checkDate = date.split("-");
   if (checkDate.length !== 3) return false;
-  return true;
-};
-
-const validateNickname = (nickname) => {
-  const checkNickname = nickname.trim();
-  if (checkNickname.length < 2) return false;
   return true;
 };
 
