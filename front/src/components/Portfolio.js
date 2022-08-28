@@ -70,7 +70,7 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-          <BookmarkButton user={portfolioOwner} />
+          {userState.user && <BookmarkButton user={portfolioOwner} />}
         </div>
 
         <div className="mvps-container">
