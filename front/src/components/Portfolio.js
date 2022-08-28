@@ -5,6 +5,7 @@ import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
+import BookmarkButton from "./bookmark/BookmarkButton";
 import "./style/app.css";
 
 function Portfolio() {
@@ -67,6 +68,7 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
+          <BookmarkButton user={portfolioOwner} />
         </div>
 
         <div className="mvps-container">
