@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
-
 import * as Api from "../../api";
 
 function RegisterForm() {
@@ -20,15 +19,12 @@ function RegisterForm() {
     e.preventDefault();
 
     try {
-      // "user/register" 엔드포인트로 post요청함.
       const { email, password, name } = values;
       await Api.post("user/register", {
         email,
         password,
         name,
       });
-
-      // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
