@@ -9,7 +9,6 @@ class awardService {
 
   static async getAwardInfo(userId) {
     const award = await Award.findByUserId(userId);
-    console.log(award);
     if (award.length < 1) {
       const error = new Error('수상 이력 정보가 존재하지 않습니다.');
       return { error };
@@ -21,7 +20,7 @@ class awardService {
     const award = await Award.findByAwardId(awardId);
 
     if (!award) {
-      throw new Error('awardId가 존재하지 않습니다.');
+      throw new Error('awardId에 대응하는 데이터가 존재하지 않습니다.');
     }
 
     const { title, detail } = toUpdate;
