@@ -56,6 +56,8 @@ class userAuthService {
     const id = user.id;
     const name = user.name;
     const description = user.description;
+    // 초기 toggleBookmark 세팅을 위한 반환할 변수 설정
+    const bookmarks = user.bookmarks;
 
     const loginUser = {
       token,
@@ -63,6 +65,7 @@ class userAuthService {
       email,
       name,
       description,
+      bookmarks,
       errorMessage: null,
     };
 

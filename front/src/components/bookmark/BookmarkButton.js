@@ -1,10 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
-import * as DB from "./testdb";
+// import * as DB from "./testdb";
 
 const BookmarkButton = ({ user }) => {
-  console.log(user);
   const userState = useContext(UserStateContext);
   const [toggleBookmark, setToggleBookmark] = useState(false);
   const [bookmarks, setBookmarks] = useState("");
