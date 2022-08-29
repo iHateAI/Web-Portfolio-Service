@@ -56,6 +56,8 @@ class userAuthService {
     const id = user.id;
     const name = user.name;
     const description = user.description;
+    // 초기 toggleBookmark 세팅을 위한 반환할 변수 설정
+    const bookmarks = user.bookmarks;
 
     const loginUser = {
       token,
@@ -63,6 +65,7 @@ class userAuthService {
       email,
       name,
       description,
+      bookmarks,
       errorMessage: null,
     };
 
@@ -115,6 +118,14 @@ class userAuthService {
     if (toUpdate.description) {
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
+      user = await User.update({ user_id, fieldToUpdate, newValue });
+    }
+
+    if (toUpdate.bookmarks) {
+      const fieldToUpdate = [toUpdate.bookmarks.option];
+      const newValue = {
+        bookmarks: toUpdate.bookmarks.bookmarkId,
+      };
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 

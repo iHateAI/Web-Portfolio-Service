@@ -261,6 +261,40 @@ userAuthRouter.put(
   }
 );
 
+userAuthRouter.put(
+  "/users/bookmarks/:userId",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const userId = req.params.userId;
+      const { bookmarkId } = req.body;
+      // bookmark할 유저라면 add, 아니라면 remove
+      const isBookmark = req.query.bookmark;
+      // add라면 $addToSet, remove라면 $pull
+      const toUpdate = {
+        bookmarks: {
+          bookmarkId,
+          option: isBookmark === "add" ? "$addToSet" : "$pull",
+        },
+      };
+
+      const updatedUser = await userAuthService.setUser({ userId, toUpdate });
+      res.status(200).send({
+        success: true,
+        message: "북마크 업데이트 성공",
+        bookmarks: updatedUser.bookmarks,
+        apiPath: "[PUT] /api/users/bookmarks/:userId",
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[POST] /api/user/login",
+      });
+    }
+  }
+);
+
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
 userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
