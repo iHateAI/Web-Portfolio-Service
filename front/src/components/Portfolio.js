@@ -8,6 +8,7 @@ import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
 import Projects from "./project/Projects";
 import CertificateContainer from "./certificate/CertificateContainer";
+import BookmarkButton from "./bookmark/BookmarkButton";
 import "./style/app.css";
 
 function Portfolio() {
@@ -60,6 +61,7 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
+          {userState.user && <BookmarkButton user={portfolioOwner} />}
         </div>
         <div className="like-container">
           <UserLike

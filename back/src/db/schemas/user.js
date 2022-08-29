@@ -42,6 +42,7 @@ const UserSchema = new Schema(
       default: false,
     },
     liked: [new mongoose.Schema({ name: String })],
+    bookmarks: [{ type: String }],
   },
   {
     timestamps: true,

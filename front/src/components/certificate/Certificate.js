@@ -24,7 +24,6 @@ function Certificate({
           certificate={certificate}
           isEditable={isEditable}
           setIsEditing={setIsEditing}
-          setCertificates={setCertificates}
           onShowButtonClickEventHandler={onShowButtonClickEventHandler}
           setDeleteCertificationId={setDeleteCertificationId}
         />

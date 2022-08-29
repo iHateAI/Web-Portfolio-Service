@@ -32,7 +32,7 @@ const UserImageProfileUpload = ({ user, onChangeImageUploadEvent }) => {
     <form style={containerStyle}>
       <div style={titleStyle}>IMAGE PREVIEW</div>
       <div style={previewWrapperStyle}>
-        <img style={previewStyle} src={previewImageSrc} alt="profile-image" />{" "}
+        <img style={previewStyle} src={previewImageSrc} alt="profileImage" />{" "}
       </div>
       <label htmlFor="image-input" style={imageLabelStyle}>
         Image upload
