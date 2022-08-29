@@ -1,54 +1,50 @@
-import React, { useState } from "react"
-import AwardCard from "./AwardCard"
-import AwardCardEdit from "./AwardCardEdit"
+import React, { useState } from "react";
+import AwardCard from "./AwardCard";
+import AwardCardEdit from "./AwardCardEdit";
 
 const AwardCardPresenter = ({
-    award,
-    isEditable,
-    onEditButtonClickEvent,
-    onDeleteButtonClickEvent,
+  award,
+  isEditable,
+  onEditButtonClickEvent,
+  onDeleteButtonClickEvent,
 }) => {
-    const [isEditMode, setIsEditMode] = useState(false)
+  const [isEditMode, setIsEditMode] = useState(false);
 
-    const onAwardEditButtonClickEventHandler = (editedAward) => {
-        onEditButtonClickEvent(editedAward)
-        setIsEditMode(false)
-    }
+  const handleAwardEditButtonClick = (editedAward) => {
+    onEditButtonClickEvent(editedAward);
+    setIsEditMode(false);
+  };
 
-    const onCancelButtonClickEventHandler = (isCanceld) => {
-        setIsEditMode(isCanceld)
-    }
+  const handleCancelButtonClick = (isCanceld) => {
+    setIsEditMode(isCanceld);
+  };
 
-    const onEnterEditModeButtonClickEventHandler = () => {
-        setIsEditMode((prev) => !prev)
-    }
+  const handleEnterEditModeButtonClick = () => {
+    setIsEditMode((prev) => !prev);
+  };
 
-    const onDeleteButtonClickEventHandler = (targetAward) => {
-        onDeleteButtonClickEvent(targetAward)
-    }
+  const handleDeleteButtonClick = (targetAward) => {
+    onDeleteButtonClickEvent(targetAward);
+  };
 
-    return (
-        <React.Fragment>
-            {isEditMode ? (
-                <AwardCardEdit
-                    award={award}
-                    onAwardEditButtonClickEvent={
-                        onAwardEditButtonClickEventHandler
-                    }
-                    onCancelButtonClickEvent={onCancelButtonClickEventHandler}
-                />
-            ) : (
-                <AwardCard
-                    award={award}
-                    isEditable={isEditable}
-                    onEnterEditModeButtonClickEvent={
-                        onEnterEditModeButtonClickEventHandler
-                    }
-                    onDeleteButtonClickEvent={onDeleteButtonClickEventHandler}
-                />
-            )}
-        </React.Fragment>
-    )
-}
+  return (
+    <React.Fragment>
+      {isEditMode ? (
+        <AwardCardEdit
+          award={award}
+          onAwardEditButtonClickEvent={handleAwardEditButtonClick}
+          onCancelButtonClickEvent={handleCancelButtonClick}
+        />
+      ) : (
+        <AwardCard
+          award={award}
+          isEditable={isEditable}
+          onEnterEditModeButtonClickEvent={handleEnterEditModeButtonClick}
+          onDeleteButtonClickEvent={handleDeleteButtonClick}
+        />
+      )}
+    </React.Fragment>
+  );
+};
 
-export default AwardCardPresenter
+export default AwardCardPresenter;

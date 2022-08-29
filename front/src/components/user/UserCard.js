@@ -29,13 +29,9 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 
   const handleImageUpload = async (uploadedImage) => {
     const res = fetchUpdaeUserImage.call(this, uploadedImage, user);
-    // 서버 API가 수정이 완료되면 기능을 완성하도록 합니다.
     console.log(res);
   };
 
-  // UserInformation Component
-  // 여기서만 한 번 쓰고 사용하지 않음.
-  // jsx 부분의 코드 길이가 길어지므로 이렇게 사용.
   const UserInformation = () => {
     return (
       <div className="single-user-item-info">

@@ -4,11 +4,11 @@ const AwardCard = ({
   onEnterEditModeButtonClickEvent,
   onDeleteButtonClickEvent,
 }) => {
-  const onEnterEditModeButtonClickEventHandler = () => {
+  const handleEnterEditModeButtonClick = () => {
     onEnterEditModeButtonClickEvent();
   };
 
-  const onDeleteButtonClickEventHandler = () => {
+  const handleDeleteButtonClick = () => {
     onDeleteButtonClickEvent(award);
   };
 
@@ -24,13 +24,13 @@ const AwardCard = ({
       {isEditable && (
         <div className="mvp-management">
           <button
-            onClick={onEnterEditModeButtonClickEventHandler}
+            onClick={handleEnterEditModeButtonClick}
             className="mvp-edit-button"
           >
             edit
           </button>
           <button
-            onClick={onDeleteButtonClickEventHandler}
+            onClick={handleDeleteButtonClick}
             className="mvp-delete-button"
           >
             delete
