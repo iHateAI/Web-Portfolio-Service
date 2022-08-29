@@ -409,6 +409,38 @@ h6,
   background-color: #000;
   color: #fff;
 }
+/* Like-button */
+.like-container {
+  padding: 0 1.8rem;
+}
+.like-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+}
+
+.like-button.animated {
+  -webkit-animation: pop 0.9s both;
+  animation: pop 0.9s both;
+}
+.like-button svg {
+  width: 3.5rem;
+  height: 3.5rem;
+  opacity: 1;
+}
+.like-button svg path {
+  fill: #333;
+  transition: fill 0.4s ease-out;
+}
+.like-button.active svg path {
+  fill: #085ed6;
+}
+
+.like-button:active {
+  transform: translateY(0.2rem);
+}
 
 /*--------------------------------------------------------------
 # mvp
