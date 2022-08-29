@@ -204,11 +204,20 @@ userAuthRouter.put(
   async (req, res, next) => {
     try {
       const user_id = req.params.userId;
-      const password = req.body.password;
+      const { currentPassword, newPassword } = req.body;
+
+      const currentUser = await userAuthService.comparePassword({
+        user_id,
+        password: currentPassword,
+      });
+
+      if (!currentUser) {
+        throw new Error("비밀번호가 일치하지 않습니다.");
+      }
 
       const updatedUser = await userAuthService.setUserPassword({
         user_id,
-        password,
+        password: newPassword,
       });
 
       res.status(201).send({

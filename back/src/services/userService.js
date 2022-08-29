@@ -172,6 +172,22 @@ class userAuthService {
 
     return user;
   }
+
+  static async comparePassword({ user_id, password }) {
+    const user = await User.findById({ user_id });
+
+    // 비밀번호 일치 여부 확인
+    const correctPasswordHash = user.password;
+    const isPasswordCorrect = await bcrypt.compare(
+      password,
+      correctPasswordHash
+    );
+    if (!isPasswordCorrect) {
+      return false;
+    }
+
+    return true;
+  }
 }
 
 export { userAuthService };

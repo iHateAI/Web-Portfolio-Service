@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, ButtonGroup, Card, Row } from "react-bootstrap";
-// import { deleteProject } from './dev/mockApiProject';
+import { Row } from "react-bootstrap";
 import TestData from "../../dev/testData";
 import useModal from "../../hooks/useModal";
 import ConfirmModal from "../modal/ConfirmModal";
@@ -12,8 +11,10 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
     onCloseButtonClickEventHandler,
   ] = useModal(false);
 
+  const { title, detail, startDate, endDate } = project || {};
+
   const handleDeleteProject = async (bool) => {
-    // await deleteProject(project.key);
+    // await deleteProject(key);
     await TestData.deleteProject(project._id);
     getUser();
   };
@@ -22,10 +23,10 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
     <div className="mvp-content-detail">
       <Row>
         <div className="mvp-info">
-          <h3 className="title">{project.title}</h3>
-          <p className="sub-title">{project.detail}</p>
+          <h3 className="title">{title}</h3>
+          <p className="sub-title">{detail}</p>
           <p className="sub-title">
-            {project.startDate} ~ {project.endDate}
+            {startDate} ~ {endDate}
           </p>
         </div>
       </Row>
@@ -46,7 +47,7 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
         isShow={isShow}
         onCloseButtonClickEvent={onCloseButtonClickEventHandler}
         onCheckButtonClickEvent={handleDeleteProject}
-        msg={`${project.title}(을)를 목록에서 삭제하시겠습니까?`}
+        msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
       />
     </div>
   );
