@@ -37,7 +37,6 @@ function UserCard({
   const handleImgClick = () => {
     onShowButtonClickEventHandler(true);
   };
-  console.log("owner", portfolioOwnerId);
 
   const handleImageUpload = async (uploadedImage) => {
     const res = await fetchUpdaeUserImage.call(this, uploadedImage, user);
