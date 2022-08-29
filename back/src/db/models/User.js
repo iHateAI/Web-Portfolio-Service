@@ -31,7 +31,9 @@ class User {
       update,
       option
     );
+    
     return updatedUser;
+
   }
 }
 
