@@ -32,7 +32,9 @@ class Education {
       filter,
       newValues,
       option
-    );
+    )
+      .select('_id university major status')
+      .lean();
     return updatedEducation;
   }
 

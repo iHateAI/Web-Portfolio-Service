@@ -15,10 +15,6 @@ class certificationService {
       userId,
     });
 
-    certification.certificationDate = dateToString(
-      certification.certificationDate
-    );
-
     /**
      * 여기 밑에 수정할거임
      */

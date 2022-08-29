@@ -199,11 +199,11 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/api/users/password/:id',
+  '/api/users/password/:userId',
   login_required,
   async (req, res, next) => {
     try {
-      const user_id = req.params.id;
+      const user_id = req.params.userId;
       const password = req.body.password;
 
       const updatedUser = await userAuthService.setUserPassword({ user_id, password });

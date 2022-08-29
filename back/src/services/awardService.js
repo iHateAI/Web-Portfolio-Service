@@ -2,9 +2,16 @@ import { Award } from '../db';
 
 class awardService {
   static async addAwardInfo({ title, detail, userId }) {
-    // const award = await Award.create({ title, detail, userId });
-    // return award;
-    return Award.create({ title, detail, userId });
+    /**
+     * 여긴 다시 수정
+     */
+    const award = await Award.create({ title, detail, userId });
+
+    const _title = award.title;
+    const _detail = award.detail;
+    const _id = award._id;
+
+    return { title: _title, detail: _detail, _id };
   }
 
   static async getAwardInfo(userId) {

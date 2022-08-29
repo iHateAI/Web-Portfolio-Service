@@ -2,7 +2,22 @@ import { Education } from '../db';
 
 class educationService {
   static async addEducationInfo({ university, major, status, userId }) {
-    return Education.create({ university, major, status, userId });
+    /**
+     * 여긴 다시 수정
+     */
+    const education = await Education.create({
+      university,
+      major,
+      status,
+      userId,
+    });
+
+    const _university = education.university;
+    const _major = education.major;
+    const _status = education.status;
+    const _id = education._id;
+
+    return { university: _university, major: _major, status: _status, _id };
   }
 
   static async getEducationInfo(userId) {
