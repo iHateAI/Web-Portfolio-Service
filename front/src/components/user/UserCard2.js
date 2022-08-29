@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import BookmarkButton from "../bookmark/BookmarkButton";
 
 function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
           alt="userImg"
         />
       </div>
+      <BookmarkButton user={user} />
     </div>
   );
 }
