@@ -1,16 +1,27 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import useModal from "../../hooks/useModal";
 import UserModal from "../modal/UserModal";
 import UserImageProfileUpload from "./UserImageProfile";
+import UserLike from "../user/UserLike";
+import UserLikeList from "../user/UserLikeList";
 import * as Api from "../../api";
+import { UserStateContext } from "../../App";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork, setUser }) {
+function UserCard({
+  user,
+  setIsEditing,
+  isEditable,
+  isNetwork,
+  setUser,
+  portfolioOwnerId,
+}) {
   const [
     isShow,
     onShowButtonClickEventHandler,
     onCloseButtonClickEventHandler,
   ] = useModal(false);
+  const userState = useContext(UserStateContext);
 
   const navigate = useNavigate();
 
@@ -26,6 +37,7 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, setUser }) {
   const handleImgClick = () => {
     onShowButtonClickEventHandler(true);
   };
+  console.log("owner", portfolioOwnerId);
 
   const handleImageUpload = async (uploadedImage) => {
     const res = await fetchUpdaeUserImage.call(this, uploadedImage, user);
@@ -46,13 +58,17 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork, setUser }) {
         <div className="user-description">
           <p>{user?.description}</p>
         </div>
-        <h4 className="skill-title">What I did</h4>
-        <ul className="skill-list">
-          <li>Design</li>
-          <li>HTML5/CSS3</li>
-          <li>CMS</li>
-          <li>Logo</li>
-        </ul>
+
+        <div className="like-container">
+          <UserLike
+            portfolioOwnerId={portfolioOwnerId}
+            user={userState.user?.id}
+          ></UserLike>
+          <UserLikeList
+            portfolioOwnerId={portfolioOwnerId}
+            user={userState.user?.id}
+          />
+        </div>
 
         {isEditable && (
           <button className="edit-button" onClick={handlerEditClick}>
