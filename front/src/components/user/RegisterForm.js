@@ -44,7 +44,7 @@ function RegisterForm() {
         <Container>
           <Row className="justify-content-md-center mt-5">
             <Col lg={8}>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className="register-form">
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>이메일 주소</Form.Label>
                   <Form.Control

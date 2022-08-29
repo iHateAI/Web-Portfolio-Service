@@ -45,7 +45,7 @@ function LoginForm() {
         <Container>
           <Row className="justify-content-md-center mt-5">
             <Col lg={8}>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className="login-form">
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>Email Adress</Form.Label>
                   <Form.Control
