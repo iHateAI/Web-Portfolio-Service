@@ -1,50 +1,44 @@
-import { Card, Col, Row, Button } from "react-bootstrap"
-
 const AwardCard = ({
-    award,
-    isEditable,
-    onEnterEditModeButtonClickEvent,
-    onDeleteButtonClickEvent,
+  award,
+  isEditable,
+  onEnterEditModeButtonClickEvent,
+  onDeleteButtonClickEvent,
 }) => {
-    const onEnterEditModeButtonClickEventHandler = () => {
-        onEnterEditModeButtonClickEvent()
-    }
+  const handleEnterEditModeButtonClick = () => {
+    onEnterEditModeButtonClickEvent();
+  };
 
-    const onDeleteButtonClickEventHandler = () => {
-        onDeleteButtonClickEvent(award)
-    }
+  const handleDeleteButtonClick = () => {
+    onDeleteButtonClickEvent(award);
+  };
 
-    return (
-        <Card>
-            <Row className="align-items-center">
-                <Col>
-                    <Card.Title>{award.title}</Card.Title>
-                    <br />
-                    <Card.Subtitle>{award.detail}</Card.Subtitle>
-                </Col>
-                {isEditable && (
-                    <Col xs lg="1">
-                        <Button
-                            variant="outline-info"
-                            size="sm"
-                            onClick={onEnterEditModeButtonClickEventHandler}
-                            className="mr-3"
-                        >
-                            편집
-                        </Button>
-                        <Button
-                            variant="danger"
-                            size="sm"
-                            onClick={onDeleteButtonClickEventHandler}
-                            className="mr-3"
-                        >
-                            삭제
-                        </Button>
-                    </Col>
-                )}
-            </Row>
-        </Card>
-    )
-}
+  return (
+    <div className="mvp-content-detail">
+      <div className="mvp-info">
+        <h3 className="title">{award.title}</h3>
 
-export default AwardCard
+        <p className="sub-title">
+          <span>{award.detail}</span>
+        </p>
+      </div>
+      {isEditable && (
+        <div className="mvp-management">
+          <button
+            onClick={handleEnterEditModeButtonClick}
+            className="mvp-edit-button"
+          >
+            edit
+          </button>
+          <button
+            onClick={handleDeleteButtonClick}
+            className="mvp-delete-button"
+          >
+            delete
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AwardCard;

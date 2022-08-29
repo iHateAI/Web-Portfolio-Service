@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-// import * as Api from "../../testApi";
 import * as Api from "../../api";
 
 // Education 삭제
@@ -21,9 +20,9 @@ function EducationDelete({ education, setEducations }) {
 
   return (
     <>
-      <Button variant="secondary" size="sm" onClick={handleShow}>
-        삭제
-      </Button>
+      <button className="mvp-delete-button" onClick={handleShow}>
+        DELETE
+      </button>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>

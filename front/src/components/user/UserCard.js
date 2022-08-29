@@ -1,51 +1,96 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Row, Button, Col } from "react-bootstrap";
+import useModal from "../../hooks/useModal";
+import UserModal from "../modal/UserModal";
+import UserImageProfileUpload from "./UserImageProfile";
+import * as Api from "../../api";
 
 function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+  const [
+    isShow,
+    onShowButtonClickEventHandler,
+    onCloseButtonClickEventHandler,
+  ] = useModal(false);
+
   const navigate = useNavigate();
-  return (
-    <Card className="mb-2 ms-3 mr-5" style={{ width: "18rem" }}>
-      <Card.Body>
-        <Row className="justify-content-md-center">
-          <Card.Img
-            style={{ width: "10rem", height: "8rem" }}
-            className="mb-3"
-            src="http://placekitten.com/200/200"
-            alt="랜덤 고양이 사진 (http://placekitten.com API 사용)"
-          />
-        </Row>
-        <Card.Title>{user?.name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">{user?.email}</Card.Subtitle>
-        <Card.Text>{user?.description}</Card.Text>
+
+  const handlerEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handlerPortfolioClick = () => {
+    if (!isNetwork) return;
+    navigate(`/users/${user.id}`);
+  };
+
+  const handleImgClick = () => {
+    onShowButtonClickEventHandler(true);
+  };
+
+  const handleImageUpload = async (uploadedImage) => {
+    const res = fetchUpdaeUserImage.call(this, uploadedImage, user);
+    console.log(res);
+  };
+
+  const UserInformation = () => {
+    return (
+      <div className="single-user-item-info">
+        <h3 className="user-name">{user?.name}</h3>
+        <p className="user-email">
+          <span>{user?.email}</span>
+        </p>
+        <div className="user-description">
+          <p>{user?.description}</p>
+        </div>
+        <h4 className="skill-title">What I did</h4>
+        <ul className="skill-list">
+          <li>Design</li>
+          <li>HTML5/CSS3</li>
+          <li>CMS</li>
+          <li>Logo</li>
+        </ul>
 
         {isEditable && (
-          <Col>
-            <Row className="mt-3 text-center text-info">
-              <Col sm={{ span: 20 }}>
-                <Button
-                  variant="outline-info"
-                  size="sm"
-                  onClick={() => setIsEditing(true)}
-                >
-                  편집
-                </Button>
-              </Col>
-            </Row>
-          </Col>
+          <button className="edit-button" onClick={handlerEditClick}>
+            EDIT
+          </button>
         )}
+      </div>
+    );
+  };
 
-        {isNetwork && (
-          <Card.Link
-            className="mt-3"
-            href="#"
-            onClick={() => navigate(`/users/${user.id}`)}
-          >
-            포트폴리오
-          </Card.Link>
-        )}
-      </Card.Body>
-    </Card>
+  return (
+    <React.Fragment>
+      <div className="singlepage-item-box">
+        <div className="item-wrap" onClick={handlerPortfolioClick}>
+          <div onClick={handleImgClick}>
+            <img
+              className="item-img"
+              src={user?.profileImageUrl}
+              alt="userImg"
+            />
+          </div>
+          <UserInformation />
+        </div>
+      </div>
+      <UserModal
+        isShow={isShow}
+        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+      >
+        <UserImageProfileUpload
+          user={user}
+          onChangeImageUploadEvent={handleImageUpload}
+        />
+      </UserModal>
+    </React.Fragment>
   );
+}
+
+async function fetchUpdaeUserImage(uploadedImg, user) {
+  const formData = new FormData();
+  formData.append("image", uploadedImg);
+  const res = await Api.imageUpload(`users/${user.id}`, formData);
+  return res.data;
 }
 
 export default UserCard;

@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Form, Col } from "react-bootstrap";
-// import * as Api from "../../testApi";
 import * as Api from "../../api";
 import useModal from "../../hooks/useModal";
-import useEducationValidation from "../../hooks/useEducationValidation";
 import AlertModal from "../modal/AlertModal";
+import { useForm } from "../../hooks/useForm";
 
 function EducationAddForm({
   portfolioOwnerId,
@@ -12,9 +11,11 @@ function EducationAddForm({
   setAddEducation,
 }) {
   //학교 이름, 전공, 학력 상태 세팅
-  const [university, setUniversity] = useState("");
-  const [major, setMajor] = useState("");
-  const [status, setStatus] = useState("");
+  const [values, isValid, handleChange] = useForm({
+    university: "",
+    major: "",
+    status: "",
+  });
 
   const [
     isShow,
@@ -22,35 +23,17 @@ function EducationAddForm({
     onCloseButtonClickEventHandler,
   ] = useModal(false);
 
-  const {
-    checkValidationUniversity,
-    checkValidationMajor,
-    checkValidationStatus,
-    checkValidationEducationAll,
-  } = useEducationValidation();
-
-  const isValidUniversity = checkValidationUniversity(university);
-  const isValidMajor = checkValidationMajor(major);
-  const isValidStatus = checkValidationStatus(status);
-  const isValid = checkValidationEducationAll(
-    isValidUniversity,
-    isValidMajor,
-    isValidStatus
-  );
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userId = portfolioOwnerId;
-    if (!isValid) {
+    if (!isValid.all) {
       onShowButtonClickEventHandler();
       return;
     }
 
     // "education/add" end-point로 post요청
     await Api.post("api/education", {
-      university,
-      major,
-      status,
+      ...values,
     });
 
     // "educationlist/유저id"  get요청
@@ -68,10 +51,10 @@ function EducationAddForm({
         <Form.Control
           type="text"
           placeholder="학교 이름"
-          value={university}
-          onChange={(e) => setUniversity(e.target.value)}
+          name="university"
+          onChange={handleChange}
         />
-        {!isValidUniversity && (
+        {!isValid.university && (
           <Form.Text className="text-danger">
             학교 이름을 4글자 이상 입력해주세요.
           </Form.Text>
@@ -82,10 +65,10 @@ function EducationAddForm({
         <Form.Control
           type="text"
           placeholder="전공"
-          value={major}
-          onChange={(e) => setMajor(e.target.value)}
+          name="major"
+          onChange={handleChange}
         />
-        {!isValidMajor && (
+        {!isValid.major && (
           <Form.Text className="text-danger">
             전공을 4글자 이상 입력해주세요.
           </Form.Text>
@@ -99,8 +82,7 @@ function EducationAddForm({
         name="status"
         label="재학중"
         value="재학중"
-        checked={status === "재학중"}
-        onChange={(e) => setStatus(e.target.value)}
+        onChange={handleChange}
       />
       <Form.Check
         inline
@@ -108,8 +90,7 @@ function EducationAddForm({
         name="status"
         label="학사졸업"
         value="학사졸업"
-        checked={status === "학사졸업"}
-        onChange={(e) => setStatus(e.target.value)}
+        onChange={handleChange}
       />
       <Form.Check
         inline
@@ -117,8 +98,7 @@ function EducationAddForm({
         name="status"
         label="석사졸업"
         value="석사졸업"
-        checked={status === "석사졸업"}
-        onChange={(e) => setStatus(e.target.value)}
+        onChange={handleChange}
       />
       <Form.Check
         inline
@@ -126,10 +106,9 @@ function EducationAddForm({
         name="status"
         label="박사졸업"
         value="박사졸업"
-        checked={status === "박사졸업"}
-        onChange={(e) => setStatus(e.target.value)}
+        onChange={handleChange}
       />
-      {!isValidStatus && (
+      {!isValid.status && (
         <Form.Text className="text-danger">학력을 선택해주세요.</Form.Text>
       )}
 
