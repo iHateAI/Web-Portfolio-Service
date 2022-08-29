@@ -9,7 +9,7 @@ const LikeSchema = new Schema(
       ref: "User",
     },
     // 좋아요를 받은 user의 ObjectId (portfolioOwnerUSer)
-    otherUser: {
+    ownerUser: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
