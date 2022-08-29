@@ -9,7 +9,7 @@ const userAuthRouter = Router();
 // 프로필 이미지에 변경 대한 multer
 const profileImageUpload = getMulter('src/uploads', 10);
 
-userAuthRouter.post('/user/register', async function (req, res, next) {
+userAuthRouter.post('/api/user/register', async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -48,7 +48,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
   }
 });
 
-userAuthRouter.post('/user/login', async function (req, res, next) {
+userAuthRouter.post('/api/user/login', async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -77,7 +77,7 @@ userAuthRouter.post('/user/login', async function (req, res, next) {
 });
 
 userAuthRouter.get(
-  '/userlist',
+  '/api/userlist',
   login_required,
   async function (req, res, next) {
     try {
@@ -101,7 +101,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.get(
-  '/user/current',
+  '/api/user/current',
   login_required,
   async function (req, res, next) {
     try {
@@ -132,7 +132,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/users/:id',
+  '/api/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -141,10 +141,11 @@ userAuthRouter.put(
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
-      const password = req.body.password ?? null;
+      //const password = req.body.password ?? null;
+      
       const description = req.body.description ?? null;
 
-      const toUpdate = { name, email, password, description };
+      const toUpdate = { name, email, description };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
       const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
@@ -170,7 +171,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.get(
-  '/users/:id',
+  '/api/users/:id',
   login_required,
   async function (req, res, next) {
     try {
@@ -198,7 +199,7 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/user/password/:id',
+  '/api/users/password/:id',
   login_required,
   async (req, res, next) => {
     try {
@@ -224,7 +225,7 @@ userAuthRouter.put(
 );
 
 userAuthRouter.put(
-  '/user/profileImage/:userId',
+  '/api/users/profileImage/:userId',
   login_required,
   profileImageUpload.single('image'),
   async (req, res, next) => {
@@ -245,13 +246,13 @@ userAuthRouter.put(
         success: true,
         updatedUser,
         message: '프로필 이미지 변경 성공',
-        apiPath: '/api/users/profileImage/:userId',
+        apiPath: '[PUT] /api/users/profileImage/:userId',
       });
     } catch (err) {
       res.status(409).send({
         success: false,
         message: err.message,
-        apiPath: '/api/users/profileImage/:userId',
+        apiPath: '[PUT] /api/users/profileImage/:userId',
       });
     }
   }

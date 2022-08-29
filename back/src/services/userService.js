@@ -84,6 +84,7 @@ class userAuthService {
       return { errorMessage };
     }
 
+    console.log(toUpdate.email);
 
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
     if (toUpdate.name) {
@@ -94,7 +95,11 @@ class userAuthService {
 
     if (toUpdate.email) {
       // 이메일 중복 체크
-      // const hasEmail = await User.findByEmail({})
+      const hasEmail = await User.findByEmail({ email: toUpdate.email});
+      
+      if (hasEmail) {
+        throw new Error('이미 존재하는 이메일입니다.');
+      }
 
       const fieldToUpdate = 'email';
       const newValue = toUpdate.email;
@@ -125,10 +130,10 @@ class userAuthService {
 
     const fieldToUpdate = 'password';
     const newValue = await bcrypt.hash(password, 10);
-    user = await User.update({user_id, fieldToUpdate, newValue});
+    user = await User.update({ user_id, fieldToUpdate, newValue });
 
     return user;
-  } 
+  }
 
   static async setUserProfileImage({ userId, profileImage }) {
     const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${profileImage.filename}`;
