@@ -8,8 +8,8 @@ function User({ portfolioOwnerId, isEditable }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    Api.get("users", portfolioOwnerId).then((res) => {
-      const data = res.data;
+    Api.get("api/users", portfolioOwnerId).then((res) => {
+      const data = res.data.data;
       data.profileImageUrl =
         data.profileImageUrl || `${process.env.PUBLIC_URL}/images/profile.PNG`;
       setUser(data);
@@ -29,6 +29,7 @@ function User({ portfolioOwnerId, isEditable }) {
           user={user}
           setIsEditing={setIsEditing}
           isEditable={isEditable}
+          setUser={setUser}
         />
       )}
     </React.Fragment>

@@ -19,8 +19,8 @@ function Portfolio() {
   const userState = useContext(UserStateContext);
 
   const fetchPorfolioOwner = async (ownerId) => {
-    const res = await Api.get("users", ownerId);
-    const ownerData = res.data;
+    const res = await Api.get("api/users", ownerId);
+    const ownerData = res.data.data;
     setPortfolioOwner(ownerData);
     setIsFetchCompleted(true);
   };
