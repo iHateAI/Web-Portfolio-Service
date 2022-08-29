@@ -20,7 +20,7 @@ function RegisterForm() {
 
     try {
       const { email, password, name } = values;
-      await Api.post("user/register", {
+      await Api.post("api/user/register", {
         email,
         password,
         name,

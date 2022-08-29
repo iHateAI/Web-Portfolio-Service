@@ -35,7 +35,6 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
     setUser({
       ...updatedUser,
-      profileUrl: user?.profileUrl,
     });
     setIsEditing(false);
   };
