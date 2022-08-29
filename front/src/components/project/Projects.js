@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Card } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
 //import TestData from '../../dev/testData';
@@ -9,7 +9,7 @@ import { useCallback } from "react";
 function Projects({ portfolioOwnerId, isEditable }) {
   //api 요청에 사용할 값, 편집 가능 여부
   const [isEditing, setIsEditing] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState([]);
   const userId = portfolioOwnerId;
   //state
 
@@ -20,7 +20,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
 
   const getUser = useCallback(() => {
     Api.get("api/project", `?userId=${userId}`).then((res) =>
-      setUser(res.data)
+      setUser(res.data.data)
     );
   }, [userId]);
 
@@ -32,14 +32,15 @@ function Projects({ portfolioOwnerId, isEditable }) {
   return (
     <div className="mvp-container">
       <h3 className="mvp-title">프로젝트</h3>
-      {user?.map((project, index) => (
-        <Project
-          project={project}
-          isEditable={isEditable}
-          getUser={getUser}
-          key={index}
-        />
-      ))}
+      {user &&
+        user.map((project, index) => (
+          <Project
+            project={project}
+            isEditable={isEditable}
+            getUser={getUser}
+            key={index}
+          />
+        ))}
       <div className="d-flex justify-content-center w-100">
         {isEditable && (
           <Button

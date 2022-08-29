@@ -42,6 +42,8 @@ const UserSchema = new Schema(
       required: false,
       default: false,
     },
+
+    bookmarks: [{ type: String }],
   },
   {
     timestamps: true,

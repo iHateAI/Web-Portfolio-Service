@@ -204,11 +204,20 @@ userAuthRouter.put(
   async (req, res, next) => {
     try {
       const user_id = req.params.userId;
-      const password = req.body.password;
+      const { currentPassword, newPassword } = req.body;
+
+      const currentUser = await userAuthService.comparePassword({
+        user_id,
+        password: currentPassword,
+      });
+
+      if (!currentUser) {
+        throw new Error("비밀번호가 일치하지 않습니다.");
+      }
 
       const updatedUser = await userAuthService.setUserPassword({
         user_id,
-        password,
+        password: newPassword,
       });
 
       res.status(201).send({
@@ -325,6 +334,31 @@ userAuthRouter.get(
         userId,
       });
       res.status(200).json(updatedData);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+userAuthRouter.put(
+  "/users/bookmarks/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const { bookmarkId } = req.body;
+      // bookmark할 유저라면 add, 아니라면 remove
+      const isBookmark = req.query.bookmark;
+      // add라면 $addToSet, remove라면 $pull
+      const toUpdate = {
+        bookmarks: {
+          bookmarkId,
+          option: isBookmark === "add" ? "$addToSet" : "$pull",
+        },
+      };
+
+      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      res.status(200).json(updatedUser.bookmarks);
     } catch (error) {
       next(error);
     }
