@@ -35,7 +35,7 @@ function EducationAddForm({ setEducations, setAddEducation }) {
     // "educationlist/유저id"  get요청
     const res = await Api.get(`api/education/`);
     // educations를 response의 data로 세팅함.
-    setEducations(res.data);
+    setEducations(res.data.data);
 
     // 데이터 추가가 끝나면 종료
     setAddEducation(false);

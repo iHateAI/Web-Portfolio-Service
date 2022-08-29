@@ -13,7 +13,7 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
 
   useEffect(() => {
     // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
-    Api.get(`api/education/`).then((res) => setEducations(res.data));
+    Api.get(`api/education/`).then((res) => setEducations(res.data.data));
   }, []);
 
   return (
