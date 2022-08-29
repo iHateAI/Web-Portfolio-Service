@@ -2,13 +2,14 @@ import is from "@sindresorhus/is";
 import { Router } from "express";
 import { login_required } from "../middlewares/login_required";
 import { userAuthService } from "../services/userService";
-import getmulter from "../utils/multer";
+import getMulter from "../utils/multer";
 
 const userAuthRouter = Router();
 
-const profileImageUpload = getmulter("src/uploads", 10);
+// 프로필 이미지에 변경 대한 multer
+const profileImageUpload = getMulter("src/uploads", 10);
 
-userAuthRouter.post("/user/register", async function (req, res, next) {
+userAuthRouter.post("/api/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
@@ -32,13 +33,22 @@ userAuthRouter.post("/user/register", async function (req, res, next) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).json(newUser);
-  } catch (error) {
-    next(error);
+    res.status(201).send({
+      success: true,
+      message: "유저 등록 성공",
+      apiPath: "[POST] /api/user/register",
+      data: newUser,
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: "[POST] /api/user/register",
+    });
   }
 });
 
-userAuthRouter.post("/user/login", async function (req, res, next) {
+userAuthRouter.post("/api/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -50,28 +60,48 @@ userAuthRouter.post("/user/login", async function (req, res, next) {
     if (user.errorMessage) {
       throw new Error(user.errorMessage);
     }
-    res.status(200).send(user);
-  } catch (error) {
-    next(error);
+
+    res.status(200).send({
+      success: true,
+      message: "로그인 성공",
+      apiPath: "[POST] /api/user/login",
+      data: user,
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: "[POST] /api/user/login",
+    });
   }
 });
 
 userAuthRouter.get(
-  "/userlist",
+  "/api/userlist",
   login_required,
   async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
       const users = await userAuthService.getUsers();
-      res.status(200).send(users);
-    } catch (error) {
-      next(error);
+
+      res.status(200).send({
+        success: true,
+        message: "전체 유저 목록 불러오기 성공",
+        apiPath: "[GET] /api/userlist",
+        data: users,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[GET] /api/userlist",
+      });
     }
   }
 );
 
 userAuthRouter.get(
-  "/user/current",
+  "/api/user/current",
   login_required,
   async function (req, res, next) {
     try {
@@ -85,17 +115,25 @@ userAuthRouter.get(
         throw new Error(currentUserInfo.errorMessage);
       }
 
-      res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: "유저 정보 불러오기 성공",
+        apiPath: "[GET] /api/user/current",
+        data: currentUserInfo,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[GET] /api/user/current",
+      });
     }
   }
 );
 
 userAuthRouter.put(
-  "/users/:id",
+  "/api/users/:id",
   login_required,
-  profileImageUpload.single("image"),
   async function (req, res, next) {
     try {
       // URI로부터 사용자 id를 추출함.
@@ -103,37 +141,37 @@ userAuthRouter.put(
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
-      const password = req.body.password ?? null;
+      //const password = req.body.password ?? null;
+
       const description = req.body.description ?? null;
 
-      // 프로필 이미지 데이터 가져오기
-      const profileImage = req.file ?? null;
-      console.log(profileImage);
-      const toUpdate = { name, email, password, description };
+      const toUpdate = { name, email, description };
 
       // 해당 사용자 아이디로 사용자 정보를 db에서 찾아 업데이트함. 업데이트 요소가 없을 시 생략함
-      let updatedUser = await userAuthService.setUser({ user_id, toUpdate });
-
-      // 프로필 이미지 url 반환
-      if (profileImage) {
-        const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${req.file.filename}`;
-        console.log(profileImage);
-        updatedUser = { ...updatedUser._doc, profileImageUrl };
-      }
+      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
 
       if (updatedUser.errorMessage) {
         throw new Error(updatedUser.errorMessage);
       }
 
-      res.status(200).json(updatedUser);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: "유저 정보 업데이트 성공",
+        apiPath: "[PUT] /api/users/:userId",
+        data: updatedUser,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[PUT] /api/users/:userId",
+      });
     }
   }
 );
 
 userAuthRouter.get(
-  "/users/:id",
+  "/api/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -144,34 +182,81 @@ userAuthRouter.get(
         throw new Error(currentUserInfo.errorMessage);
       }
 
-      res.status(200).send(currentUserInfo);
-    } catch (error) {
-      next(error);
+      res.status(200).send({
+        success: true,
+        message: "유저 정보 불러오기 성공",
+        apiPath: "[GET] /api/users/:id",
+        data: currentUserInfo,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[GET] /api/users/:id",
+      });
     }
   }
 );
 
 userAuthRouter.put(
-  "/users/bookmarks/:id",
+  "/api/users/password/:userId",
   login_required,
-  async function (req, res, next) {
+  async (req, res, next) => {
     try {
-      const user_id = req.params.id;
-      const { bookmarkId } = req.body;
-      // bookmark할 유저라면 add, 아니라면 remove
-      const isBookmark = req.query.bookmark;
-      // add라면 $addToSet, remove라면 $pull
-      const toUpdate = {
-        bookmarks: {
-          bookmarkId,
-          option: isBookmark === "add" ? "$addToSet" : "$pull",
-        },
-      };
+      const user_id = req.params.userId;
+      const password = req.body.password;
 
-      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
-      res.status(200).json(updatedUser.bookmarks);
-    } catch (error) {
-      next(error);
+      const updatedUser = await userAuthService.setUserPassword({
+        user_id,
+        password,
+      });
+
+      res.status(201).send({
+        success: true,
+        message: "비밀번호 변경 성공",
+        apiPath: "[PUT] /api/user/password/:userId",
+        data: updatedUser,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: "[PUT] /api/user/password/:userId",
+      });
+    }
+  }
+);
+
+userAuthRouter.put(
+  "/api/users/profileImage/:userId",
+  login_required,
+  profileImageUpload.single("image"),
+  async (req, res, next) => {
+    try {
+      const userId = req.params.userId;
+      const profileImage = req.file;
+
+      if (!profileImage) {
+        throw new Error("이미지 파일을 전송받지 못했습니다.");
+      }
+
+      const updatedUser = await userAuthService.setUserProfileImage({
+        userId,
+        profileImage,
+      });
+
+      res.status(201).send({
+        success: true,
+        updatedUser,
+        message: "프로필 이미지 변경 성공",
+        apiPath: "[PUT] /api/users/profileImage/:userId",
+      });
+    } catch (err) {
+      res.status(409).send({
+        success: false,
+        message: err.message,
+        apiPath: "[PUT] /api/users/profileImage/:userId",
+      });
     }
   }
 );
