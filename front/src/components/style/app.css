@@ -350,7 +350,7 @@ h6,
 }
 .singlepage-item-box .item-img {
   padding: 0 1.8rem;
-  width: 40rem;
+  width: 55rem;
   max-width: 100%;
   display: flex;
   margin-right: 4rem;
@@ -360,7 +360,7 @@ h6,
   flex-direction: column;
   justify-content: space-between;
   padding: 0 2rem;
-  width: 70%;
+  width: 50%;
 }
 .single-user-item-info .user-name {
   font-size: 2.3rem;
@@ -370,6 +370,7 @@ h6,
 }
 .single-user-item-info .user-description {
   font-size: 1.5rem;
+  width: 90%;
 }
 .skill-title {
   font-size: 2.2rem;
@@ -412,6 +413,13 @@ h6,
 /* Like-button */
 .like-container {
   padding: 0 1.8rem;
+  display: flex;
+}
+.like-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 2rem;
 }
 .like-button {
   display: flex;
@@ -441,6 +449,35 @@ h6,
 .like-button:active {
   transform: translateY(0.2rem);
 }
+.like-count {
+  font-size: 1.5rem;
+}
+.like-list-container {
+  font-size: 2rem;
+}
+.like-list li:not(hr) {
+  list-style: none;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.like-list-button {
+  display: inline-block;
+  width: 10rem;
+  background-color: #fff;
+  border: 1px solid #000;
+  padding: 0.5rem 1.5rem;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  color: #000;
+  transition: 0.2s all ease;
+  font-weight: 700;
+}
+
+.like-list-button:hover {
+  background-color: #000;
+  color: #fff;
+}
 
 /*--------------------------------------------------------------
 # mvp
@@ -455,7 +492,7 @@ h6,
 }
 .mvp-container {
   overflow: scroll;
-  height: 40rem;
+  height: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
