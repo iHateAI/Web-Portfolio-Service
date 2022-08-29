@@ -81,6 +81,7 @@ const tabMenuStyle = {
   textAlign: "center",
   fontSize: "2rem",
   fontFamily: "Raleway",
+  cursor: "pointer",
 };
 
 const tabStyle = {
