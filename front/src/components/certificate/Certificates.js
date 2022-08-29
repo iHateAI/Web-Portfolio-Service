@@ -29,7 +29,7 @@ function Certificates({ portfolioOwnerId, isEditable }) {
       <h3 className="mvp-title">자격증</h3>
       {certificates.map((certificate) => (
         <Certificate
-          key={certificate.id}
+          key={certificate._id}
           certificate={certificate}
           setCertificates={setCertificates}
           isEditable={isEditable}
