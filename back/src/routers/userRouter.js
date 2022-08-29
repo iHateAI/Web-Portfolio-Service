@@ -1,19 +1,19 @@
-import is from '@sindresorhus/is';
-import { Router } from 'express';
-import { login_required } from '../middlewares/login_required';
-import { userAuthService } from '../services/userService';
-import getMulter from '../utils/multer';
+import is from "@sindresorhus/is";
+import { Router } from "express";
+import { login_required } from "../middlewares/login_required";
+import { userAuthService } from "../services/userService";
+import getMulter from "../utils/multer";
 
 const userAuthRouter = Router();
 
 // 프로필 이미지에 변경 대한 multer
-const profileImageUpload = getMulter('src/uploads', 10);
+const profileImageUpload = getMulter("src/uploads", 10);
 
-userAuthRouter.post('/api/user/register', async function (req, res, next) {
+userAuthRouter.post("/api/user/register", async function (req, res, next) {
   try {
     if (is.emptyObject(req.body)) {
       throw new Error(
-        'headers의 Content-Type을 application/json으로 설정해주세요'
+        "headers의 Content-Type을 application/json으로 설정해주세요"
       );
     }
 
@@ -35,20 +35,20 @@ userAuthRouter.post('/api/user/register', async function (req, res, next) {
 
     res.status(201).send({
       success: true,
-      message: '유저 등록 성공',
-      apiPath: '[POST] /api/user/register',
+      message: "유저 등록 성공",
+      apiPath: "[POST] /api/user/register",
       data: newUser,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[POST] /api/user/register',
+      apiPath: "[POST] /api/user/register",
     });
   }
 });
 
-userAuthRouter.post('/api/user/login', async function (req, res, next) {
+userAuthRouter.post("/api/user/login", async function (req, res, next) {
   try {
     // req (request) 에서 데이터 가져오기
     const email = req.body.email;
@@ -63,21 +63,21 @@ userAuthRouter.post('/api/user/login', async function (req, res, next) {
 
     res.status(200).send({
       success: true,
-      message: '로그인 성공',
-      apiPath: '[POST] /api/user/login',
+      message: "로그인 성공",
+      apiPath: "[POST] /api/user/login",
       data: user,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[POST] /api/user/login',
+      apiPath: "[POST] /api/user/login",
     });
   }
 });
 
 userAuthRouter.get(
-  '/api/userlist',
+  "/api/userlist",
   login_required,
   async function (req, res, next) {
     try {
@@ -86,22 +86,22 @@ userAuthRouter.get(
 
       res.status(200).send({
         success: true,
-        message: '전체 유저 목록 불러오기 성공',
-        apiPath: '[GET] /api/userlist',
+        message: "전체 유저 목록 불러오기 성공",
+        apiPath: "[GET] /api/userlist",
         data: users,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[GET] /api/userlist',
+        apiPath: "[GET] /api/userlist",
       });
     }
   }
 );
 
 userAuthRouter.get(
-  '/api/user/current',
+  "/api/user/current",
   login_required,
   async function (req, res, next) {
     try {
@@ -117,22 +117,22 @@ userAuthRouter.get(
 
       res.status(200).send({
         success: true,
-        message: '유저 정보 불러오기 성공',
-        apiPath: '[GET] /api/user/current',
+        message: "유저 정보 불러오기 성공",
+        apiPath: "[GET] /api/user/current",
         data: currentUserInfo,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[GET] /api/user/current',
+        apiPath: "[GET] /api/user/current",
       });
     }
   }
 );
 
 userAuthRouter.put(
-  '/api/users/:id',
+  "/api/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -142,7 +142,7 @@ userAuthRouter.put(
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
       //const password = req.body.password ?? null;
-      
+
       const description = req.body.description ?? null;
 
       const toUpdate = { name, email, description };
@@ -156,22 +156,22 @@ userAuthRouter.put(
 
       res.status(200).send({
         success: true,
-        message: '유저 정보 업데이트 성공',
-        apiPath: '[PUT] /api/users/:userId',
+        message: "유저 정보 업데이트 성공",
+        apiPath: "[PUT] /api/users/:userId",
         data: updatedUser,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[PUT] /api/users/:userId',
+        apiPath: "[PUT] /api/users/:userId",
       });
     }
   }
 );
 
 userAuthRouter.get(
-  '/api/users/:id',
+  "/api/users/:id",
   login_required,
   async function (req, res, next) {
     try {
@@ -184,57 +184,69 @@ userAuthRouter.get(
 
       res.status(200).send({
         success: true,
-        message: '유저 정보 불러오기 성공',
-        apiPath: '[GET] /api/users/:id',
+        message: "유저 정보 불러오기 성공",
+        apiPath: "[GET] /api/users/:id",
         data: currentUserInfo,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[GET] /api/users/:id',
+        apiPath: "[GET] /api/users/:id",
       });
     }
   }
 );
 
 userAuthRouter.put(
-  '/api/users/password/:userId',
+  "/api/users/password/:userId",
   login_required,
   async (req, res, next) => {
     try {
       const user_id = req.params.userId;
-      const password = req.body.password;
+      const { currentPassword, newPassword } = req.body;
 
-      const updatedUser = await userAuthService.setUserPassword({ user_id, password });
+      const currentUser = await userAuthService.comparePassword({
+        user_id,
+        password: currentPassword,
+      });
+
+      if (!currentUser) {
+        throw new Error("비밀번호가 일치하지 않습니다.");
+      }
+
+      const updatedUser = await userAuthService.setUserPassword({
+        user_id,
+        password: newPassword,
+      });
 
       res.status(201).send({
         success: true,
-        message: '비밀번호 변경 성공',
-        apiPath: '[PUT] /api/user/password/:userId',
+        message: "비밀번호 변경 성공",
+        apiPath: "[PUT] /api/user/password/:userId",
         data: updatedUser,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[PUT] /api/user/password/:userId',
+        apiPath: "[PUT] /api/user/password/:userId",
       });
     }
   }
 );
 
 userAuthRouter.put(
-  '/api/users/profileImage/:userId',
+  "/api/users/profileImage/:userId",
   login_required,
-  profileImageUpload.single('image'),
+  profileImageUpload.single("image"),
   async (req, res, next) => {
     try {
       const userId = req.params.userId;
       const profileImage = req.file;
 
       if (!profileImage) {
-        throw new Error('이미지 파일을 전송받지 못했습니다.');
+        throw new Error("이미지 파일을 전송받지 못했습니다.");
       }
 
       const updatedUser = await userAuthService.setUserProfileImage({
@@ -245,21 +257,21 @@ userAuthRouter.put(
       res.status(201).send({
         success: true,
         updatedUser,
-        message: '프로필 이미지 변경 성공',
-        apiPath: '[PUT] /api/users/profileImage/:userId',
+        message: "프로필 이미지 변경 성공",
+        apiPath: "[PUT] /api/users/profileImage/:userId",
       });
     } catch (err) {
       res.status(409).send({
         success: false,
         message: err.message,
-        apiPath: '[PUT] /api/users/profileImage/:userId',
+        apiPath: "[PUT] /api/users/profileImage/:userId",
       });
     }
   }
 );
 
 // jwt 토큰 기능 확인용, 삭제해도 되는 라우터임.
-userAuthRouter.get('/afterlogin', login_required, function (req, res, next) {
+userAuthRouter.get("/afterlogin", login_required, function (req, res, next) {
   res
     .status(200)
     .send(

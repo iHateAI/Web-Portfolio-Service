@@ -29,7 +29,7 @@ function Network() {
       navigate("/login");
       return;
     }
-    Api.get("userlist").then((res) => {
+    Api.get("api", "userlist").then((res) => {
       const data = res.data.data;
       const userArr = [];
       data.forEach((v) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Card, Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 
 import * as Api from "../../api";
 import Education from "./Education";
@@ -13,7 +13,7 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   useEffect(() => {
     // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
     Api.get(`api/education`, `?userId=${userId}`).then((res) =>
-      setEducations(res.data)
+      setEducations(res.data.data)
     );
   }, [userId]);
 
