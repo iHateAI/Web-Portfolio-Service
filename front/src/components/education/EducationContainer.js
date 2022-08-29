@@ -16,7 +16,7 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
     Api.get(`api/education`, `?userId=${portfolioOwnerId}`).then((res) =>
       setEducations(res.data.data)
     );
-  }, []);
+  }, [portfolioOwnerId]);
 
   return (
     <div className="mvp-container">
