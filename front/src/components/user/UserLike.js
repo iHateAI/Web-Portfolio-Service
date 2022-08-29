@@ -5,14 +5,17 @@ function UserLike({ portfolioOwnerId, user }) {
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
 
+  // "api/users/유저id"  get요청
+  // setLikeCount,setLiked 를 response.data의 data로 세팅함.
   useEffect(() => {
-    Api.get("users", portfolioOwnerId).then((res) =>
-      setLikeCount(res.data.likeCount)
-    );
+    Api.get("api/users", portfolioOwnerId).then((res) => {
+      setLikeCount(res.data.data.likeCount);
+      console.log(res.data);
+    });
   }, [portfolioOwnerId]);
 
   useEffect(() => {
-    Api.get("like", portfolioOwnerId).then((res) =>
+    Api.get("api/like", portfolioOwnerId).then((res) =>
       setLiked(res.data.userStatus)
     );
   }, [portfolioOwnerId]);
@@ -21,8 +24,8 @@ function UserLike({ portfolioOwnerId, user }) {
     async (e) => {
       e.preventDefault();
 
-      const res = await Api.put(`like/${user}`, {
-        otherUserId: portfolioOwnerId,
+      const res = await Api.put(`api/like/${user}`, {
+        ownerUserId: portfolioOwnerId,
       });
       setLikeCount(res.data.likeCount);
       setLiked(res.data.status);
