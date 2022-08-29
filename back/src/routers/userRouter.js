@@ -265,18 +265,18 @@ userAuthRouter.put(
  * 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
  */
 userAuthRouter.put(
-  "/like/:id",
+  "/api/like/:id",
   login_required,
   async function (req, res, next) {
     try {
       // 좋아요를 클릭한 사람의 id
       const currentUserId = req.params.id;
       // 좋아요를 받은 사람의 id
-      const otherUserId = req.body.otherUserId;
+      const ownerUserId = req.body.ownerUserId;
       // 현재 상태를 나타내는 status와 likeCount 반환
       const updatedUser = await userAuthService.setLike({
         currentUserId,
-        otherUserId,
+        ownerUserId,
       });
 
       res.status(200).json(updatedUser);
@@ -291,17 +291,17 @@ userAuthRouter.put(
  */
 
 userAuthRouter.get(
-  "/like/:id",
+  "/api/like/:id",
   login_required,
   async function (req, res, next) {
     try {
       // 좋아요를 받은 사람의 id
-      const otherUserId = req.params.id;
+      const ownerUserId = req.params.id;
       const currentUserId = req.currentUserId;
       // console.log("get currentUserId : " , currentUserId);
       const updatedLike = await userAuthService.getLike({
         currentUserId,
-        otherUserId,
+        ownerUserId,
       });
       res.status(200).json(updatedLike);
     } catch (error) {
@@ -315,7 +315,7 @@ userAuthRouter.get(
  * 현재 상태를 나타내는 status와 likeCount 반환
  */
 userAuthRouter.get(
-  "/likelist/:id",
+  "/api/likelist/:id",
   login_required,
   async function (req, res, next) {
     try {
