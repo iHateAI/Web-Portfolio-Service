@@ -5,7 +5,7 @@ import UserModal from "../modal/UserModal";
 import UserImageProfileUpload from "./UserImageProfile";
 import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, setUser }) {
   const [
     isShow,
     onShowButtonClickEventHandler,
@@ -28,8 +28,12 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   };
 
   const handleImageUpload = async (uploadedImage) => {
-    const res = fetchUpdaeUserImage.call(this, uploadedImage, user);
-    console.log(res);
+    const res = await fetchUpdaeUserImage.call(this, uploadedImage, user);
+    const { success, updatedUser } = res;
+    if (success) {
+      setUser(updatedUser);
+      onCloseButtonClickEventHandler();
+    }
   };
 
   const UserInformation = () => {
@@ -89,7 +93,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 async function fetchUpdaeUserImage(uploadedImg, user) {
   const formData = new FormData();
   formData.append("image", uploadedImg);
-  const res = await Api.imageUpload(`users/${user.id}`, formData);
+  const res = await Api.imageUpload(
+    `api/users/profileImage/${user.id}`,
+    formData
+  );
   return res.data;
 }
 

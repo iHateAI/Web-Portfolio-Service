@@ -16,13 +16,13 @@ function Network() {
       navigate("/login");
       return;
     }
-    Api.get("userlist").then((res) => {
-      const data = res.data;
+    Api.get("api/userlist").then((res) => {
+      const data = res.data.data;
       const userArr = [];
       data.forEach((v) => {
         const image =
-          v.profileUrl || `${process.env.PUBLIC_URL}/images/profile.PNG`;
-        userArr.push({ ...v, profileUrl: image });
+          v.profileImageUrl || `${process.env.PUBLIC_URL}/images/profile.PNG`;
+        userArr.push({ ...v, profileImageUrl: image });
       });
       setUsers(userArr);
     });

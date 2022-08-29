@@ -4,7 +4,6 @@ import useModal from "../../hooks/useModal";
 import AwardCardPresenter from "./AwardCardPresenter";
 import AwardCardAddForm from "./AwardCardAddForm";
 import * as Api from "../../api";
-import TestData from "../../dev/testData";
 import ConfirmModal from "../modal/ConfirmModal";
 
 const AwardContainer = ({ userId, isEditable }) => {
@@ -20,9 +19,9 @@ const AwardContainer = ({ userId, isEditable }) => {
 
   useEffect(() => {
     // GET: api/award
-    Api.get(`api/award`, `?userId=${userId}`).then((res) =>
-      setAwardArray(res.data)
-    );
+    Api.get(`api/award`, `?userId=${userId}`).then((res) => {
+      setAwardArray(res.data.data);
+    });
   }, [userId]);
 
   const hanldeEditButtonClick = async (editedAward) => {
@@ -31,8 +30,8 @@ const AwardContainer = ({ userId, isEditable }) => {
       title: editedAward.title,
       detail: editedAward.detail,
     });
-    const res = await Api.get("api/award");
-    setAwardArray(res.data);
+    const res = await Api.get("api/award", `?userId=${userId}`);
+    setAwardArray(res.data.data);
   };
 
   const handleAddButtonClick = () => {
@@ -48,8 +47,8 @@ const AwardContainer = ({ userId, isEditable }) => {
     };
     const result = await Api.post("api/award", newAwardObj);
     result.user_id = userId;
-    const res = await Api.get("api/award");
-    setAwardArray(res.data);
+    const res = await Api.get("api/award", `?userId=${userId}`);
+    setAwardArray(res.data.data);
     setIsAddMode(false);
   };
 
@@ -58,10 +57,12 @@ const AwardContainer = ({ userId, isEditable }) => {
   };
 
   const handleConfirmCheckButtonClick = async (checked) => {
-    // POST: awards/delete/:id
+    // DELETE: api/award/:id
     if (checked) {
-      const result = await TestData.deleteAward(userId, deleteAward);
-      setAwardArray(result);
+      await Api.delete("api/award", deleteAward._id);
+      setAwardArray((prev) =>
+        prev.filter((item) => item._id !== deleteAward._id)
+      );
       setDeleteAward(null);
     }
   };
@@ -73,7 +74,7 @@ const AwardContainer = ({ userId, isEditable }) => {
 
   return (
     <div className="mvp-container">
-      <h3 className="mvp-title">Ward</h3>
+      <h3 className="mvp-title">Award</h3>
       {awardArray.map((award) => (
         <AwardCardPresenter
           key={award._id}

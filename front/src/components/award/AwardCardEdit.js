@@ -17,6 +17,8 @@ const AwardCardEdit = ({
     onCloseButtonClickEventHandler,
   ] = useModal(false);
 
+  const { title, detail } = values || {};
+
   const handleSubmitButtonClick = (e) => {
     e.preventDefault();
     if (!isValid.all) {
@@ -40,7 +42,7 @@ const AwardCardEdit = ({
           <Form.Control
             type="text"
             placeholder="수상내역"
-            value={values?.title}
+            value={title}
             name="title"
             onChange={handleChange}
           />
@@ -54,7 +56,7 @@ const AwardCardEdit = ({
           <Form.Control
             type="text"
             placeholder="수상내역 설명"
-            value={values?.detail}
+            value={detail}
             name="detail"
             onChange={handleChange}
           />

@@ -18,8 +18,8 @@ function LoginForm() {
     e.preventDefault();
 
     try {
-      const res = await Api.post("user/login", { ...values });
-      const user = res.data;
+      const res = await Api.post("api/user/login", { ...values });
+      const user = res.data.data;
       const jwtToken = user.token;
       sessionStorage.setItem("userToken", jwtToken);
       dispatch({
