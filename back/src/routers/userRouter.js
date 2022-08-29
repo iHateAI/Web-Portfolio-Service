@@ -262,11 +262,11 @@ userAuthRouter.put(
 );
 
 userAuthRouter.put(
-  "/users/bookmarks/:userId",
+  "/users/bookmarks/:id",
   login_required,
   async function (req, res, next) {
     try {
-      const userId = req.params.userId;
+      const user_id = req.params.id;
       const { bookmarkId } = req.body;
       // bookmark할 유저라면 add, 아니라면 remove
       const isBookmark = req.query.bookmark;
@@ -278,19 +278,10 @@ userAuthRouter.put(
         },
       };
 
-      const updatedUser = await userAuthService.setUser({ userId, toUpdate });
-      res.status(200).send({
-        success: true,
-        message: "북마크 업데이트 성공",
-        bookmarks: updatedUser.bookmarks,
-        apiPath: "[PUT] /api/users/bookmarks/:userId",
-      });
-    } catch (err) {
-      res.status(404).send({
-        success: false,
-        message: err.message,
-        apiPath: "[POST] /api/user/login",
-      });
+      const updatedUser = await userAuthService.setUser({ user_id, toUpdate });
+      res.status(200).json(updatedUser.bookmarks);
+    } catch (error) {
+      next(error);
     }
   }
 );
