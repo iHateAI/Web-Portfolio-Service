@@ -5,11 +5,7 @@ import useModal from "../../hooks/useModal";
 import AlertModal from "../modal/AlertModal";
 import { useForm } from "../../hooks/useForm";
 
-function EducationAddForm({
-  portfolioOwnerId,
-  setEducations,
-  setAddEducation,
-}) {
+function EducationAddForm({ setEducations, setAddEducation }) {
   //학교 이름, 전공, 학력 상태 세팅
   const [values, isValid, handleChange] = useForm({
     university: "",
@@ -25,7 +21,7 @@ function EducationAddForm({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const userId = portfolioOwnerId;
+
     if (!isValid.all) {
       onShowButtonClickEventHandler();
       return;
