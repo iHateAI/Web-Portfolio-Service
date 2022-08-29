@@ -11,10 +11,23 @@ class projectService {
       userId,
     });
 
-    project.startDate = dateToString(project.startDate);
-    project.endDate = dateToString(project.endDate);
+    /**
+     * 여기 수정할거임 밑에
+     */
 
-    return project;
+    const _title = project.title;
+    const _detail = project.detail;
+    const _startDate = dateToString(project.startDate);
+    const _endDate = dateToString(project.endDate);
+    const _id = project._id;
+
+    return {
+      title: _title,
+      detail: _detail,
+      startDate: _startDate,
+      endDate: _endDate,
+      _id,
+    };
   }
 
   static async getProjectInfo(userId) {
@@ -35,7 +48,6 @@ class projectService {
 
   static async setProjectInfo({ projectId, toUpdate }) {
     const hasProject = await Project.findByProjectId(projectId);
-
 
     if (!hasProject) {
       throw new Error('projectId에 대응하는 데이터가 존재하지 않습니다.');

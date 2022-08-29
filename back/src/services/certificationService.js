@@ -18,7 +18,22 @@ class certificationService {
     certification.certificationDate = dateToString(
       certification.certificationDate
     );
-    return certification;
+
+    /**
+     * 여기 밑에 수정할거임
+     */
+
+    const _title = certification.title;
+    const _detail = certification.detail;
+    const _certificationDate = dateToString(certification.certificationDate);
+    const _id = certification._id;
+
+    return {
+      title: _title,
+      detail: _detail,
+      certificationDate: _certificationDate,
+      _id,
+    };
   }
 
   static async getCertificationInfo(userId) {
@@ -29,9 +44,11 @@ class certificationService {
     }
 
     certifications = certifications.map((certification) => {
-      certification.certificationDate = dateToString(certification.certificationDate);
+      certification.certificationDate = dateToString(
+        certification.certificationDate
+      );
       return certification;
-    })
+    });
 
     return certifications;
   }
@@ -53,8 +70,13 @@ class certificationService {
       ...(certificationDate && { certificationDate }),
     };
 
-    const certification = await Certification.update({certificationId, newValues});
-    certification.certificationDate = dateToString(certification.certificationDate);
+    const certification = await Certification.update({
+      certificationId,
+      newValues,
+    });
+    certification.certificationDate = dateToString(
+      certification.certificationDate
+    );
 
     return certification;
   }

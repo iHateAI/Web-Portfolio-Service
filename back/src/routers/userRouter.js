@@ -33,7 +33,7 @@ userAuthRouter.post('/user/register', async function (req, res, next) {
       throw new Error(newUser.errorMessage);
     }
 
-    res.status(201).json({
+    res.status(201).send({
       success: true,
       message: '유저 등록 성공',
       apiPath: '[POST] /api/user/register',
@@ -156,14 +156,14 @@ userAuthRouter.put(
       res.status(200).send({
         success: true,
         message: '유저 정보 업데이트 성공',
-        apiPath: '[PUT] /api/users/:id',
+        apiPath: '[PUT] /api/users/:userId',
         data: updatedUser,
       });
     } catch (err) {
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[PUT] /api/users/:id',
+        apiPath: '[PUT] /api/users/:userId',
       });
     }
   }
@@ -198,7 +198,33 @@ userAuthRouter.get(
 );
 
 userAuthRouter.put(
-  '/users/profileImage/:userId',
+  '/user/password/:id',
+  login_required,
+  async (req, res, next) => {
+    try {
+      const user_id = req.params.id;
+      const password = req.body.password;
+
+      const updatedUser = await userAuthService.setUserPassword({ user_id, password });
+
+      res.status(201).send({
+        success: true,
+        message: '비밀번호 변경 성공',
+        apiPath: '[PUT] /api/user/password/:userId',
+        data: updatedUser,
+      });
+    } catch (err) {
+      res.status(404).send({
+        success: false,
+        message: err.message,
+        apiPath: '[PUT] /api/user/password/:userId',
+      });
+    }
+  }
+);
+
+userAuthRouter.put(
+  '/user/profileImage/:userId',
   login_required,
   profileImageUpload.single('image'),
   async (req, res, next) => {

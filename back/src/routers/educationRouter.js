@@ -97,7 +97,9 @@ educationRouter.delete(
         success: true,
         message: '데이터 삭제 성공',
         apiPath: '[DELETE] /api/education/:educationId',
-        deletedCount,
+        data: {
+          deletedCount,
+        },
       });
     } catch (err) {
       res.status(404).send({

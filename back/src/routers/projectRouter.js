@@ -94,7 +94,9 @@ projectRouter.delete('/:projectId', async (req, res, next) => {
       success: true,
       message: '데이터 삭제 성공',
       apiPath: '[DELETE] /api/project/:projectId',
-      deletedCount,
+      data: {
+        deletedCount,
+      },
     });
   } catch (err) {
     res.status(404).send({

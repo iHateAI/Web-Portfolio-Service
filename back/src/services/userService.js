@@ -84,6 +84,7 @@ class userAuthService {
       return { errorMessage };
     }
 
+
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
     if (toUpdate.name) {
       const fieldToUpdate = 'name';
@@ -92,6 +93,9 @@ class userAuthService {
     }
 
     if (toUpdate.email) {
+      // 이메일 중복 체크
+      // const hasEmail = await User.findByEmail({})
+
       const fieldToUpdate = 'email';
       const newValue = toUpdate.email;
       user = await User.update({ user_id, fieldToUpdate, newValue });
@@ -112,7 +116,21 @@ class userAuthService {
     return user;
   }
 
-  static async setUserProfileImage({userId, profileImage}) {
+  static async setUserPassword({ user_id, password }) {
+    let user = await User.findById({ user_id });
+
+    if (!user) {
+      throw new Error('가입되지 않은 유저입니다.');
+    }
+
+    const fieldToUpdate = 'password';
+    const newValue = await bcrypt.hash(password, 10);
+    user = await User.update({user_id, fieldToUpdate, newValue});
+
+    return user;
+  } 
+
+  static async setUserProfileImage({ userId, profileImage }) {
     const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${profileImage.filename}`;
     const fieldToUpdate = 'profileImageUrl';
     const newValue = profileImageUrl;
@@ -122,7 +140,7 @@ class userAuthService {
       fieldToUpdate,
       newValue,
     });
-    
+
     return user;
   }
 
