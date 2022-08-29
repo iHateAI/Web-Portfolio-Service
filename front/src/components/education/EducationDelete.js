@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
-// import * as Api from "../../testApi";
 import * as Api from "../../api";
 
 // Education 삭제

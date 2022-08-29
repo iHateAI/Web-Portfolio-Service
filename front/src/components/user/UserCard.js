@@ -5,7 +5,7 @@ import UserModal from "../modal/UserModal";
 import UserImageProfileUpload from "./UserImageProfile";
 import * as Api from "../../api";
 
-function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
+function UserCard({ user, setIsEditing, isEditable, isNetwork, setUser }) {
   const [
     isShow,
     onShowButtonClickEventHandler,
@@ -28,14 +28,14 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
   };
 
   const handleImageUpload = async (uploadedImage) => {
-    const res = fetchUpdaeUserImage.call(this, uploadedImage, user);
-    // 서버 API가 수정이 완료되면 기능을 완성하도록 합니다.
-    console.log(res);
+    const res = await fetchUpdaeUserImage.call(this, uploadedImage, user);
+    const { success, updatedUser } = res;
+    if (success) {
+      setUser(updatedUser);
+      onCloseButtonClickEventHandler();
+    }
   };
 
-  // UserInformation Component
-  // 여기서만 한 번 쓰고 사용하지 않음.
-  // jsx 부분의 코드 길이가 길어지므로 이렇게 사용.
   const UserInformation = () => {
     return (
       <div className="single-user-item-info">
@@ -93,7 +93,10 @@ function UserCard({ user, setIsEditing, isEditable, isNetwork }) {
 async function fetchUpdaeUserImage(uploadedImg, user) {
   const formData = new FormData();
   formData.append("image", uploadedImg);
-  const res = await Api.imageUpload(`users/${user.id}`, formData);
+  const res = await Api.imageUpload(
+    `api/users/profileImage/${user.id}`,
+    formData
+  );
   return res.data;
 }
 
