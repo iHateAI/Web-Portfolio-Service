@@ -7,42 +7,103 @@ const projectRouter = Router();
 // 프로젝트 이력 추가 라우터
 projectRouter.post('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.currentUserId;
+    const data = {
+      title: req.body.title,
+      detail: req.body.detail,
+      startDate: req.body.startDate,
+      endDate: req.body.endDate,
+      userId: req.currentUserId,
+    };
 
-    const data = { ...req.body, userId };
     const registeredProject = await projectService.addProjectInfo(data);
 
-    res.status(200).send(registeredProject);
+    res.status(201).send({
+      success: true,
+      message: '데이터 등록 성공',
+      apiPath: '[POST] /api/project',
+      data: registeredProject,
+    });
   } catch (err) {
-    next(err);
+    res.status(400).send({
+      success: false,
+      message: err.message,
+      apiPath: '[POST] /api/project',
+    });
   }
 });
 
 // 프로젝트 이력 조회 라우터
 projectRouter.get('/', login_required, async (req, res, next) => {
   try {
-    const userId = req.query.userId ? req.query.userId : req.currentUserId;
+    const userId = req.query.userId ?? req.currentUserId;
+
     const project = await projectService.getProjectInfo(userId);
-    if (project.error) {
-      console.log(project.error.message);
-      throw project.error;
-    }
-    res.status(200).send(project);
+
+    res.status(200).send({
+      success: true,
+      message: '데이터 불러오기 성공',
+      apiPath: '[GET] /api/project',
+      data: project,
+    });
   } catch (err) {
-    next(err);
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: '[GET] /api/project',
+    });
   }
 });
 
 // 프로젝트 이력 수정 라우터
 projectRouter.put('/:projectId', login_required, async (req, res, next) => {
   try {
-    const { projectId } = req.params;
-    const data = { ...req.body, projectId };
-    const modifiedProject = await projectService.setProjectInfo(data);
+    const projectId = req.params.projectId;
+    const title = req.body.title ?? null;
+    const detail = req.body.detail ?? null;
+    const startDate = req.body.startDate ?? null;
+    const endDate = req.body.endDate ?? null;
 
-    res.status(200).send(modifiedProject);
+    const toUpdate = { title, detail, startDate, endDate };
+    const modifiedProject = await projectService.setProjectInfo({
+      projectId,
+      toUpdate,
+    });
+
+    res.status(201).send({
+      success: true,
+      message: '데이터 수정 성공',
+      apiPath: '[PUT] /api/project/:projectId',
+      data: modifiedProject,
+    });
   } catch (err) {
-    next(err);
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: '[PUT] /api/project/:projectId',
+    });
+  }
+});
+
+projectRouter.delete('/:projectId', async (req, res, next) => {
+  try {
+    const { projectId } = req.params;
+    
+    const deletedCount = await projectService.deleteProjectInfo(projectId);
+
+    res.status(200).send({
+      success: true,
+      message: '데이터 삭제 성공',
+      apiPath: '[DELETE] /api/project/:projectId',
+      data: {
+        deletedCount,
+      },
+    });
+  } catch (err) {
+    res.status(404).send({
+      success: false,
+      message: err.message,
+      apiPath: '[DELETE] /api/project/:projectId',
+    });
   }
 });
 
