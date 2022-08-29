@@ -2,7 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
-
 import * as Api from "../../api";
 
 function RegisterForm() {
@@ -12,7 +11,6 @@ function RegisterForm() {
     password: "",
     confirmPassword: "",
     name: "",
-    nickname: "",
   });
 
   const isPasswordSame = values.password === values.confirmPassword;
@@ -21,16 +19,12 @@ function RegisterForm() {
     e.preventDefault();
 
     try {
-      // "user/register" 엔드포인트로 post요청함.
-      const { email, password, name, nickname } = values;
+      const { email, password, name } = values;
       await Api.post("user/register", {
         email,
         password,
         name,
-        nickname,
       });
-
-      // 로그인 페이지로 이동함.
       navigate("/login");
     } catch (err) {
       console.log("회원가입에 실패하였습니다.", err);
@@ -50,7 +44,7 @@ function RegisterForm() {
         <Container>
           <Row className="justify-content-md-center mt-5">
             <Col lg={8}>
-              <Form onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit} className="register-form">
                 <Form.Group controlId="formBasicEmail">
                   <Form.Label>이메일 주소</Form.Label>
                   <Form.Control
@@ -110,21 +104,6 @@ function RegisterForm() {
                   {!isValid.name && (
                     <Form.Text className="text-danger">
                       이름은 2글자 이상으로 설정해 주세요.
-                    </Form.Text>
-                  )}
-                </Form.Group>
-
-                <Form.Group controlId="formBasicNickname" className="mt-3">
-                  <Form.Label>닉네임</Form.Label>
-                  <Form.Control
-                    type="text"
-                    autoComplete="off"
-                    name="nickname"
-                    onChange={handleChange}
-                  />
-                  {!isValid.nickname && (
-                    <Form.Text className="text-danger">
-                      닉네임은 1글자 이상으로 설정해 주세요.
                     </Form.Text>
                   )}
                 </Form.Group>

@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Button, Row, Col } from 'react-bootstrap';
+import React, { useEffect, useState } from "react";
+import { Card, Button, Row, Col } from "react-bootstrap";
 
-import * as Api from '../../api';
-// import * as Api from "../../testApi";
-import Education from './Education';
-import EducationAddForm from './EducationAddForm';
+import * as Api from "../../api";
+import Education from "./Education";
+import EducationAddForm from "./EducationAddForm";
 
 function EducationContainer({ portfolioOwnerId, isEditable }) {
   //useState 훅을통해 educations, addEducation 상태를 생성함.
@@ -14,13 +13,13 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   useEffect(() => {
     // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
     Api.get(`api/education`, `?userId=${userId}`).then((res) =>
-      setEducations(res.data),
+      setEducations(res.data)
     );
   }, [userId]);
 
   return (
-    <div className='mvp-container'>
-      <h3 className='mvp-title'>Education</h3>
+    <div className="mvp-container">
+      <h3 className="mvp-title">Education</h3>
       {educations.map((education) => (
         <Education
           key={education._id}
@@ -37,9 +36,9 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
         />
       )}
       {isEditable && (
-        <Row className='text-center mb-4'>
+        <Row className="text-center mb-4">
           <Col>
-            <Button size='md' onClick={() => setAddEducation(true)}>
+            <Button size="md" onClick={() => setAddEducation(true)}>
               +
             </Button>
           </Col>

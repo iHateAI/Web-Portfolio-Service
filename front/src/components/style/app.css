@@ -269,33 +269,8 @@ h6,
   margin-top: 2rem;
   font-size: 1.5rem;
 }
-.network-container {
-  display: flex;
-  justify-content: center;
-}
-.network-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 1320px;
-  animation: fadein 3s;
-  -moz-animation: fadein 3s; /* Firefox */
-  -webkit-animation: fadein 3s; /* Safari and Chrome */
-  -o-animation: fadein 3s; /* Opera */
-  margin-bottom: 4rem;
-}
-.network-content .title-container {
-  width: 100%;
-  padding: 1.8rem;
-}
-.network-title {
-  font-size: 3rem;
-}
-
-.network-sub-title {
-  width: 40%;
-  margin-top: 2rem;
-  font-size: 1.5rem;
+.login-form {
+  font-size: 150%;
 }
 
 /*--------------------------------------------------------------
@@ -323,6 +298,9 @@ h6,
   width: 40%;
   margin-top: 2rem;
   font-size: 1.5rem;
+}
+.register-form {
+  font-size: 150%;
 }
 
 /*--------------------------------------------------------------
