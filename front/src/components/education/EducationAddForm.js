@@ -33,7 +33,7 @@ function EducationAddForm({ setEducations, setAddEducation }) {
     });
 
     // "educationlist/유저id"  get요청
-    const res = await Api.get(`api/education/`);
+    const res = await Api.get(`api/education`);
     // educations를 response의 data로 세팅함.
     setEducations(res.data.data);
 

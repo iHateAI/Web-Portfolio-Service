@@ -11,10 +11,11 @@ function EducationDelete({ education, setEducations }) {
   const handleShow = () => setShow(true);
   const handleDelete = async () => {
     await Api.delete("api/education", education._id);
+    setEducations((current) => {
+      const newList = current.filter((edu) => edu._id !== education._id);
+      return newList;
+    });
 
-    const res = await Api.get("api/education");
-    const updatedEducation = res.data;
-    setEducations(updatedEducation);
     setShow(false);
   };
 

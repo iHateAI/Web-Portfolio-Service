@@ -30,6 +30,7 @@ function User({ portfolioOwnerId, isEditable }) {
           setIsEditing={setIsEditing}
           isEditable={isEditable}
           setUser={setUser}
+          portfolioOwnerId={portfolioOwnerId}
         />
       )}
     </React.Fragment>

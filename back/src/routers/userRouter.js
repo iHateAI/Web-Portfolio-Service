@@ -269,6 +269,76 @@ userAuthRouter.put(
     }
   }
 );
+/*
+ * likes 관리 컴포넌트
+ * 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
+ */
+userAuthRouter.put(
+  "/api/like/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      // 좋아요를 클릭한 사람의 id
+      const currentUserId = req.params.id;
+      // 좋아요를 받은 사람의 id
+      const ownerUserId = req.body.ownerUserId;
+      // 현재 상태를 나타내는 status와 likeCount 반환
+      const updatedUser = await userAuthService.setLike({
+        currentUserId,
+        ownerUserId,
+      });
+
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+/*
+ * likeCount 반환 컴포넌트
+ * 현재 상태를 나타내는 status와 likeCount 반환
+ */
+
+userAuthRouter.get(
+  "/api/like/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      // 좋아요를 받은 사람의 id
+      const ownerUserId = req.params.id;
+      const currentUserId = req.currentUserId;
+      // console.log("get currentUserId : " , currentUserId);
+      const updatedLike = await userAuthService.getLike({
+        currentUserId,
+        ownerUserId,
+      });
+      res.status(200).json(updatedLike);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+/*
+ * 좋아요를 누른 user 목록 반환 컴포넌트
+ * 현재 상태를 나타내는 status와 likeCount 반환
+ */
+userAuthRouter.get(
+  "/api/likelist/:id",
+  login_required,
+  async function (req, res, next) {
+    try {
+      const userId = req.params.id;
+
+      const updatedData = await userAuthService.getlikeList({
+        userId,
+      });
+      res.status(200).json(updatedData);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 
 userAuthRouter.put(
   "/users/bookmarks/:id",

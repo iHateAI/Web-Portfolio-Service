@@ -5,10 +5,10 @@ class Like {
    * create()
    * 좋아요 버튼을 클릭한 user와 좋아요를 받은 user로 like 객체 생성
    */
-  static async create({ visitedId, ownerId }) {
+  static async create({ currentUser, ownerUser }) {
     const createdNewLike = await LikeModel.create({
-      visitedId,
-      ownerId,
+      currentUser,
+      ownerUser,
     });
     return createdNewLike;
   }
@@ -17,9 +17,9 @@ class Like {
    * findByUser()
    * 좋아요 버튼을 클릭한 user와 좋아요를 받은 user의 like 객체가 LikeModel안에 있다면 like 객체 반환/ 아니면 null 반환
    */
-  static async findByUser({ visitedId, ownerId }) {
+  static async findByUser({ currentUser, ownerUser }) {
     const like = await LikeModel.findOne({
-      $and: [{ visitedId }, { ownerId }],
+      $and: [{ currentUser }, { ownerUser }],
     });
     return like;
   }
