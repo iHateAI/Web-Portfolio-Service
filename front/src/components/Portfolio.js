@@ -3,7 +3,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserStateContext } from "../App";
 import * as Api from "../api";
 import User from "./user/User";
-import UserLike from "./user/UserLike";
 import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
 import Projects from "./project/Projects";
@@ -62,12 +61,6 @@ function Portfolio() {
             isEditable={portfolioOwner.id === userState.user?.id}
           />
           {userState.user && <BookmarkButton user={portfolioOwner} />}
-        </div>
-        <div className="like-container">
-          <UserLike
-            portfolioOwnerId={portfolioOwner.id}
-            user={userState.user?.id}
-          ></UserLike>
         </div>
 
         <div className="mvps-container">
