@@ -16,8 +16,8 @@ class User {
     return user;
   }
 
-  static async findAll() {
-    const users = await UserModel.find({});
+  static async findAll(query) {
+    const users = await UserModel.find(query);
     return users;
   }
 

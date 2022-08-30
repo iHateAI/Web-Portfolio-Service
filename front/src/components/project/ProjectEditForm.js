@@ -3,10 +3,17 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { useForm } from "../../hooks/useForm";
 
+const dateValidate = (start, end) => {
+  const [startDate, endDate] = [new Date(start), new Date(end)];
+  if (startDate > endDate) return false;
+  return true;
+};
+
 function ProjectEditForm({ project, editClick, getUser }) {
   const [values, isValid, handleChange] = useForm({ ...project });
 
   const { title, detail, startDate, endDate, all } = isValid || {};
+  const isCorrectDates = dateValidate(values.startDate, values.endDate);
 
   const handlePostProject = async () => {
     if (all) {
@@ -40,7 +47,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
           value={values?.detail}
           onChange={handleChange}
         />
-        {detail && (
+        {detail || (
           <Form.Text className="text-danger">
             상세내역은 5글자 이상이여야 합니다.
           </Form.Text>
@@ -65,9 +72,9 @@ function ProjectEditForm({ project, editClick, getUser }) {
             />
           </Col>
         </Row>
-        {startDate || endDate || (
+        {(startDate && endDate && isCorrectDates) || (
           <Form.Text className="text-danger">
-            시작일과 종료일을 기입해주세요.
+            시작일과 종료일을 바르게 기입해주세요.
           </Form.Text>
         )}
       </Form.Group>

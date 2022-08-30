@@ -35,7 +35,10 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
         <UserInformation />
         <img
           className="item-img-style"
-          src={user.profileImageUrl}
+          src={
+            user.profileImageUrl ||
+            `${process.env.PUBLIC_URL}/images/profile.PNG`
+          }
           alt="userImg"
         />
       </div>

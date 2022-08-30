@@ -1,8 +1,8 @@
 import React from "react";
 import { Row } from "react-bootstrap";
-import TestData from "../../dev/testData";
 import useModal from "../../hooks/useModal";
 import ConfirmModal from "../modal/ConfirmModal";
+import * as Api from "../../api";
 
 function ProjectCard({ project, isEditable, editClick, getUser }) {
   const [
@@ -15,7 +15,7 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
 
   const handleDeleteProject = async (bool) => {
     // await deleteProject(key);
-    await TestData.deleteProject(project._id);
+    await Api.delete("api/project", project._id);
     getUser();
   };
 

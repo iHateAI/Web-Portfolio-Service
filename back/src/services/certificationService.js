@@ -1,5 +1,5 @@
-import { Certification } from '../db';
-import dateToString from '../utils/dateObjToString';
+import { Certification } from "../db";
+import dateToString from "../utils/dateObjToString";
 
 class certificationService {
   static async addCertificationInfo({
@@ -35,9 +35,10 @@ class certificationService {
   static async getCertificationInfo(userId) {
     let certifications = await Certification.findByUserId(userId);
 
-    if (certifications.length < 1) {
-      throw new Error('자격증 정보가 존재하지 않습니다.');
-    }
+    if (certifications.length < 1) return [];
+    // {
+    //   throw new Error('자격증 정보가 존재하지 않습니다.');
+    // }
 
     certifications = certifications.map((certification) => {
       certification.certificationDate = dateToString(
@@ -55,7 +56,7 @@ class certificationService {
     );
 
     if (!hasCertification) {
-      throw new Error('certificationId에 대응하는 데이터가 존재하지 않습니다.');
+      throw new Error("certificationId에 대응하는 데이터가 존재하지 않습니다.");
     }
 
     const { title, detail, certificationDate } = toUpdate;
@@ -82,7 +83,7 @@ class certificationService {
       certificationId
     );
     if (certification.deletedCount < 1) {
-      throw new Error('존재하지 않는 도큐먼트입니다.');
+      throw new Error("존재하지 않는 도큐먼트입니다.");
     }
     return certification.deletedCount;
   }

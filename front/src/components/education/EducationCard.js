@@ -1,7 +1,7 @@
 import React from "react";
 import EducationDelete from "./EducationDelete";
 
-function EducationCard({ isEditable, setIsEditing, education, setEducations }) {
+function EducationCard({ isEditable, setIsEditing, education, getEducation }) {
   const { university, major, status } = education;
   return (
     <div className="mvp-content-detail">
@@ -19,10 +19,7 @@ function EducationCard({ isEditable, setIsEditing, education, setEducations }) {
           >
             EDIT
           </button>
-          <EducationDelete
-            education={education}
-            setEducations={setEducations}
-          />
+          <EducationDelete education={education} getEducation={getEducation} />
         </div>
       )}
     </div>
