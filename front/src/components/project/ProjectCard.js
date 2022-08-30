@@ -4,7 +4,12 @@ import useModal from "../../hooks/useModal";
 import ConfirmModal from "../modal/ConfirmModal";
 import * as Api from "../../api";
 
-function ProjectCard({ project, isEditable, editClick, getUser }) {
+function ProjectCard({
+  project,
+  isEditable,
+  onEditButtonClickEvent,
+  fetchProjects,
+}) {
   const [
     isShow,
     onShowButtonClickEventHandler,
@@ -14,9 +19,8 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
   const { title, detail, startDate, endDate } = project || {};
 
   const handleDeleteProject = async (bool) => {
-    // await deleteProject(key);
     await Api.delete("api/project", project._id);
-    getUser();
+    fetchProjects();
   };
 
   return (
@@ -32,7 +36,7 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
       </Row>
       {isEditable && (
         <div className="mvp-management">
-          <button className="mvp-edit-button" onClick={editClick}>
+          <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
             편집
           </button>
           <button

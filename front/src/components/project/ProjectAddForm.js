@@ -9,7 +9,7 @@ const dateValidate = (start, end) => {
   return true;
 };
 
-function ProjectAddForm({ onClick, getUser }) {
+function ProjectAddForm({ onEditButtonClickEvent, fetchProjects }) {
   const [values, isValid, handleChange] = useForm({
     title: "",
     detail: "",
@@ -23,8 +23,8 @@ function ProjectAddForm({ onClick, getUser }) {
   const handlePutProject = async () => {
     if (all && isCorrectDates) {
       await Api.post("api/project", { ...values });
-      getUser();
-      onClick();
+      fetchProjects();
+      onEditButtonClickEvent();
     }
   };
 
@@ -84,7 +84,7 @@ function ProjectAddForm({ onClick, getUser }) {
         >
           확인
         </Button>
-        <Button variant="secondary" onClick={onClick}>
+        <Button variant="secondary" onClick={onEditButtonClickEvent}>
           취소
         </Button>
       </Form.Group>
