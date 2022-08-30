@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
@@ -12,6 +12,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ function LoginForm() {
       });
       navigate("/", { replace: true });
     } catch (err) {
-      console.log("로그인에 실패하였습니다.\n", err);
+      setError(true);
     }
   };
 
@@ -76,7 +77,11 @@ function LoginForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-
+                {error && (
+                  <Form.Text className="text-danger">
+                    잘못된 이메일 또는 비밀번호입니다.
+                  </Form.Text>
+                )}
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
                     <Button
