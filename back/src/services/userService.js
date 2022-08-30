@@ -88,8 +88,6 @@ class userAuthService {
       return { errorMessage };
     }
 
-    console.log(toUpdate.email);
-
     // 업데이트 대상에 name이 있다면, 즉 name 값이 null 이 아니라면 업데이트 진행
     if (toUpdate.name) {
       const fieldToUpdate = "name";
@@ -101,7 +99,7 @@ class userAuthService {
       // 이메일 중복 체크
       const hasEmail = await User.findByEmail({ email: toUpdate.email });
 
-      if (hasEmail) {
+      if (hasEmail.id !== user.id) {
         throw new Error("이미 존재하는 이메일입니다.");
       }
 
@@ -111,18 +109,21 @@ class userAuthService {
     }
 
     if (toUpdate.password) {
+      console.log("test2");
       const fieldToUpdate = "password";
       const newValue = bcrypt.hash(toUpdate.password, 10);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.description) {
+      console.log("test3");
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.bookmarks) {
+      console.log("test4");
       const fieldToUpdate = [toUpdate.bookmarks.option];
       const newValue = {
         bookmarks: toUpdate.bookmarks.bookmarkId,

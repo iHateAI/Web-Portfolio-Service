@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
@@ -12,6 +12,7 @@ function RegisterForm() {
     confirmPassword: "",
     name: "",
   });
+  const [error, setError] = useState(false);
 
   const isPasswordSame = values.password === values.confirmPassword;
 
@@ -27,7 +28,7 @@ function RegisterForm() {
       });
       navigate("/login");
     } catch (err) {
-      console.log("회원가입에 실패하였습니다.", err);
+      setError(true);
     }
   };
 
@@ -107,7 +108,11 @@ function RegisterForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-
+                {error && (
+                  <Form.Text className="text-danger">
+                    이미 사용중인 이메일입니다.
+                  </Form.Text>
+                )}
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
                     <Button

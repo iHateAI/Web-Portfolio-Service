@@ -43,7 +43,10 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     const userObj = { ...values, id: user.id };
     const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
     setUser({
-      ...updatedUser,
+      ...updatedUser.data,
+      profileImageUrl:
+        updatedUser.data.profileImageUrl ||
+        `${process.env.PUBLIC_URL}/images/profile.PNG`,
     });
     setIsEditing(false);
   };

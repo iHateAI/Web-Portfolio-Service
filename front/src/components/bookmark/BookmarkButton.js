@@ -1,8 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
-
-// import * as DB from "./testdb";
+import Icon from "../icon/Icon";
 
 const BookmarkButton = ({ user }) => {
   const userState = useContext(UserStateContext);
@@ -13,13 +12,6 @@ const BookmarkButton = ({ user }) => {
   const userCardId = user.id;
 
   const setInitialToggleBookmark = async () => {
-    // const res = DB.get(loginUserId);
-    // if (!res) return;
-    // if (res.includes(userCardId)) {
-    //   setToggleBookmark(true);
-    // } else {
-    //   setToggleBookmark(false);
-    // }
     setBookmarks(userState.user.bookmarks);
 
     if (!bookmarks) return;
@@ -37,7 +29,6 @@ const BookmarkButton = ({ user }) => {
 
   const handleToggleBookmark = async () => {
     if (toggleBookmark === true) {
-      // DB.remove(loginUserId, userCardId);
       const res = await Api.put(
         `users/bookmarks/${loginUserId}?bookmark=remove`,
         {
@@ -49,7 +40,6 @@ const BookmarkButton = ({ user }) => {
       return;
     }
 
-    // DB.push(loginUserId, userCardId);
     const res = await Api.put(`users/bookmarks/${loginUserId}?bookmark=add`, {
       bookmarkId: userCardId,
     });
@@ -60,8 +50,20 @@ const BookmarkButton = ({ user }) => {
   return (
     <div className="bookmark-button-container">
       {userState.user.id !== user.id && (
-        <button className="bookmark-button" onClick={handleToggleBookmark}>
-          {toggleBookmark ? "★" : "☆"}
+        <button
+          onClick={handleToggleBookmark}
+          style={{
+            fontSize: "30px",
+            color: "#0d1e2d",
+            border: "none",
+            backgroundColor: "transparent",
+          }}
+        >
+          {toggleBookmark ? (
+            <Icon name={"bookmark"} />
+          ) : (
+            <Icon name={"regularBookmark"} />
+          )}
         </button>
       )}
     </div>
