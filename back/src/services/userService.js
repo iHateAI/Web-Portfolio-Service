@@ -72,8 +72,8 @@ class userAuthService {
     return loginUser;
   }
 
-  static async getUsers() {
-    const users = await User.findAll();
+  static async getUsers(query = {}) {
+    const users = await User.findAll(query);
     return users;
   }
 

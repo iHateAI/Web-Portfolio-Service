@@ -82,14 +82,32 @@ userAuthRouter.get(
   async function (req, res, next) {
     try {
       // 전체 사용자 목록을 얻음
-      const users = await userAuthService.getUsers();
-
-      res.status(200).send({
-        success: true,
-        message: "전체 유저 목록 불러오기 성공",
-        apiPath: "[GET] /api/userlist",
-        data: users,
-      });
+      const bookmark = req.query.bookmark;
+      if (bookmark === "true") {
+        const user_id = req.currentUserId;
+        const bookmarks = await userAuthService
+          .getUserInfo({
+            user_id,
+          })
+          .then((res) => res.bookmarks);
+        const bookmarkedUsers = await userAuthService.getUsers({
+          id: { $in: bookmarks },
+        });
+        res.status(200).send({
+          success: true,
+          message: "북마크된 유저 목록 불러오기 성공",
+          apiPath: "[GET] /api/userlist",
+          data: bookmarkedUsers,
+        });
+      } else {
+        const users = await userAuthService.getUsers();
+        res.status(200).send({
+          success: true,
+          message: "전체 유저 목록 불러오기 성공",
+          apiPath: "[GET] /api/userlist",
+          data: users,
+        });
+      }
     } catch (err) {
       res.status(404).send({
         success: false,

@@ -3,6 +3,12 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { useForm } from "../../hooks/useForm";
 
+const dateValidate = (start, end) => {
+  const [startDate, endDate] = [new Date(start), new Date(end)];
+  if (startDate > endDate) return false;
+  return true;
+};
+
 function ProjectAddForm({ onClick, getUser }) {
   const [values, isValid, handleChange] = useForm({
     title: "",
@@ -12,9 +18,10 @@ function ProjectAddForm({ onClick, getUser }) {
   });
 
   const { title, detail, startDate, endDate, all } = isValid || {};
+  const isCorrectDates = dateValidate(values.startDate, values.endDate);
 
   const handlePutProject = async () => {
-    if (all) {
+    if (all && isCorrectDates) {
       await Api.post("api/project", { ...values });
       getUser();
       onClick();
@@ -43,7 +50,7 @@ function ProjectAddForm({ onClick, getUser }) {
           name="detail"
           onChange={handleChange}
         />
-        {detail && (
+        {detail || (
           <Form.Text className="text-danger">
             상세내역은 5글자 이상이여야 합니다.
           </Form.Text>
@@ -62,9 +69,9 @@ function ProjectAddForm({ onClick, getUser }) {
             <Form.Control type="date" name="endDate" onChange={handleChange} />
           </Col>
         </Row>
-        {startDate || endDate || (
+        {(startDate && endDate && isCorrectDates) || (
           <Form.Text className="text-danger">
-            시작일과 종료일을 기입해주세요.
+            시작일과 종료일을 바르게 기입해주세요.
           </Form.Text>
         )}
       </Form.Group>
@@ -73,7 +80,7 @@ function ProjectAddForm({ onClick, getUser }) {
           variant="primary"
           className="me-3"
           onClick={handlePutProject}
-          disabled={!isValid.all}
+          disabled={!all || !isCorrectDates}
         >
           확인
         </Button>

@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import { projectService } from '../services/projectService';
-import { login_required } from '../middlewares/login_required';
+import { Router } from "express";
+import { projectService } from "../services/projectService";
+import { login_required } from "../middlewares/login_required";
 
 const projectRouter = Router();
 
 // 프로젝트 이력 추가 라우터
-projectRouter.post('/', login_required, async (req, res, next) => {
+projectRouter.post("/", login_required, async (req, res, next) => {
   try {
     const data = {
       title: req.body.title,
@@ -19,21 +19,21 @@ projectRouter.post('/', login_required, async (req, res, next) => {
 
     res.status(201).send({
       success: true,
-      message: '데이터 등록 성공',
-      apiPath: '[POST] /api/project',
+      message: "데이터 등록 성공",
+      apiPath: "[POST] /api/project",
       data: registeredProject,
     });
   } catch (err) {
     res.status(400).send({
       success: false,
       message: err.message,
-      apiPath: '[POST] /api/project',
+      apiPath: "[POST] /api/project",
     });
   }
 });
 
 // 프로젝트 이력 조회 라우터
-projectRouter.get('/', login_required, async (req, res, next) => {
+projectRouter.get("/", login_required, async (req, res, next) => {
   try {
     const userId = req.query.userId ?? req.currentUserId;
 
@@ -41,21 +41,21 @@ projectRouter.get('/', login_required, async (req, res, next) => {
 
     res.status(200).send({
       success: true,
-      message: '데이터 불러오기 성공',
-      apiPath: '[GET] /api/project',
+      message: "데이터 불러오기 성공",
+      apiPath: "[GET] /api/project",
       data: project,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[GET] /api/project',
+      apiPath: "[GET] /api/project",
     });
   }
 });
 
 // 프로젝트 이력 수정 라우터
-projectRouter.put('/:projectId', login_required, async (req, res, next) => {
+projectRouter.put("/:projectId", login_required, async (req, res, next) => {
   try {
     const projectId = req.params.projectId;
     const title = req.body.title ?? null;
@@ -71,29 +71,29 @@ projectRouter.put('/:projectId', login_required, async (req, res, next) => {
 
     res.status(201).send({
       success: true,
-      message: '데이터 수정 성공',
-      apiPath: '[PUT] /api/project/:projectId',
+      message: "데이터 수정 성공",
+      apiPath: "[PUT] /api/project/:projectId",
       data: modifiedProject,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[PUT] /api/project/:projectId',
+      apiPath: "[PUT] /api/project/:projectId",
     });
   }
 });
 
-projectRouter.delete('/:projectId', async (req, res, next) => {
+projectRouter.delete("/:projectId", async (req, res, next) => {
   try {
     const { projectId } = req.params;
-    
+
     const deletedCount = await projectService.deleteProjectInfo(projectId);
 
     res.status(200).send({
       success: true,
-      message: '데이터 삭제 성공',
-      apiPath: '[DELETE] /api/project/:projectId',
+      message: "데이터 삭제 성공",
+      apiPath: "[DELETE] /api/project/:projectId",
       data: {
         deletedCount,
       },
@@ -102,7 +102,7 @@ projectRouter.delete('/:projectId', async (req, res, next) => {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[DELETE] /api/project/:projectId',
+      apiPath: "[DELETE] /api/project/:projectId",
     });
   }
 });

@@ -6,7 +6,7 @@ function UserLike({ portfolioOwnerId, user }) {
   const [likeCount, setLikeCount] = useState(0);
 
   useEffect(() => {
-    Api.get("users", portfolioOwnerId).then((res) =>
+    Api.get("api/users", portfolioOwnerId).then((res) =>
       setLikeCount(res.data.likeCount)
     );
   }, [portfolioOwnerId]);
