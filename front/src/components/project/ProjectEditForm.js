@@ -79,7 +79,12 @@ function ProjectEditForm({ project, editClick, getUser }) {
         )}
       </Form.Group>
       <Form.Group className="d-flex justify-content-center">
-        <Button variant="primary" className="me-3" onClick={handlePostProject}>
+        <Button
+          variant="primary"
+          className="me-3"
+          onClick={handlePostProject}
+          disabled={!all || !isCorrectDates}
+        >
           확인
         </Button>
         <Button variant="secondary" onClick={editClick}>
