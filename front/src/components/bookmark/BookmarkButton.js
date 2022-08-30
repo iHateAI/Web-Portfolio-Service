@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserStateContext } from "../../App";
 import * as Api from "../../api";
+
 // import * as DB from "./testdb";
 
 const BookmarkButton = ({ user }) => {
@@ -59,15 +60,7 @@ const BookmarkButton = ({ user }) => {
   return (
     <div className="bookmark-button-container">
       {userState.user.id !== user.id && (
-        <button
-          onClick={handleToggleBookmark}
-          style={{
-            fontSize: "30px",
-            color: "navy",
-            border: "none",
-            backgroundColor: "white",
-          }}
-        >
+        <button className="bookmark-button" onClick={handleToggleBookmark}>
           {toggleBookmark ? "★" : "☆"}
         </button>
       )}
