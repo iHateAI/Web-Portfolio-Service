@@ -8,7 +8,7 @@ import AwardContainer from "./award/AwardContainer";
 import Projects from "./project/Projects";
 import CertificateContainer from "./certificate/CertificateContainer";
 import BookmarkButton from "./bookmark/BookmarkButton";
-import "./style/app.css";
+import "./style/app.scss";
 
 function Portfolio() {
   const navigate = useNavigate();

@@ -82,7 +82,7 @@ function UserCard({
     <React.Fragment>
       <div className="singlepage-item-box">
         <div className="item-wrap" onClick={handlerPortfolioClick}>
-          <div onClick={handleImgClick}>
+          <div className="item-img-contaienr" onClick={handleImgClick}>
             <img
               className="item-img"
               src={user?.profileImageUrl}
