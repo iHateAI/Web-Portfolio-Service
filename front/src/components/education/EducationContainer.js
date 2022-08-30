@@ -25,6 +25,15 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   return (
     <div className="mvp-container">
       <h3 className="mvp-title">Education</h3>
+      {isEditable && (
+        <Row className="text-center mb-4">
+          <Col>
+            <Button size="md" onClick={() => setAddEducation(true)}>
+              +
+            </Button>
+          </Col>
+        </Row>
+      )}
       {educations.map((education) => (
         <Education
           key={education._id}
@@ -39,15 +48,6 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
           getEducation={getEducation}
           setAddEducation={setAddEducation}
         />
-      )}
-      {isEditable && (
-        <Row className="text-center mb-4">
-          <Col>
-            <Button size="md" onClick={() => setAddEducation(true)}>
-              +
-            </Button>
-          </Col>
-        </Row>
       )}
     </div>
   );
