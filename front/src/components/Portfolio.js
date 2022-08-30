@@ -72,7 +72,7 @@ function Portfolio() {
           </div>
           <div className="mvp-content">
             <AwardContainer
-              userId={portfolioOwner.id}
+              portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>

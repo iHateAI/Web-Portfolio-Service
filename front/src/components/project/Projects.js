@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
 import * as Api from "../../api";
@@ -34,20 +34,16 @@ function Projects({ portfolioOwnerId, isEditable }) {
             key={project._id}
           />
         ))}
-      <div className="d-flex justify-content-center w-100">
-        {isEditable && (
-          <Button
-            variant="primary"
-            className="text-center"
-            onClick={handleIsEditing}
-          >
-            +
-          </Button>
-        )}
-      </div>
+      {isEditable && (
+        <Row className="mt-3 text-center mb-4">
+          <Col>
+            <Button onClick={handleIsEditing}>+</Button>
+          </Col>
+        </Row>
+      )}
       {isEditing && (
         <ProjectAddForm
-          onEditButtonClickEvent={handleIsEditing}
+          onCancelButtonClickEvent={handleIsEditing}
           fetchProjects={fetchProjects}
         />
       )}

@@ -7,12 +7,13 @@ function Project({ project, isEditable, fetchProjects }) {
   const handleIsEditing = () => {
     setIsEditing(!isEditing);
   };
+
   return (
-    <>
+    <React.Fragment>
       {isEditing ? (
         <ProjectEditForm
           project={project}
-          onEditButtonClickEvent={handleIsEditing}
+          onCancelButtonClickEvent={handleIsEditing}
           fetchProjects={fetchProjects}
         />
       ) : (
@@ -23,7 +24,7 @@ function Project({ project, isEditable, fetchProjects }) {
           fetchProjects={fetchProjects}
         />
       )}
-    </>
+    </React.Fragment>
   );
 }
 
