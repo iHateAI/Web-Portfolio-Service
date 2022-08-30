@@ -234,6 +234,7 @@ const titleStyle = {
 
 const formStyle = {
   margin: "auto",
+  width: "100%",
   color: varColors.light.coolBlack,
   fontFamily: "system-ui",
 };
