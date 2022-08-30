@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserLikeList({ portfolioOwnerId, user }) {
@@ -28,7 +28,7 @@ function UserLikeList({ portfolioOwnerId, user }) {
         <Modal.Body>
           <div className="like-list">
             {likeList.map((user) => (
-              <li key={user.id}>
+              <li key={user.name}>
                 {user.name}
 
                 <hr />
