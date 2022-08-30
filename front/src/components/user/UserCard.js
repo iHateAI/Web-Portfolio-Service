@@ -35,7 +35,7 @@ function UserCard({
   };
 
   const handleImgClick = () => {
-    onShowButtonClickEventHandler(true);
+    isEditable && onShowButtonClickEventHandler(true);
   };
 
   const handleImageUpload = async (uploadedImage) => {
