@@ -21,6 +21,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     email: user.email,
     description: user.description,
   });
+  const [error, setError] = useState(false);
 
   const [
     isShow,
@@ -40,15 +41,19 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
       onShowButtonClickEventHandler();
       return;
     }
-    const userObj = { ...values, id: user.id };
-    const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
-    setUser({
-      ...updatedUser.data,
-      profileImageUrl:
-        updatedUser.data.profileImageUrl ||
-        `${process.env.PUBLIC_URL}/images/profile.PNG`,
-    });
-    setIsEditing(false);
+    try {
+      const userObj = { ...values, id: user.id };
+      const updatedUser = await fetchUpdateUserInformation.call(this, userObj);
+      setUser({
+        ...updatedUser.data,
+        profileImageUrl:
+          updatedUser.data.profileImageUrl ||
+          `${process.env.PUBLIC_URL}/images/profile.PNG`,
+      });
+      setIsEditing(false);
+    } catch (e) {
+      setError(true);
+    }
   };
 
   const handlerCancelClick = () => {
@@ -78,6 +83,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
         {!isValid.email && (
           <Form.Text className="text-danger">
             Please check your email.
+          </Form.Text>
+        )}
+        {error && (
+          <Form.Text className="text-danger">
+            이미 사용중인 이메일입니다.
           </Form.Text>
         )}
         <input
@@ -224,6 +234,7 @@ const titleStyle = {
 
 const formStyle = {
   margin: "auto",
+  width: "100%",
   color: varColors.light.coolBlack,
   fontFamily: "system-ui",
 };

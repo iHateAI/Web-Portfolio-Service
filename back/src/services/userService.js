@@ -99,7 +99,7 @@ class userAuthService {
       // 이메일 중복 체크
       const hasEmail = await User.findByEmail({ email: toUpdate.email });
 
-      if (hasEmail.id !== user.id) {
+      if (hasEmail && hasEmail.id !== user.id) {
         throw new Error("이미 존재하는 이메일입니다.");
       }
 
