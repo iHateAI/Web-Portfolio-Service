@@ -1,4 +1,4 @@
-import { Award } from '../db';
+import { Award } from "../db";
 
 class awardService {
   static async addAwardInfo({ title, detail, userId }) {
@@ -16,10 +16,11 @@ class awardService {
 
   static async getAwardInfo(userId) {
     const award = await Award.findByUserId(userId);
-    if (award.length < 1) {
-      const error = new Error('수상 이력 정보가 존재하지 않습니다.');
-      return { error };
-    }
+    if (award.length < 1) return [];
+    // {
+    //   const error = new Error('수상 이력 정보가 존재하지 않습니다.');
+    //   return { error };
+    // }
     return award;
   }
 
@@ -27,7 +28,7 @@ class awardService {
     const award = await Award.findByAwardId(awardId);
 
     if (!award) {
-      throw new Error('awardId에 대응하는 데이터가 존재하지 않습니다.');
+      throw new Error("awardId에 대응하는 데이터가 존재하지 않습니다.");
     }
 
     const { title, detail } = toUpdate;
@@ -43,7 +44,7 @@ class awardService {
   static async deleteAwardInfo(awardId) {
     const award = await Award.deleteByAwardId(awardId);
     if (award.deletedCount < 1) {
-      throw new Error('존재하지 않는 도큐먼트입니다.');
+      throw new Error("존재하지 않는 도큐먼트입니다.");
     }
     return award.deletedCount;
   }

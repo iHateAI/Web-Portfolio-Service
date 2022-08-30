@@ -199,7 +199,7 @@ const ConfirmPassword = ({ user }) => {
 };
 
 async function fetchUpdateUserInformation(user) {
-  const res = await Api.put(`users/${user.id}`, {
+  const res = await Api.put(`api/users/${user.id}`, {
     name: user.name,
     email: user.email,
     description: user.description,

@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal";
 import AlertModal from "../modal/AlertModal";
 import { useForm } from "../../hooks/useForm";
 
-function EducationEditForm({ setIsEditing, setEducations, education }) {
+function EducationEditForm({ setIsEditing, getEducation, education }) {
   const [values, isValid, handleChange] = useForm({
     ...education,
   });
@@ -28,10 +28,7 @@ function EducationEditForm({ setIsEditing, setEducations, education }) {
       ...values,
     });
     // "educationlist/유저id" end-point로 GET 요청
-
-    const res = await Api.get("api/education");
-    // educations를 response -> data로 세팅
-    setEducations(res.data.data);
+    getEducation();
 
     // Edit 모드 종료, Edit모드를 false로
     setIsEditing(false);

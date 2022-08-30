@@ -4,17 +4,14 @@ import * as Api from "../../api";
 
 // Education 삭제
 
-function EducationDelete({ education, setEducations }) {
+function EducationDelete({ education, getEducation }) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const handleDelete = async () => {
     await Api.delete("api/education", education._id);
-
-    const res = await Api.get("api/education");
-    const updatedEducation = res.data;
-    setEducations(updatedEducation);
+    getEducation();
     setShow(false);
   };
 

@@ -1,5 +1,5 @@
-import { Project } from '../db';
-import dateToString from '../utils/dateObjToString';
+import { Project } from "../db";
+import dateToString from "../utils/dateObjToString";
 
 class projectService {
   static async addProjectInfo({ title, detail, startDate, endDate, userId }) {
@@ -33,16 +33,16 @@ class projectService {
   static async getProjectInfo(userId) {
     let projects = await Project.findByUserId(userId);
 
-    if (projects.length < 1) {
-      throw new Error('프로젝트 정보가 존재하지 않습니다.');
-    }
+    if (projects.length < 1) return [];
+    // {
+    //   throw new Error("프로젝트 정보가 존재하지 않습니다.");
+    // }
 
     projects = projects.map((project) => {
       project.startDate = dateToString(project.startDate);
       project.endDate = dateToString(project.endDate);
       return project;
     });
-
     return projects;
   }
 
@@ -50,7 +50,7 @@ class projectService {
     const hasProject = await Project.findByProjectId(projectId);
 
     if (!hasProject) {
-      throw new Error('projectId에 대응하는 데이터가 존재하지 않습니다.');
+      throw new Error("projectId에 대응하는 데이터가 존재하지 않습니다.");
     }
 
     const { title, detail, startDate, endDate } = toUpdate;
@@ -72,7 +72,7 @@ class projectService {
   static async deleteProjectInfo(projectId) {
     const project = await Project.deleteByProjectId(projectId);
     if (project.deletedCount < 1) {
-      throw new Error('존재하지 않는 도큐먼트입니다.');
+      throw new Error("존재하지 않는 도큐먼트입니다.");
     }
     return project.deletedCount;
   }

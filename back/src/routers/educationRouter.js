@@ -1,11 +1,11 @@
-import { Router } from 'express';
-import { educationService } from '../services/educationService';
-import { login_required } from '../middlewares/login_required';
+import { Router } from "express";
+import { educationService } from "../services/educationService";
+import { login_required } from "../middlewares/login_required";
 
 const educationRouter = Router();
 
 // 학력 정보 추가 라우터
-educationRouter.post('/', login_required, async (req, res, next) => {
+educationRouter.post("/", login_required, async (req, res, next) => {
   try {
     const data = {
       university: req.body.university,
@@ -18,21 +18,21 @@ educationRouter.post('/', login_required, async (req, res, next) => {
 
     res.status(201).send({
       success: true,
-      message: '데이터 등록 성공',
-      apiPath: '[POST] /api/education',
+      message: "데이터 등록 성공",
+      apiPath: "[POST] /api/education",
       data: registeredEducation,
     });
   } catch (err) {
     res.status(400).send({
       success: false,
       message: err.message,
-      apiPath: '[POST] /api/education',
+      apiPath: "[POST] /api/education",
     });
   }
 });
 
 // 학력 정보 조회 라우터
-educationRouter.get('/', login_required, async (req, res, next) => {
+educationRouter.get("/", login_required, async (req, res, next) => {
   try {
     const userId = req.query.userId ?? req.currentUserId;
 
@@ -40,21 +40,21 @@ educationRouter.get('/', login_required, async (req, res, next) => {
 
     res.status(200).send({
       success: true,
-      message: '데이터 불러오기 성공',
-      apiPath: '[GET] /api/education',
+      message: "데이터 불러오기 성공",
+      apiPath: "[GET] /api/education",
       data: education,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[GET] /api/education',
+      apiPath: "[GET] /api/education",
     });
   }
 });
 
 // 학력 정보 수정 라우터
-educationRouter.put('/:educationId', login_required, async (req, res, next) => {
+educationRouter.put("/:educationId", login_required, async (req, res, next) => {
   try {
     const educationId = req.params.educationId;
     const university = req.body.university ?? null;
@@ -70,21 +70,21 @@ educationRouter.put('/:educationId', login_required, async (req, res, next) => {
 
     res.status(201).send({
       success: true,
-      message: '데이터 수정 성공',
-      apiPath: '[PUT] /api/education/:educationId',
+      message: "데이터 수정 성공",
+      apiPath: "[PUT] /api/education/:educationId",
       data: modifiedEducation,
     });
   } catch (err) {
     res.status(404).send({
       success: false,
       message: err.message,
-      apiPath: '[PUT] /api/education/:educationId',
+      apiPath: "[PUT] /api/education/:educationId",
     });
   }
 });
 
 educationRouter.delete(
-  '/:educationId',
+  "/:educationId",
   login_required,
   async (req, res, next) => {
     try {
@@ -92,11 +92,11 @@ educationRouter.delete(
       const deletedCount = await educationService.deleteEducationInfo(
         educationId
       );
-      
+
       res.status(200).send({
         success: true,
-        message: '데이터 삭제 성공',
-        apiPath: '[DELETE] /api/education/:educationId',
+        message: "데이터 삭제 성공",
+        apiPath: "[DELETE] /api/education/:educationId",
         data: {
           deletedCount,
         },
@@ -105,7 +105,7 @@ educationRouter.delete(
       res.status(404).send({
         success: false,
         message: err.message,
-        apiPath: '[DELETE] /api/education/:educationId',
+        apiPath: "[DELETE] /api/education/:educationId",
       });
     }
   }

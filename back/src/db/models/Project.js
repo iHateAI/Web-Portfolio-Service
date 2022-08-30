@@ -1,4 +1,4 @@
-import { ProjectModel } from '../schemas/project';
+import { ProjectModel } from "../schemas/project";
 
 class Project {
   static async create({ title, detail, startDate, endDate, userId }) {
@@ -17,9 +17,8 @@ class Project {
 
   static async findByUserId(userId) {
     const projectData = await ProjectModel.find({ userId })
-      .select('_id title detail startDate endDate')
+      .select("_id title detail startDate endDate")
       .lean();
-
     return projectData;
   }
 
@@ -53,7 +52,7 @@ class Project {
       newValues,
       option
     )
-      .select('_id title detail startDate endDate')
+      .select("_id title detail startDate endDate")
       .lean();
 
     return updatedProject;

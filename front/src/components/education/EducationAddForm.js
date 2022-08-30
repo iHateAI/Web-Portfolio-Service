@@ -5,7 +5,7 @@ import useModal from "../../hooks/useModal";
 import AlertModal from "../modal/AlertModal";
 import { useForm } from "../../hooks/useForm";
 
-function EducationAddForm({ setEducations, setAddEducation }) {
+function EducationAddForm({ getEducation, setAddEducation }) {
   //학교 이름, 전공, 학력 상태 세팅
   const [values, isValid, handleChange] = useForm({
     university: "",
@@ -33,9 +33,7 @@ function EducationAddForm({ setEducations, setAddEducation }) {
     });
 
     // "educationlist/유저id"  get요청
-    const res = await Api.get(`api/education/`);
-    // educations를 response의 data로 세팅함.
-    setEducations(res.data.data);
+    getEducation();
 
     // 데이터 추가가 끝나면 종료
     setAddEducation(false);

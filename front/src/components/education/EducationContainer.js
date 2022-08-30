@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 
 import * as Api from "../../api";
@@ -11,12 +11,16 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   const [educations, setEducations] = useState([]);
   const [addEducation, setAddEducation] = useState(false);
 
-  useEffect(() => {
-    // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
+  const getEducation = useCallback(() => {
     Api.get(`api/education`, `?userId=${portfolioOwnerId}`).then((res) =>
       setEducations(res.data.data)
     );
   }, [portfolioOwnerId]);
+
+  useEffect(() => {
+    // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
+    getEducation();
+  }, [getEducation]);
 
   return (
     <div className="mvp-container">
@@ -25,14 +29,14 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
         <Education
           key={education._id}
           education={education}
-          setEducations={setEducations}
+          getEducation={getEducation}
           isEditable={isEditable}
         />
       ))}
       {addEducation && (
         <EducationAddForm
           portfolioOwnerId={portfolioOwnerId}
-          setEducations={setEducations}
+          getEducation={getEducation}
           setAddEducation={setAddEducation}
         />
       )}
