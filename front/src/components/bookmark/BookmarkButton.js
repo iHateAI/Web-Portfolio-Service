@@ -50,15 +50,7 @@ const BookmarkButton = ({ user }) => {
   return (
     <div className="bookmark-button-container">
       {userState.user.id !== user.id && (
-        <button
-          onClick={handleToggleBookmark}
-          style={{
-            fontSize: "30px",
-            color: "#0d1e2d",
-            border: "none",
-            backgroundColor: "transparent",
-          }}
-        >
+        <button onClick={handleToggleBookmark} className="bookmark-button">
           {toggleBookmark ? (
             <Icon name={"bookmark"} />
           ) : (
