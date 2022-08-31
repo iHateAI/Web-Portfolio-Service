@@ -13,7 +13,7 @@ function ProjectContainer({ portfolioOwnerId, isEditable }) {
   };
 
   const fetchProjects = useCallback(() => {
-    Api.get("api/project", `?projectsId=${portfolioOwnerId}`).then((res) =>
+    Api.get("api/project", `?userId=${portfolioOwnerId}`).then((res) =>
       setProjects(res.data.data)
     );
   }, [portfolioOwnerId]);
