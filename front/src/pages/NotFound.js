@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const NotFound = () => {
   return (
     <div style={containerStyle}>
@@ -11,6 +13,9 @@ const NotFound = () => {
       <h2 style={contentStyle}>
         we are sorry, but the page you requested was not found
       </h2>
+      <Link to="/" style={linkStyle}>
+        GO BACK
+      </Link>
     </div>
   );
 };
@@ -39,6 +44,13 @@ const contentStyle = {
   fontWeight: 700,
   textTransform: "uppercase",
   color: "#000",
+};
+
+const linkStyle = {
+  textDecoration: "underline",
+  color: "#262626",
+  fontSize: "40px",
+  fontWeight: 700,
 };
 
 export default NotFound;
