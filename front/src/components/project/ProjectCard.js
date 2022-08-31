@@ -9,11 +9,8 @@ function ProjectCard({
   onEditButtonClickEvent,
   fetchProjects,
 }) {
-  const [
-    isShow,
-    onShowButtonClickEventHandler,
-    onCloseButtonClickEventHandler,
-  ] = useModal(false);
+  const [isShow, handleShowButtonClickEvent, handleCloseButtonClickEvent] =
+    useModal(false);
 
   const { title, detail, startDate, endDate } = project || {};
 
@@ -38,7 +35,7 @@ function ProjectCard({
           </button>
           <button
             className="mvp-delete-button"
-            onClick={onShowButtonClickEventHandler}
+            onClick={handleShowButtonClickEvent}
           >
             삭제
           </button>
@@ -46,7 +43,7 @@ function ProjectCard({
       )}
       <ConfirmModal
         isShow={isShow}
-        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+        onCloseButtonClickEvent={handleCloseButtonClickEvent}
         onCheckButtonClickEvent={handleDeleteProject}
         msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
       />

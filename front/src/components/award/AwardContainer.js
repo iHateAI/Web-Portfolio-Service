@@ -5,11 +5,11 @@ import AwardCardAddForm from "./AwardCardAddForm";
 import * as Api from "../../api";
 
 const AwardContainer = ({ portfolioOwnerId, isEditable }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [awards, setAwards] = useState([]);
 
-  const handleIsEditing = () => {
-    setIsEditing(!isEditing);
+  const handleIsAdding = () => {
+    setIsAdding(!isAdding);
   };
 
   const fetchAwards = useCallback(() => {
@@ -25,25 +25,24 @@ const AwardContainer = ({ portfolioOwnerId, isEditable }) => {
   return (
     <div className="mvp-container">
       <h3 className="mvp-title">Award</h3>
-      {awards &&
-        awards.map((award) => (
-          <AwardCardPresenter
-            award={award}
-            isEditable={isEditable}
-            fetchAwards={fetchAwards}
-            key={award._id}
-          />
-        ))}
+      {awards.map((award) => (
+        <AwardCardPresenter
+          award={award}
+          isEditable={isEditable}
+          fetchAwards={fetchAwards}
+          key={award._id}
+        />
+      ))}
       {isEditable && (
         <Row className="mt-3 text-center mb-4">
           <Col sm={colStyle}>
-            <Button onClick={handleIsEditing}>+</Button>
+            <Button onClick={handleIsAdding}>+</Button>
           </Col>
         </Row>
       )}
-      {isEditing && (
+      {isAdding && (
         <AwardCardAddForm
-          onCancelButtonClickEvent={handleIsEditing}
+          onCancelButtonClickEvent={handleIsAdding}
           fetchAwards={fetchAwards}
         />
       )}

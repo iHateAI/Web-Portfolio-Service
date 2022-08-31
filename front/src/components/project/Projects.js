@@ -5,11 +5,11 @@ import ProjectAddForm from "./ProjectAddForm";
 import * as Api from "../../api";
 
 function Projects({ portfolioOwnerId, isEditable }) {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [projects, setProjects] = useState([]);
 
-  const handleIsEditing = () => {
-    setIsEditing(!isEditing);
+  const handleIsAdding = () => {
+    setIsAdding(!isAdding);
   };
 
   const fetchProjects = useCallback(() => {
@@ -25,25 +25,24 @@ function Projects({ portfolioOwnerId, isEditable }) {
   return (
     <div className="mvp-container">
       <h3 className="mvp-title">프로젝트</h3>
-      {projects &&
-        projects.map((project) => (
-          <Project
-            project={project}
-            isEditable={isEditable}
-            fetchProjects={fetchProjects}
-            key={project._id}
-          />
-        ))}
+      {projects.map((project) => (
+        <Project
+          project={project}
+          isEditable={isEditable}
+          fetchProjects={fetchProjects}
+          key={project._id}
+        />
+      ))}
       {isEditable && (
         <Row className="mt-3 text-center mb-4">
           <Col>
-            <Button onClick={handleIsEditing}>+</Button>
+            <Button onClick={handleIsAdding}>+</Button>
           </Col>
         </Row>
       )}
-      {isEditing && (
+      {isAdding && (
         <ProjectAddForm
-          onCancelButtonClickEvent={handleIsEditing}
+          onCancelButtonClickEvent={handleIsAdding}
           fetchProjects={fetchProjects}
         />
       )}

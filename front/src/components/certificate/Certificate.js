@@ -2,30 +2,26 @@ import React, { useState } from "react";
 import CertificateCard from "./CertificateCard";
 import CertificateEditForm from "./CertificateEditForm";
 
-function Certificate({
-  certificate,
-  setCertificates,
-  isEditable,
-  onShowButtonClickEventHandler,
-  setDeleteCertificationId,
-}) {
+function Certificate({ certification, isEditable, fetchCertifications }) {
   const [isEditing, setIsEditing] = useState(false);
+  const handleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
     <>
       {isEditing ? (
         <CertificateEditForm
-          currentCertificate={certificate}
-          setCertificates={setCertificates}
-          setIsEditing={setIsEditing}
+          certification={certification}
+          onCancelButtonClickEvent={handleIsEditing}
+          fetchCertifications={fetchCertifications}
         />
       ) : (
         <CertificateCard
-          certificate={certificate}
+          certification={certification}
           isEditable={isEditable}
-          setIsEditing={setIsEditing}
-          onShowButtonClickEventHandler={onShowButtonClickEventHandler}
-          setDeleteCertificationId={setDeleteCertificationId}
+          onEditButtonClickEvent={handleIsEditing}
+          fetchCertifications={fetchCertifications}
         />
       )}
     </>

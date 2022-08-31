@@ -8,11 +8,8 @@ const AwardCard = ({
   onEditButtonClickEvent,
   fetchAwards,
 }) => {
-  const [
-    isShow,
-    onShowButtonClickEventHandler,
-    onCloseButtonClickEventHandler,
-  ] = useModal(false);
+  const [isShow, handleShowButtonClickEvent, handleCloseButtonClickEvent] =
+    useModal(false);
 
   const { title, detail } = award || {};
 
@@ -36,7 +33,7 @@ const AwardCard = ({
             edit
           </button>
           <button
-            onClick={onShowButtonClickEventHandler}
+            onClick={handleShowButtonClickEvent}
             className="mvp-delete-button"
           >
             delete
@@ -45,7 +42,7 @@ const AwardCard = ({
       )}
       <ConfirmModal
         isShow={isShow}
-        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+        onCloseButtonClickEvent={handleCloseButtonClickEvent}
         onCheckButtonClickEvent={handleDeleteAward}
         msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
       />
