@@ -32,18 +32,19 @@ const UserConfirmPassword = ({ user }) => {
     if (!isValid) {
       return;
     }
-    try {
-      Api.put(`api/users/password/${user.id}`, {
-        currentPassword: values.currentPassword,
-        newPassword: values.password,
-      }).then(() => {
+    Api.put(`api/users/password/${user.id}`, {
+      currentPassword: values.currentPassword,
+      newPassword: values.password,
+    })
+      .then(() => {
         Storage.removeItem();
+        setErrorMsg("");
         dispatch({ type: "LOGOUT" });
         navigate("/");
+      })
+      .catch(() => {
+        setErrorMsg("비밀번호가 일치하지 않습니다!");
       });
-    } catch (e) {
-      setErrorMsg("비밀번호가 일치하지 않습니다.");
-    }
   };
 
   return (
