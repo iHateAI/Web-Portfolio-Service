@@ -79,7 +79,7 @@
 
 <br />
 
-## 📁 Project Structure
+## 📁 프로젝트 구조
 
 ### Front-End
 
@@ -255,16 +255,6 @@
 
 ---
 
-### 📌 프로필 이미지 변경
-- 자신이 원하는 이미지로 프로필 이미지를 변경할 수 있어요!
-<details>
-<summary>자세히 보기</summary>
-
-![editProfileImageGIF](./readmeImages/editProfileImage.gif)
-</details>
-
----
-
 ### ⛅ 네트워크 페이지
 - 네트워크 페이지에서 다른 사용자를 찾을 수 있어요!
 - 무한 스크롤링 기능으로 등록된 모든 사용자를 찾아 볼 수 있어요.
@@ -272,6 +262,27 @@
 <summary>자세히 보기</summary>
 
 ![networkGIF](./readmeImages/network.gif)
+</details>
+
+---
+
+### ✨ 다른 유저 포트폴리오 보기
+- 다른 유저가 만든 포트폴리오를 확인할 수 있어요!
+- 네트워크 페이지에서 원하는 유저 카드를 클릭하세요.
+<details>
+<summary>자세히 보기</summary>
+
+![mvpGIF](./readmeImages/visit.gif)
+</details>
+
+---
+
+### 📌 프로필 이미지 변경
+- 자신이 원하는 이미지로 프로필 이미지를 변경할 수 있어요!
+<details>
+<summary>자세히 보기</summary>
+
+![editProfileImageGIF](./readmeImages/editProfileImage.gif)
 </details>
 
 ---
@@ -294,6 +305,8 @@
 
 ![likeGIF](./readmeImages/like.gif)
 </details>
+
+---
 
 <br />
 
