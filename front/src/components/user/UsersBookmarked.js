@@ -46,7 +46,7 @@ function UsersBookmarked() {
 
   return (
     <div className="usercard-container">
-      <div className="usercard">
+      <div className="usercard-content">
         {pagedUsers.length !== 0 ? (
           pagedUsers.map((user) => (
             <UserCard2 key={user.id} user={user} isNetwork />

@@ -23,7 +23,7 @@ function ProjectContainer({ portfolioOwnerId, isEditable }) {
   }, [fetchProjects]);
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">프로젝트</h3>
       {projects.map((project) => (
         <Project

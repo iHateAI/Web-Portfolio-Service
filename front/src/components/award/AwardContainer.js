@@ -23,7 +23,7 @@ const AwardContainer = ({ portfolioOwnerId, isEditable }) => {
   }, [fetchAwards]);
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">Award</h3>
       {awards.map((award) => (
         <AwardCardPresenter

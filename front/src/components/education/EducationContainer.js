@@ -23,7 +23,7 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
   }, [fetchEducations]);
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">Education</h3>
 
       {educations.map((education) => (

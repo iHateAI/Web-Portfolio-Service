@@ -23,7 +23,7 @@ function CertificateContainer({ portfolioOwnerId, isEditable }) {
   }, [fetchCertifications]);
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">Certificate</h3>
       {certifications.map((certification) => (
         <Certificate

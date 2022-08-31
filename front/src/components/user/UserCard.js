@@ -80,7 +80,7 @@ function UserCard({
 
   return (
     <React.Fragment>
-      <div className="singlepage-item-box">
+      <div className="single-user-item-box">
         <div className="item-wrap" onClick={handlerPortfolioClick}>
           <div className="item-img-contaienr" onClick={handleImgClick}>
             <img
