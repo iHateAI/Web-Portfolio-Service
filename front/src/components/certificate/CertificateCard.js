@@ -14,7 +14,7 @@ function CertificateCard({
 
   const { title, detail, certificationDate } = certification || {};
 
-  const handleDeleteProject = async () => {
+  const handleDeleteCertification = async () => {
     await Api.delete("api/certification", certification._id);
     fetchCertifications();
   };
@@ -42,7 +42,7 @@ function CertificateCard({
       <ConfirmModal
         isShow={isShow}
         onCloseButtonClickEvent={handleCloseButtonClickEvent}
-        onCheckButtonClickEvent={handleDeleteProject}
+        onCheckButtonClickEvent={handleDeleteCertification}
         msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
       />
     </div>
