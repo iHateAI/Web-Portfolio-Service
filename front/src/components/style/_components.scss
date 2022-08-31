@@ -5,15 +5,16 @@
 
 .navmenu-container {
   display: flex;
+  width: 100%;
   max-width: $theme-max-width;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 5rem $font-size-medium;
 }
 
 .navmenu {
   background: $theme-color-dark-1;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   visibility: hidden;
   height: 0vh;
   transition: all 0.2s;
@@ -22,7 +23,6 @@
     color: $theme-color-white;
   }
   .content {
-    width: 40%;
     @media only screen and (max-width: $bp-small) {
       display: none;
     }
@@ -39,7 +39,7 @@
 
   &.active {
     visibility: visible;
-    height: 25vh;
+    height: 20vh;
     @media only screen and (max-width: $bp-small) {
       height: 20rem;
     }

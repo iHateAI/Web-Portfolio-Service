@@ -50,10 +50,11 @@ function Portfolio() {
     <div className="portfolio-container">
       <section className="section portfolio-content">
         <div className="title-container">
-          <h2 className="portfolio-title">Work Single Page</h2>
+          <h2 className="portfolio-title">About Me</h2>
           <p className="portfolio-sub-title">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            necessitatibus incidunt ut officiis explicabo inventore.
+            {portfolioOwner.id === userState.user?.id
+              ? "Create your portfolio so that many people can see it!"
+              : `Thanks for visiting ${portfolioOwner.name}'s portfolio.`}
           </p>
         </div>
         <div className="user-container">

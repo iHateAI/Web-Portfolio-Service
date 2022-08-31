@@ -38,8 +38,8 @@ function RegisterForm() {
         <div className="title-container">
           <h2 className="register-title">Register</h2>
           <p className="register-sub-title">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            necessitatibus incidunt ut officiis explicabo inventore.
+            Welcome to SYP. Please register to use the service.
+            <br></br>Share Your Portfolio !
           </p>
         </div>
         <Container>

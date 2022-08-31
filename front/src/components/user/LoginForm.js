@@ -39,8 +39,8 @@ function LoginForm() {
         <div className="title-container">
           <h2 className="login-title">Login</h2>
           <p className="login-sub-title">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
-            necessitatibus incidunt ut officiis explicabo inventore.
+            Welcome to SYP. Please log in to use the service.
+            <br></br>Share Your Portfolio !
           </p>
         </div>
         <Container>
