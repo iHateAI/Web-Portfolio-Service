@@ -4,7 +4,7 @@ import Project from "./Project";
 import ProjectAddForm from "./ProjectAddForm";
 import * as Api from "../../api";
 
-function Projects({ portfolioOwnerId, isEditable }) {
+function ProjectContainer({ portfolioOwnerId, isEditable }) {
   const [isAdding, setIsAdding] = useState(false);
   const [projects, setProjects] = useState([]);
 
@@ -50,4 +50,4 @@ function Projects({ portfolioOwnerId, isEditable }) {
   );
 }
 
-export default Projects;
+export default ProjectContainer;
