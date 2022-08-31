@@ -12,7 +12,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ function LoginForm() {
       });
       navigate("/", { replace: true });
     } catch (err) {
-      setError(true);
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -77,10 +77,8 @@ function LoginForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-                {error && (
-                  <Form.Text className="text-danger">
-                    잘못된 이메일 또는 비밀번호입니다.
-                  </Form.Text>
+                {errorMessage && (
+                  <Form.Text className="text-danger">{errorMessage}</Form.Text>
                 )}
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>

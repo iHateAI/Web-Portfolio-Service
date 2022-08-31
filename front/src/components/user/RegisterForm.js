@@ -12,7 +12,7 @@ function RegisterForm() {
     confirmPassword: "",
     name: "",
   });
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const isPasswordSame = values.password === values.confirmPassword;
 
@@ -28,7 +28,7 @@ function RegisterForm() {
       });
       navigate("/login");
     } catch (err) {
-      setError(true);
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -108,10 +108,8 @@ function RegisterForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-                {error && (
-                  <Form.Text className="text-danger">
-                    이미 사용중인 이메일입니다.
-                  </Form.Text>
+                {errorMessage && (
+                  <Form.Text className="text-danger">{errorMessage}</Form.Text>
                 )}
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>
