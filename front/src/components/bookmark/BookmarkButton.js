@@ -11,21 +11,20 @@ const BookmarkButton = ({ user }) => {
   const loginUserId = userState.user.id;
   const userCardId = user.id;
 
-  const setInitialToggleBookmark = () => {
-    if (userState.user.bookmarks.length === 0) return;
-
-    setBookmarks(userState.user.bookmarks);
-
-    if (bookmarks.includes(userCardId)) {
-      setToggleBookmark(true);
-    } else {
-      setToggleBookmark(false);
-    }
-  };
-
   useEffect(() => {
+    const setInitialToggleBookmark = () => {
+      if (userState.user.bookmarks.length === 0) return;
+
+      setBookmarks(userState.user.bookmarks);
+
+      if (bookmarks.includes(userCardId)) {
+        setToggleBookmark(true);
+      } else {
+        setToggleBookmark(false);
+      }
+    };
     setInitialToggleBookmark();
-  }, [bookmarks, userState]);
+  }, [userCardId, bookmarks, userState]);
 
   const handleToggleBookmark = async () => {
     if (toggleBookmark === true) {
@@ -37,14 +36,13 @@ const BookmarkButton = ({ user }) => {
       );
       userState.user.bookmarks = res.data;
       setToggleBookmark(false);
-      return;
+    } else {
+      const res = await Api.put(`users/bookmarks/${loginUserId}?bookmark=add`, {
+        bookmarkId: userCardId,
+      });
+      userState.user.bookmarks = res.data;
+      setToggleBookmark(true);
     }
-
-    const res = await Api.put(`users/bookmarks/${loginUserId}?bookmark=add`, {
-      bookmarkId: userCardId,
-    });
-    userState.user.bookmarks = res.data;
-    setToggleBookmark(true);
   };
 
   return (
