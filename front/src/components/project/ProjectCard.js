@@ -1,43 +1,41 @@
 import React from "react";
-import { Row } from "react-bootstrap";
 import useModal from "../../hooks/useModal";
 import ConfirmModal from "../modal/ConfirmModal";
 import * as Api from "../../api";
 
-function ProjectCard({ project, isEditable, editClick, getUser }) {
-  const [
-    isShow,
-    onShowButtonClickEventHandler,
-    onCloseButtonClickEventHandler,
-  ] = useModal(false);
+function ProjectCard({
+  project,
+  isEditable,
+  onEditButtonClickEvent,
+  fetchProjects,
+}) {
+  const [isShow, handleShowButtonClickEvent, handleCloseButtonClickEvent] =
+    useModal(false);
 
   const { title, detail, startDate, endDate } = project || {};
 
-  const handleDeleteProject = async (bool) => {
-    // await deleteProject(key);
+  const handleDeleteProject = async () => {
     await Api.delete("api/project", project._id);
-    getUser();
+    fetchProjects();
   };
 
   return (
     <div className="mvp-content-detail">
-      <Row>
-        <div className="mvp-info">
-          <h3 className="title">{title}</h3>
-          <p className="sub-title">{detail}</p>
-          <p className="sub-title">
-            {startDate} ~ {endDate}
-          </p>
-        </div>
-      </Row>
+      <div className="mvp-info">
+        <h3 className="title">{title}</h3>
+        <p className="sub-title">{detail}</p>
+        <p className="sub-title">
+          {startDate} ~ {endDate}
+        </p>
+      </div>
       {isEditable && (
         <div className="mvp-management">
-          <button className="mvp-edit-button" onClick={editClick}>
+          <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
             편집
           </button>
           <button
             className="mvp-delete-button"
-            onClick={onShowButtonClickEventHandler}
+            onClick={handleShowButtonClickEvent}
           >
             삭제
           </button>
@@ -45,7 +43,7 @@ function ProjectCard({ project, isEditable, editClick, getUser }) {
       )}
       <ConfirmModal
         isShow={isShow}
-        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+        onCloseButtonClickEvent={handleCloseButtonClickEvent}
         onCheckButtonClickEvent={handleDeleteProject}
         msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
       />

@@ -1,16 +1,24 @@
+import React from "react";
+import useModal from "../../hooks/useModal";
+import ConfirmModal from "../modal/ConfirmModal";
+import * as Api from "../../api";
+
 function CertificateCard({
-  certificate,
+  certification,
   isEditable,
-  setIsEditing,
-  onShowButtonClickEventHandler,
-  setDeleteCertificationId,
+  onEditButtonClickEvent,
+  fetchCertifications,
 }) {
-  const {
-    _id: certificationId,
-    title,
-    detail,
-    certificationDate,
-  } = certificate;
+  const [isShow, handleShowButtonClickEvent, handleCloseButtonClickEvent] =
+    useModal(false);
+
+  const { title, detail, certificationDate } = certification || {};
+
+  const handleDeleteProject = async () => {
+    await Api.delete("api/certification", certification._id);
+    fetchCertifications();
+  };
+
   return (
     <div className="mvp-content-detail">
       <div className="mvp-info">
@@ -20,23 +28,23 @@ function CertificateCard({
       </div>
       {isEditable && (
         <div className="mvp-management">
-          <button
-            className="mvp-edit-button"
-            onClick={() => setIsEditing(true)}
-          >
+          <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
             EDIT
           </button>
           <button
             className="mvp-delete-button"
-            onClick={() => {
-              setDeleteCertificationId(certificationId);
-              onShowButtonClickEventHandler();
-            }}
+            onClick={handleShowButtonClickEvent}
           >
             DELETE
           </button>
         </div>
       )}
+      <ConfirmModal
+        isShow={isShow}
+        onCloseButtonClickEvent={handleCloseButtonClickEvent}
+        onCheckButtonClickEvent={handleDeleteProject}
+        msg={`${title}(을)를 목록에서 삭제하시겠습니까?`}
+      />
     </div>
   );
 }
