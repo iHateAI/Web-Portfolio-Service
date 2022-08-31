@@ -23,14 +23,14 @@ function Users() {
     Api.get("api", "userlist").then((res) => {
       const data = shuffle(res.data.data);
       setUsers(data);
-      if (data.length < 3) setPagedUsers(data.slice(0, data.length));
-      else setPagedUsers(data.slice(0, 3));
+      if (data.length < 6) setPagedUsers(data.slice(0, data.length));
+      else setPagedUsers(data.slice(0, 6));
     });
   }, []);
 
   useEffect(() => {
     let io;
-    let page = 3;
+    let page = 2;
     if (ioTarget) {
       const pageControll = (entries, observer) => {
         entries.forEach(async (entry) => {

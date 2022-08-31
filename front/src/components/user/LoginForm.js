@@ -4,6 +4,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import Storage from "../../storage/storage";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ function LoginForm() {
     email: "",
     password: "",
   });
-  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,14 +22,14 @@ function LoginForm() {
       const res = await Api.post("api/user/login", { ...values });
       const user = res.data.data;
       const jwtToken = user.token;
-      sessionStorage.setItem("userToken", jwtToken);
+      Storage.setItem(jwtToken);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
       });
       navigate("/", { replace: true });
     } catch (err) {
-      setError(true);
+      setErrorMessage(err.response.data.message);
     }
   };
 
@@ -77,10 +78,8 @@ function LoginForm() {
                     </Form.Text>
                   )}
                 </Form.Group>
-                {error && (
-                  <Form.Text className="text-danger">
-                    잘못된 이메일 또는 비밀번호입니다.
-                  </Form.Text>
+                {errorMessage && (
+                  <Form.Text className="text-danger">{errorMessage}</Form.Text>
                 )}
                 <Form.Group as={Row} className="mt-3 text-center">
                   <Col sm={{ span: 20 }}>

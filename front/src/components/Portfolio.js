@@ -5,9 +5,10 @@ import * as Api from "../api";
 import User from "./user/User";
 import EducationContainer from "./education/EducationContainer";
 import AwardContainer from "./award/AwardContainer";
-import Projects from "./project/Projects";
+import ProjectContainer from "./project/ProjectContainer";
 import CertificateContainer from "./certificate/CertificateContainer";
 import BookmarkButton from "./bookmark/BookmarkButton";
+import Spinner from "./spinner/Spinner";
 import "./style/app.scss";
 
 function Portfolio() {
@@ -42,7 +43,7 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Spinner />;
   }
 
   return (
@@ -72,7 +73,7 @@ function Portfolio() {
           </div>
           <div className="mvp-container">
             <AwardContainer
-              userId={portfolioOwner.id}
+              portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>

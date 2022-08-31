@@ -8,15 +8,15 @@ function UserLike({ portfolioOwnerId, user }) {
   // "api/users/유저id"  get요청
   // setLikeCount,setLiked 를 response.data의 data로 세팅함.
   useEffect(() => {
-    Api.get("api/users", portfolioOwnerId).then((res) => {
-      setLikeCount(res.data.data.likeCount);
-    });
-  }, [portfolioOwnerId]);
-
-  useEffect(() => {
-    Api.get("api/like", portfolioOwnerId).then((res) =>
-      setLiked(res.data.userStatus)
+    let isLikeSubscribed = true;
+    Api.get("api/users", portfolioOwnerId).then((res) =>
+      isLikeSubscribed ? setLikeCount(res.data.data.likeCount) : null
     );
+
+    Api.get("api/like", portfolioOwnerId).then((res) =>
+      isLikeSubscribed ? setLiked(res.data.userStatus) : null
+    );
+    return () => (isLikeSubscribed = false);
   }, [portfolioOwnerId]);
 
   const handleClick = useCallback(

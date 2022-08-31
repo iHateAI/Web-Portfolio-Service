@@ -109,21 +109,18 @@ class userAuthService {
     }
 
     if (toUpdate.password) {
-      console.log("test2");
       const fieldToUpdate = "password";
       const newValue = bcrypt.hash(toUpdate.password, 10);
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.description) {
-      console.log("test3");
       const fieldToUpdate = "description";
       const newValue = toUpdate.description;
       user = await User.update({ user_id, fieldToUpdate, newValue });
     }
 
     if (toUpdate.bookmarks) {
-      console.log("test4");
       const fieldToUpdate = [toUpdate.bookmarks.option];
       const newValue = {
         bookmarks: toUpdate.bookmarks.bookmarkId,

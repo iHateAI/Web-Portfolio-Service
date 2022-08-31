@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
-import { UserStateContext } from "../../App";
-import UserCard2 from "../user/UserCard2";
+import { UserStateContext } from "../App";
+import UserCard2 from "../components/user/UserCard2";
 
 const BookmarksList = ({ users }) => {
   const userState = useContext(UserStateContext);

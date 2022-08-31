@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
-
 import * as Api from "../../api";
-// import * as Api from "../../testApi";
 import Education from "./Education";
 import EducationAddForm from "./EducationAddForm";
 
 function EducationContainer({ portfolioOwnerId, isEditable }) {
-  //useState 훅을통해 educations, addEducation 상태를 생성함.
+  const [isAdding, setIsAdding] = useState(false);
   const [educations, setEducations] = useState([]);
-  const [addEducation, setAddEducation] = useState(false);
 
-  const getEducation = useCallback(() => {
+  const handleIsAdding = () => {
+    setIsAdding(!isAdding);
+  };
+
+  const fetchEducations = useCallback(() => {
     Api.get(`api/education`, `?userId=${portfolioOwnerId}`).then((res) =>
       setEducations(res.data.data)
     );
   }, [portfolioOwnerId]);
 
   useEffect(() => {
-    // "educationlist/유저id" GET 요청, educations를 response의 data로 세팅함.
-    getEducation();
-  }, [getEducation]);
+    fetchEducations();
+  }, [fetchEducations]);
 
   return (
     <div className="mvp-content">
@@ -30,24 +30,23 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
         <Education
           key={education._id}
           education={education}
-          getEducation={getEducation}
+          fetchEducations={fetchEducations}
           isEditable={isEditable}
         />
       ))}
       {isEditable && (
         <Row className="text-center mb-4">
           <Col>
-            <Button size="md" onClick={() => setAddEducation(true)}>
+            <Button size="md" onClick={handleIsAdding}>
               +
             </Button>
           </Col>
         </Row>
       )}
-      {addEducation && (
+      {isAdding && (
         <EducationAddForm
-          portfolioOwnerId={portfolioOwnerId}
-          getEducation={getEducation}
-          setAddEducation={setAddEducation}
+          onCancelButtonClickEvent={handleIsAdding}
+          fetchEducations={fetchEducations}
         />
       )}
     </div>

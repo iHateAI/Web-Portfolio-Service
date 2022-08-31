@@ -1,28 +1,30 @@
 import React, { useState } from "react";
 import EducationCard from "./EducationCard";
 import EducationEditForm from "./EducationEditForm";
-function Education({ isEditable, education, getEducation }) {
-  // useState 훅을 통해 isEditing 상태를 생성함.
+
+function Education({ isEditable, education, fetchEducations }) {
   const [isEditing, setIsEditing] = useState(false);
-  // useState 훅을 통해 education 상태를 생성함.
+  const handleIsEditing = () => {
+    setIsEditing(!isEditing);
+  };
 
   return (
-    <>
+    <React.Fragment>
       {isEditing ? (
         <EducationEditForm
           education={education}
-          getEducation={getEducation}
-          setIsEditing={setIsEditing}
+          onCancelButtonClickEvent={handleIsEditing}
+          fetchEducations={fetchEducations}
         />
       ) : (
         <EducationCard
           education={education}
-          getEducation={getEducation}
-          setIsEditing={setIsEditing}
           isEditable={isEditable}
+          onEditButtonClickEvent={handleIsEditing}
+          fetchEducations={fetchEducations}
         />
       )}
-    </>
+    </React.Fragment>
   );
 }
 

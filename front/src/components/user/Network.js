@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import UserCard2 from "./UserCard2";
 import { UserStateContext } from "../../App";
 import Users from "./Users";
 import UsersBookmarked from "./UsersBookmarked";

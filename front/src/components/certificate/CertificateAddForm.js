@@ -3,31 +3,25 @@ import { Button, Form, Col, Row } from "react-bootstrap";
 import * as Api from "../../api";
 import { useForm } from "../../hooks/useForm";
 
-function CertificateAddForm({
-  portfolioOwnerId,
-  setCertificates,
-  setIsAdding,
-}) {
+function CertificateAddForm({ onCancelButtonClickEvent, fetchCertifications }) {
   const [values, isValid, handleChange] = useForm({
     title: "",
     detail: "",
     certificationDate: "",
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isValid.all) return;
-    const user_id = portfolioOwnerId;
-    await Api.post("api/certification", {
-      ...values,
-    });
+  const { title, detail, certificationDate, all } = isValid || {};
 
-    const res = await Api.get("api/certification");
-    setCertificates(res.data.data);
-    setIsAdding(false);
+  const handleAddCertification = async () => {
+    if (all) {
+      await Api.post("api/certification", { ...values });
+      fetchCertifications();
+      onCancelButtonClickEvent();
+    }
   };
+
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Form.Group controlId="certificateAddTitle">
         <Form.Control
           type="text"
@@ -35,7 +29,7 @@ function CertificateAddForm({
           name="title"
           onChange={handleChange}
         />
-        {!isValid.title && (
+        {title || (
           <Form.Text className="text-danger">5글자 이상 적어주세요</Form.Text>
         )}
       </Form.Group>
@@ -46,7 +40,7 @@ function CertificateAddForm({
           name="detail"
           onChange={handleChange}
         />
-        {!isValid.detail && (
+        {detail || (
           <Form.Text className="text-danger">5글자 이상 적어주세요</Form.Text>
         )}
       </Form.Group>
@@ -57,14 +51,22 @@ function CertificateAddForm({
             name="certificationDate"
             onChange={handleChange}
           />
+          {certificationDate || (
+            <Form.Text className="text-danger">취득일을 기입해주세요</Form.Text>
+          )}
         </Col>
       </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center mb-4">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <Button
+            variant="primary"
+            className="me-3"
+            onClick={handleAddCertification}
+            disabled={!all}
+          >
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsAdding(false)}>
+          <Button variant="secondary" onClick={onCancelButtonClickEvent}>
             취소
           </Button>
         </Col>

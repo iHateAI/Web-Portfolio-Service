@@ -2,45 +2,26 @@ import React, { useState } from "react";
 import AwardCard from "./AwardCard";
 import AwardCardEdit from "./AwardCardEdit";
 
-const AwardCardPresenter = ({
-  award,
-  isEditable,
-  onEditButtonClickEvent,
-  onDeleteButtonClickEvent,
-}) => {
-  const [isEditMode, setIsEditMode] = useState(false);
-
-  const handleAwardEditButtonClick = (editedAward) => {
-    onEditButtonClickEvent(editedAward);
-    setIsEditMode(false);
-  };
-
-  const handleCancelButtonClick = (isCanceld) => {
-    setIsEditMode(isCanceld);
-  };
-
-  const handleEnterEditModeButtonClick = () => {
-    setIsEditMode((prev) => !prev);
-  };
-
-  const handleDeleteButtonClick = (targetAward) => {
-    onDeleteButtonClickEvent(targetAward);
+const AwardCardPresenter = ({ award, isEditable, fetchAwards }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const handleIsEditing = () => {
+    setIsEditing(!isEditing);
   };
 
   return (
     <React.Fragment>
-      {isEditMode ? (
+      {isEditing ? (
         <AwardCardEdit
           award={award}
-          onAwardEditButtonClickEvent={handleAwardEditButtonClick}
-          onCancelButtonClickEvent={handleCancelButtonClick}
+          onCancelButtonClickEvent={handleIsEditing}
+          fetchAwards={fetchAwards}
         />
       ) : (
         <AwardCard
           award={award}
           isEditable={isEditable}
-          onEnterEditModeButtonClickEvent={handleEnterEditModeButtonClick}
-          onDeleteButtonClickEvent={handleDeleteButtonClick}
+          onEditButtonClickEvent={handleIsEditing}
+          fetchAwards={fetchAwards}
         />
       )}
     </React.Fragment>
