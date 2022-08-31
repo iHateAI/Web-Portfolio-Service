@@ -6,15 +6,15 @@ import Icon from "../icon/Icon";
 const BookmarkButton = ({ user }) => {
   const userState = useContext(UserStateContext);
   const [toggleBookmark, setToggleBookmark] = useState(false);
-  const [bookmarks, setBookmarks] = useState("");
+  const [bookmarks, setBookmarks] = useState([]);
 
   const loginUserId = userState.user.id;
   const userCardId = user.id;
 
-  const setInitialToggleBookmark = async () => {
-    setBookmarks(userState.user.bookmarks);
+  const setInitialToggleBookmark = () => {
+    if (userState.user.bookmarks.length === 0) return;
 
-    if (!bookmarks) return;
+    setBookmarks(userState.user.bookmarks);
 
     if (bookmarks.includes(userCardId)) {
       setToggleBookmark(true);
