@@ -13,7 +13,7 @@ function CertificateContainer({ portfolioOwnerId, isEditable }) {
   };
 
   const fetchCertifications = useCallback(() => {
-    Api.get("api/certification", `?projectId=${portfolioOwnerId}`).then((res) =>
+    Api.get("api/certification", `?userId=${portfolioOwnerId}`).then((res) =>
       setCertifications(res.data.data)
     );
   }, [portfolioOwnerId]);
