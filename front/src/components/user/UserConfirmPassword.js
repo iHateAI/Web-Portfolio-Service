@@ -22,6 +22,8 @@ const UserConfirmPassword = ({ user }) => {
     confirmPassword: "",
   });
 
+  const { password, all } = isValid || {};
+
   const navigate = useNavigate();
   const dispatch = useContext(DispatchContext);
 
@@ -29,7 +31,7 @@ const UserConfirmPassword = ({ user }) => {
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
-    if (!isValid || !isPasswordSame) {
+    if (!all || !isPasswordSame) {
       return;
     }
     Api.put(`api/users/password/${user.id}`, {
@@ -51,7 +53,7 @@ const UserConfirmPassword = ({ user }) => {
     <form style={formStyle} onSubmit={handleSubmitClick}>
       <div style={titleStyle}>Change Password</div>
       <div>
-        <label>기존 비밀번호</label>
+        <label>Password</label>
         <input
           type="password"
           name="currentPassword"
@@ -61,21 +63,21 @@ const UserConfirmPassword = ({ user }) => {
         {errorMsg && <Form.Text className="text-danger">{errorMsg}</Form.Text>}
       </div>
       <div>
-        <label>변경할 비밀번호</label>
+        <label>New password</label>
         <input
           type="password"
           name="password"
           style={inputStyle}
           onChange={handleChange}
         />
-        {!isValid.password && (
+        {!password && (
           <Form.Text className="text-danger">
             비밀번호는 4글자 이상, 12글자 이하여야 합니다
           </Form.Text>
         )}
       </div>
       <div>
-        <label>비밀번호 확인</label>
+        <label>Check new password</label>
         <input
           type="password"
           name="confirmPassword"
@@ -88,7 +90,11 @@ const UserConfirmPassword = ({ user }) => {
           </Form.Text>
         )}
       </div>
-      <button type="submit" style={buttonStyle}>
+      <button
+        type="submit"
+        style={buttonStyle}
+        disabled={!all || !isPasswordSame ? true : false}
+      >
         CONFIRM
       </button>
     </form>
