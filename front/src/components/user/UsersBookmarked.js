@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import * as Api from "../../api";
 import UserCard2 from "./UserCard2";
+import Icon from "../icon/Icon";
 
 function UsersBookmarked() {
   const [users, setUsers] = useState([]);
@@ -46,9 +47,28 @@ function UsersBookmarked() {
   return (
     <div className="usercard-container">
       <div className="usercard">
-        {pagedUsers.map((user) => (
-          <UserCard2 key={user.id} user={user} isNetwork />
-        ))}
+        {pagedUsers.length !== 0 ? (
+          pagedUsers.map((user) => (
+            <UserCard2 key={user.id} user={user} isNetwork />
+          ))
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              paddingTop: "15rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ fontSize: "8rem", color: "#0d1e2d" }}>
+              <Icon name={"regularBookmark"} />
+            </div>
+            <div style={{ marginTop: "1rem", fontSize: "3rem" }}>
+              북마크가 없습니다.
+            </div>
+          </div>
+        )}
       </div>
       <div ref={setIoTarget} style={targetStyle} />
     </div>
