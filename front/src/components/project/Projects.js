@@ -30,7 +30,7 @@ function Projects({ portfolioOwnerId, isEditable }) {
   //컴포넌트 mount시 모의 데이터 호출
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">프로젝트</h3>
       {user &&
         user.map((project, index) => (

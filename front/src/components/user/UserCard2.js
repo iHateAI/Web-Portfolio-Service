@@ -34,7 +34,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
       <div className="item-wrap" onClick={handlerPortfolioClick}>
         <UserInformation />
         <img
-          className="item-img-style"
+          className="item-img"
           src={
             user.profileImageUrl ||
             `${process.env.PUBLIC_URL}/images/profile.PNG`

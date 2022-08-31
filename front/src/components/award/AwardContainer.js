@@ -73,7 +73,7 @@ const AwardContainer = ({ userId, isEditable }) => {
   };
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">Award</h3>
       {awardArray.map((award) => (
         <AwardCardPresenter

@@ -64,13 +64,13 @@ function Portfolio() {
         </div>
 
         <div className="mvps-container">
-          <div className="mvp-content">
+          <div className="mvp-container">
             <EducationContainer
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
-          <div className="mvp-content">
+          <div className="mvp-container">
             <AwardContainer
               userId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
@@ -79,13 +79,13 @@ function Portfolio() {
         </div>
 
         <div className="mvps-container">
-          <div className="mvp-content">
+          <div className="mvp-container">
             <CertificateContainer
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
-          <div className="mvp-content">
+          <div className="mvp-container">
             <Projects
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}

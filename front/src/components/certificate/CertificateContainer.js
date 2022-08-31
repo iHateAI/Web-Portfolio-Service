@@ -34,7 +34,7 @@ function CertificateContainer({ portfolioOwnerId, isEditable }) {
   };
 
   return (
-    <div className="mvp-container">
+    <div className="mvp-content">
       <h3 className="mvp-title">Certificate</h3>
       {certificates.map((certificate) => (
         <Certificate
