@@ -8,6 +8,7 @@ import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
 import Spinner from "./components/spinner/Spinner";
+import NotFound from "./pages/NotFound";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -52,7 +53,7 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/users/:userId" element={<Portfolio />} />
             <Route path="/network" element={<Network />} />
-            <Route path="*" element={<Portfolio />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>
