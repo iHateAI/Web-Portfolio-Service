@@ -20,9 +20,12 @@ function Network() {
     <div className="network-container">
       <section className="section network-content">
         <div className="title-container">
-          <h2 className="network-title">Hey, I'm Johan Stanworth</h2>
+          <h2 className="network-title">
+            Shall we check other people's portfolios?
+          </h2>
           <p className="network-sub-title">
-            Freelance Creative &amp; Professional Graphics Designer
+            Shall we check other people's portfolios? <br></br>Click the Card
+            that you want!!
           </p>
         </div>
         <div className="tabs-container" style={tabMenuStyle}>

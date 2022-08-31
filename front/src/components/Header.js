@@ -48,19 +48,23 @@ function Header() {
             <div className="content">
               <p>
                 <em>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Quisquam necessitatibus incidunt ut officiis explicabo
-                  inventore. <br />
+                  My advice is never do tomorrow what you can do today.
+                  <br />
+                  Procrastination is the thief of time. Collar him!
+                  <br />
                 </em>
               </p>
             </div>
             <div className="content">
-              <h3>Hire Me</h3>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Quisquam necessitatibus incidunt ut officiisexplicabo inventore.{" "}
-                <br />
-                <Link to="#">{userState?.user?.email}</Link>
+                <em>
+                  hhs950120@gmail.com <br />
+                  foxmon1524@gmail.com <br />
+                  peelsob4d@gmail.com
+                  <br />
+                  origin1508@gmail.com <br />
+                  eodnsdlekd@gmail.com <br />
+                </em>
               </p>
             </div>
           </div>
@@ -68,8 +72,8 @@ function Header() {
       </div>
       <div className="header-navbar">
         <div className="navbar-container">
-          <div className="navbar-brand" onClick={() => navigate("/")}>
-            MyPortfolio.
+          <div className="navbar-brand" onClick={() => navigate("/network")}>
+            Share Your Portfolio.
           </div>
           <div
             className={`burger-menu ${open ? "active" : ""}`}
