@@ -9,17 +9,17 @@ const dateValidate = (start, end) => {
   return true;
 };
 
-function ProjectEditForm({ project, editClick, getUser }) {
+function ProjectEditForm({ project, onCancelButtonClickEvent, fetchProjects }) {
   const [values, isValid, handleChange] = useForm({ ...project });
 
   const { title, detail, startDate, endDate, all } = isValid || {};
   const isCorrectDates = dateValidate(values.startDate, values.endDate);
 
-  const handlePostProject = async () => {
+  const handleEditProject = async () => {
     if (all) {
       await Api.put(`api/project/${project._id}`, { ...values });
-      getUser();
-      editClick();
+      fetchProjects();
+      onCancelButtonClickEvent();
     }
   };
 
@@ -30,7 +30,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
           type="text"
           placeholder="프로젝트 제목"
           name="title"
-          value={values?.title}
+          value={values.title}
           onChange={handleChange}
         />
         {title || (
@@ -44,7 +44,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
           type="text"
           placeholder="상세내역"
           name="detail"
-          value={values?.detail}
+          value={values.detail}
           onChange={handleChange}
         />
         {detail || (
@@ -59,7 +59,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
             <Form.Control
               type="date"
               name="startDate"
-              value={values?.startDate}
+              value={values.startDate}
               onChange={handleChange}
             />
           </Col>
@@ -67,7 +67,7 @@ function ProjectEditForm({ project, editClick, getUser }) {
             <Form.Control
               type="date"
               name="endDate"
-              value={values?.endDate}
+              value={values.endDate}
               onChange={handleChange}
             />
           </Col>
@@ -79,10 +79,15 @@ function ProjectEditForm({ project, editClick, getUser }) {
         )}
       </Form.Group>
       <Form.Group className="d-flex justify-content-center">
-        <Button variant="primary" className="me-3" onClick={handlePostProject}>
+        <Button
+          variant="primary"
+          className="me-3"
+          onClick={handleEditProject}
+          disabled={!all || !isCorrectDates}
+        >
           확인
         </Button>
-        <Button variant="secondary" onClick={editClick}>
+        <Button variant="secondary" onClick={onCancelButtonClickEvent}>
           취소
         </Button>
       </Form.Group>

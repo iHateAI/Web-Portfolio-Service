@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
+import Storage from "../storage/storage";
 
 function HeaderTest() {
   const [open, setOpen] = useState(false);
@@ -24,7 +25,7 @@ function HeaderTest() {
   ];
 
   const logout = () => {
-    sessionStorage.removeItem("userToken");
+    Storage.removeItem();
     dispatch({ type: "LOGOUT" });
     navigate("/");
   };

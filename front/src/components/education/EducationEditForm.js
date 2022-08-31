@@ -1,50 +1,38 @@
 import React from "react";
 import { Button, Form, Col } from "react-bootstrap";
 import * as Api from "../../api";
-import useModal from "../../hooks/useModal";
-import AlertModal from "../modal/AlertModal";
 import { useForm } from "../../hooks/useForm";
 
-function EducationEditForm({ setIsEditing, getEducation, education }) {
+function EducationEditForm({
+  education,
+  onCancelButtonClickEvent,
+  fetchEducations,
+}) {
   const [values, isValid, handleChange] = useForm({
     ...education,
   });
 
-  const [
-    isShow,
-    onShowButtonClickEventHandler,
-    onCloseButtonClickEventHandler,
-  ] = useModal(false);
+  const { university, major, status, all } = isValid || {};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isValid.all) {
-      onShowButtonClickEventHandler();
-      return;
+  const handleEditEducation = async () => {
+    if (all) {
+      await Api.put(`api/education/${education._id}`, { ...values });
+      fetchEducations();
+      onCancelButtonClickEvent();
     }
-
-    // "educations/education id" end-point로 PUT 요청
-    await Api.put(`api/education/${education._id}`, {
-      ...values,
-    });
-    // "educationlist/유저id" end-point로 GET 요청
-    getEducation();
-
-    // Edit 모드 종료, Edit모드를 false로
-    setIsEditing(false);
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form>
       <Form.Group>
         <Form.Control
           type="text"
           placeholder="학교 이름"
-          value={values?.university}
+          value={values.university}
           name="university"
           onChange={handleChange}
         />
-        {!isValid.university && (
+        {university || (
           <Form.Text className="text-danger">
             학교 이름을 4글자 이상 입력해주세요.
           </Form.Text>
@@ -55,11 +43,11 @@ function EducationEditForm({ setIsEditing, getEducation, education }) {
         <Form.Control
           type="text"
           placeholder="전공"
-          value={values?.major}
+          value={values.major}
           name="major"
           onChange={handleChange}
         />
-        {!isValid.major && (
+        {major || (
           <Form.Text className="text-danger">
             전공을 4글자 이상 입력해주세요.
           </Form.Text>
@@ -73,7 +61,7 @@ function EducationEditForm({ setIsEditing, getEducation, education }) {
         name="status"
         label="재학중"
         value="재학중"
-        checked={values?.status === "재학중"}
+        checked={values.status === "재학중"}
         onChange={handleChange}
       />
       <Form.Check
@@ -82,7 +70,7 @@ function EducationEditForm({ setIsEditing, getEducation, education }) {
         name="status"
         label="학사졸업"
         value="학사졸업"
-        checked={values?.status === "학사졸업"}
+        checked={values.status === "학사졸업"}
         onChange={handleChange}
       />
       <Form.Check
@@ -91,7 +79,7 @@ function EducationEditForm({ setIsEditing, getEducation, education }) {
         name="status"
         label="석사졸업"
         value="석사졸업"
-        checked={values?.status === "석사졸업"}
+        checked={values.status === "석사졸업"}
         onChange={handleChange}
       />
       <Form.Check
@@ -100,28 +88,28 @@ function EducationEditForm({ setIsEditing, getEducation, education }) {
         name="status"
         label="박사졸업"
         value="박사졸업"
-        checked={values?.status === "박사졸업"}
+        checked={values.status === "박사졸업"}
         onChange={handleChange}
       />
-      {!isValid.status && (
+      {status || (
         <Form.Text className="text-danger">학력을 선택해주세요.</Form.Text>
       )}
 
       <Form.Group className="mt-3 text-center mb-3">
         <Col sm={{ span: 20 }}>
-          <Button variant="primary" type="submit" className="me-3">
+          <Button
+            variant="primary"
+            className="me-3"
+            onClick={handleEditEducation}
+            disabled={!all}
+          >
             확인
           </Button>
-          <Button variant="secondary" onClick={() => setIsEditing(false)}>
+          <Button variant="secondary" onClick={onCancelButtonClickEvent}>
             취소
           </Button>
         </Col>
       </Form.Group>
-      <AlertModal
-        msg="입력이 올바르지 않습니다."
-        isShow={isShow}
-        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
-      />
     </Form>
   );
 }
