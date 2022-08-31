@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserStateContext, DispatchContext } from "../App";
 import Storage from "../storage/storage";
 
-function HeaderTest() {
+function Header() {
   const [open, setOpen] = useState(false);
 
   const navigate = useNavigate();
@@ -60,7 +60,7 @@ function HeaderTest() {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Quisquam necessitatibus incidunt ut officiisexplicabo inventore.{" "}
                 <br />
-                <a href="#">myemail@gmail.com</a>
+                <Link to="#">{userState?.user?.email}</Link>
               </p>
             </div>
           </div>
@@ -83,4 +83,4 @@ function HeaderTest() {
   );
 }
 
-export default HeaderTest;
+export default Header;

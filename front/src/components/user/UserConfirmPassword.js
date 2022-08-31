@@ -29,7 +29,7 @@ const UserConfirmPassword = ({ user }) => {
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
-    if (!isValid) {
+    if (!isValid || !isPasswordSame) {
       return;
     }
     Api.put(`api/users/password/${user.id}`, {
