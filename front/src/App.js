@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useReducer, createContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-
 import * as Api from "./api";
 import { loginReducer } from "./reducer";
-
 import Header from "./components/Header";
 import LoginForm from "./components/user/LoginForm";
 import Network from "./components/user/Network";
 import RegisterForm from "./components/user/RegisterForm";
 import Portfolio from "./components/Portfolio";
+import Spinner from "./components/spinner/Spinner";
+import NotFound from "./pages/NotFound";
 
 export const UserStateContext = createContext(null);
 export const DispatchContext = createContext(null);
@@ -39,7 +39,7 @@ function App() {
   }, []);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Spinner />;
   }
 
   return (
@@ -53,7 +53,7 @@ function App() {
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/users/:userId" element={<Portfolio />} />
             <Route path="/network" element={<Network />} />
-            <Route path="*" element={<Portfolio />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
       </UserStateContext.Provider>

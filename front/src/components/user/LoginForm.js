@@ -4,6 +4,7 @@ import { Container, Col, Row, Form, Button } from "react-bootstrap";
 import { useForm } from "../../hooks/useForm";
 import * as Api from "../../api";
 import { DispatchContext } from "../../App";
+import Storage from "../../storage/storage";
 
 function LoginForm() {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ function LoginForm() {
       const res = await Api.post("api/user/login", { ...values });
       const user = res.data.data;
       const jwtToken = user.token;
-      sessionStorage.setItem("userToken", jwtToken);
+      Storage.setItem(jwtToken);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,

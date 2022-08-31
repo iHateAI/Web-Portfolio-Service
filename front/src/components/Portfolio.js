@@ -8,6 +8,7 @@ import AwardContainer from "./award/AwardContainer";
 import ProjectContainer from "./project/ProjectContainer";
 import CertificateContainer from "./certificate/CertificateContainer";
 import BookmarkButton from "./bookmark/BookmarkButton";
+import Spinner from "./spinner/Spinner";
 import "./style/app.scss";
 
 function Portfolio() {
@@ -42,7 +43,7 @@ function Portfolio() {
   }, [params, userState, navigate]);
 
   if (!isFetchCompleted) {
-    return "loading...";
+    return <Spinner />;
   }
 
   return (

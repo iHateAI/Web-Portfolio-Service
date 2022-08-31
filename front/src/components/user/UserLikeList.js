@@ -1,28 +1,34 @@
 import React, { useState } from "react";
+import useModal from "../../hooks/useModal";
+import UserModal from "../modal/UserModal";
 import { Modal } from "react-bootstrap";
 import * as Api from "../../api";
 
 function UserLikeList({ portfolioOwnerId, user }) {
   const [likeList, setLikeList] = useState([]);
-  const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
+  const [
+    isShow,
+    onShowButtonClickEventHandler,
+    onCloseButtonClickEventHandler,
+  ] = useModal(false);
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    setShow(true);
-
+  const handleUserLikeButtonClick = async () => {
+    onShowButtonClickEventHandler(true);
     const res = await Api.get(`api/likelist/${portfolioOwnerId}`);
     setLikeList(res.data.liked);
   };
 
   return (
     <div className="like-list-container">
-      <button onClick={handleClick} className="like-list-button">
+      <button onClick={handleUserLikeButtonClick} className="like-list-button">
         Who Likes?
       </button>
-      <Modal show={show} onHide={handleClose} scrollable={true}>
-        <Modal.Header closeButton>
+      <UserModal
+        isShow={isShow}
+        onCloseButtonClickEvent={onCloseButtonClickEventHandler}
+      >
+        <Modal.Header closeButton={true}>
           <Modal.Title>Who Likes?</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -30,13 +36,12 @@ function UserLikeList({ portfolioOwnerId, user }) {
             {likeList.map((user) => (
               <li key={user.name}>
                 {user.name}
-
                 <hr />
               </li>
             ))}
           </div>
         </Modal.Body>
-      </Modal>
+      </UserModal>
     </div>
   );
 }
