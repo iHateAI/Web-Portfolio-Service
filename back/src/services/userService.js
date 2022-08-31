@@ -288,8 +288,10 @@ class userAuthService {
     return updatedLike;
   }
 
-  // 좋아요를 받은 name 객체 배열 반환
-  static async getlikeList({ userId }) {
+  /**
+   * 좋아요를 받은 name 객체 배열 반환
+   */
+  static async getLikeList({ userId }) {
     // 입력 받은 아이디가 db에 존재하는지 확인/오류 처리
     const currentUser = await User.findById({ user_id: userId });
 
@@ -300,6 +302,10 @@ class userAuthService {
     }
     return currentUser;
   }
+  
+  /**
+   * 비밀번호와 확인 비밀번호 비교
+   */
   static async comparePassword({ user_id, password }) {
     const user = await User.findById({ user_id });
 

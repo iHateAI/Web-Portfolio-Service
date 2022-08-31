@@ -159,8 +159,6 @@ userAuthRouter.put(
       // body data 로부터 업데이트할 사용자 정보를 추출함.
       const name = req.body.name ?? null;
       const email = req.body.email ?? null;
-      //const password = req.body.password ?? null;
-
       const description = req.body.description ?? null;
 
       const toUpdate = { name, email, description };
@@ -216,6 +214,9 @@ userAuthRouter.get(
   }
 );
 
+/**
+ * 비밀번호 변경 라우터
+ */
 userAuthRouter.put(
   "/api/users/password/:userId",
   login_required,
@@ -254,6 +255,9 @@ userAuthRouter.put(
   }
 );
 
+/**
+ * 프로필 사진 변경 라우터
+ */
 userAuthRouter.put(
   "/api/users/profileImage/:userId",
   login_required,
@@ -288,7 +292,7 @@ userAuthRouter.put(
   }
 );
 /*
- * likes 관리 컴포넌트
+ * likes 관리 라우터
  * 현재 상태를 나타내는 status와 likeCount 반환 / user의 status/likeCount 정보 갱신
  */
 userAuthRouter.put(
@@ -313,7 +317,7 @@ userAuthRouter.put(
   }
 );
 /*
- * likeCount 반환 컴포넌트
+ * likeCount 반환 라우터
  * 현재 상태를 나타내는 status와 likeCount 반환
  */
 
@@ -325,7 +329,6 @@ userAuthRouter.get(
       // 좋아요를 받은 사람의 id
       const ownerUserId = req.params.id;
       const currentUserId = req.currentUserId;
-      // console.log("get currentUserId : " , currentUserId);
       const updatedLike = await userAuthService.getLike({
         currentUserId,
         ownerUserId,
@@ -338,7 +341,7 @@ userAuthRouter.get(
 );
 
 /*
- * 좋아요를 누른 user 목록 반환 컴포넌트
+ * 좋아요를 누른 user 목록 반환 라우터
  * 현재 상태를 나타내는 status와 likeCount 반환
  */
 userAuthRouter.get(
@@ -348,7 +351,7 @@ userAuthRouter.get(
     try {
       const userId = req.params.id;
 
-      const updatedData = await userAuthService.getlikeList({
+      const updatedData = await userAuthService.getLikeList({
         userId,
       });
       res.status(200).json(updatedData);
@@ -358,6 +361,9 @@ userAuthRouter.get(
   }
 );
 
+/**
+ * 북마크 관리 라우터
+ */
 userAuthRouter.put(
   "/users/bookmarks/:id",
   login_required,

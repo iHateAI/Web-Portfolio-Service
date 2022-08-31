@@ -4,7 +4,9 @@ import { login_required } from '../middlewares/login_required';
 
 const certificationRouter = Router();
 
-// 자격증 정보 추가 라우터
+/**
+ * 자격증 정보 추가 라우터
+ */
 certificationRouter.post('/', login_required, async (req, res, next) => {
   try {
     const data = {
@@ -23,8 +25,9 @@ certificationRouter.post('/', login_required, async (req, res, next) => {
       apiPath: '[POST] /api/certification',
       data: registeredCertification,
     });
+
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       success: false,
       message: err.message,
       apiPath: '[POST] /api/certification',
@@ -32,7 +35,9 @@ certificationRouter.post('/', login_required, async (req, res, next) => {
   }
 });
 
-// 자격증 정보 조희 라우터
+/**
+ * 자격증 정보 조회 라우터
+ */
 certificationRouter.get('/', login_required, async (req, res, next) => {
   try {
     const userId = req.query.userId ?? req.currentUserId;
@@ -47,6 +52,7 @@ certificationRouter.get('/', login_required, async (req, res, next) => {
       apiPath: '[GET] /api/certification',
       data: certification,
     });
+
   } catch (err) {
     res.status(404).send({
       success: false,
@@ -56,7 +62,9 @@ certificationRouter.get('/', login_required, async (req, res, next) => {
   }
 });
 
-// 자격증 정보 수정 라우터
+/**
+ * 자격증 정보 수정 라우터
+ */
 certificationRouter.put(
   '/:certificationId',
   login_required,
@@ -81,6 +89,7 @@ certificationRouter.put(
         apiPath: '[PUT] /api/certification/:certificationId',
         data: modifiedCertification,
       });
+
     } catch (err) {
       res.status(404).send({
         success: false,
@@ -91,6 +100,9 @@ certificationRouter.put(
   }
 );
 
+/**
+ * 자격증 정보 삭제 라우터
+ */
 certificationRouter.delete(
   '/:certificationId',
   login_required,
@@ -110,6 +122,7 @@ certificationRouter.delete(
           deletedCount,
         },
       });
+
     } catch (err) {
       res.status(404).send({
         success: false,

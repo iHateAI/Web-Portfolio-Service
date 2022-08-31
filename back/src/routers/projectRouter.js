@@ -4,7 +4,9 @@ import { login_required } from "../middlewares/login_required";
 
 const projectRouter = Router();
 
-// 프로젝트 이력 추가 라우터
+/**
+ * 프로젝트 정보 추가 라우터
+ */
 projectRouter.post("/", login_required, async (req, res, next) => {
   try {
     const data = {
@@ -24,7 +26,7 @@ projectRouter.post("/", login_required, async (req, res, next) => {
       data: registeredProject,
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       success: false,
       message: err.message,
       apiPath: "[POST] /api/project",
@@ -32,7 +34,9 @@ projectRouter.post("/", login_required, async (req, res, next) => {
   }
 });
 
-// 프로젝트 이력 조회 라우터
+/**
+ * 프로젝트 정보 조회 라우터
+ */
 projectRouter.get("/", login_required, async (req, res, next) => {
   try {
     const userId = req.query.userId ?? req.currentUserId;
@@ -54,7 +58,9 @@ projectRouter.get("/", login_required, async (req, res, next) => {
   }
 });
 
-// 프로젝트 이력 수정 라우터
+/**
+ * 프로젝트 정보 수정 라우터
+ */
 projectRouter.put("/:projectId", login_required, async (req, res, next) => {
   try {
     const projectId = req.params.projectId;
@@ -64,6 +70,7 @@ projectRouter.put("/:projectId", login_required, async (req, res, next) => {
     const endDate = req.body.endDate ?? null;
 
     const toUpdate = { title, detail, startDate, endDate };
+    
     const modifiedProject = await projectService.setProjectInfo({
       projectId,
       toUpdate,
@@ -84,6 +91,9 @@ projectRouter.put("/:projectId", login_required, async (req, res, next) => {
   }
 });
 
+/**
+ * 프로젝트 정보 삭제 라우터
+ */
 projectRouter.delete("/:projectId", async (req, res, next) => {
   try {
     const { projectId } = req.params;

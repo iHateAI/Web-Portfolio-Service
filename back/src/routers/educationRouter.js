@@ -4,14 +4,16 @@ import { login_required } from "../middlewares/login_required";
 
 const educationRouter = Router();
 
-// 학력 정보 추가 라우터
+/**
+ * 학력 정보 추가 라우터
+ */
 educationRouter.post("/", login_required, async (req, res, next) => {
   try {
     const data = {
       university: req.body.university,
       major: req.body.major,
       status: req.body.status,
-      userId: req.currentUserId, // jwt에 담긴 userId
+      userId: req.currentUserId,
     };
 
     const registeredEducation = await educationService.addEducationInfo(data);
@@ -23,7 +25,7 @@ educationRouter.post("/", login_required, async (req, res, next) => {
       data: registeredEducation,
     });
   } catch (err) {
-    res.status(400).send({
+    res.status(404).send({
       success: false,
       message: err.message,
       apiPath: "[POST] /api/education",
@@ -31,7 +33,9 @@ educationRouter.post("/", login_required, async (req, res, next) => {
   }
 });
 
-// 학력 정보 조회 라우터
+/**
+ * 학력 정보 조회 라우터
+ */
 educationRouter.get("/", login_required, async (req, res, next) => {
   try {
     const userId = req.query.userId ?? req.currentUserId;
@@ -53,7 +57,9 @@ educationRouter.get("/", login_required, async (req, res, next) => {
   }
 });
 
-// 학력 정보 수정 라우터
+/**
+ * 학력 정보 수정 라우터
+ */
 educationRouter.put("/:educationId", login_required, async (req, res, next) => {
   try {
     const educationId = req.params.educationId;
@@ -83,6 +89,9 @@ educationRouter.put("/:educationId", login_required, async (req, res, next) => {
   }
 });
 
+/**
+ * 학력 정보 삭제 라우터
+ */
 educationRouter.delete(
   "/:educationId",
   login_required,
