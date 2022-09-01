@@ -8,10 +8,12 @@ function UsersBookmarked() {
   const [users, setUsers] = useState([]);
   const [pagedUsers, setPagedUsers] = useState([]);
   const [ioTarget, setIoTarget] = useState(null);
+  const [isBookmarksEmpty, setIsBookmarksEmpty] = useState(false);
 
   useEffect(() => {
     Api.get("api/userlist", "?bookmark=true").then((res) => {
       const data = res.data.data;
+      if (data.length === 0) setIsBookmarksEmpty(true);
       setUsers(data);
       if (data.length < 6) setPagedUsers(data.slice(0, data.length));
       else setPagedUsers(data.slice(0, 6));
@@ -47,7 +49,7 @@ function UsersBookmarked() {
   return (
     <div className="usercard-container">
       <div className="usercard-content">
-        {pagedUsers.length !== 0 ? (
+        {!isBookmarksEmpty ? (
           pagedUsers.map((user) => (
             <UserCard2 key={user.id} user={user} isNetwork />
           ))
