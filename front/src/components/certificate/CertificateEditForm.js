@@ -33,7 +33,9 @@ function CertificateEditForm({
           onChange={handleChange}
         />
         {title || (
-          <Form.Text className="text-danger">5글자 이상 적어주세요</Form.Text>
+          <Form.Text className="text-danger">
+            자격증을 5글자 이상 적어주세요.
+          </Form.Text>
         )}
       </Form.Group>
       <Form.Group controlId="certificateEditDetail" className="mt-3">
@@ -45,7 +47,9 @@ function CertificateEditForm({
           onChange={handleChange}
         />
         {detail || (
-          <Form.Text className="text-danger">5글자 이상 적어주세요</Form.Text>
+          <Form.Text className="text-danger">
+            상세내역을 5글자 이상 적어주세요.
+          </Form.Text>
         )}
       </Form.Group>
       <Form.Group as={Row} controlId="certificateEditDate" className="mt-3">
@@ -57,7 +61,9 @@ function CertificateEditForm({
             onChange={handleChange}
           />
           {certificationDate || (
-            <Form.Text className="text-danger">취득일을 기입해주세요</Form.Text>
+            <Form.Text className="text-danger">
+              자격증 취득일을 기입해주세요.
+            </Form.Text>
           )}
         </Col>
       </Form.Group>

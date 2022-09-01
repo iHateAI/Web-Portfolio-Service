@@ -35,7 +35,7 @@ function ProjectEditForm({ project, onCancelButtonClickEvent, fetchProjects }) {
         />
         {title || (
           <Form.Text className="text-danger">
-            프로젝트 제목은 5글자 이상이여야 합니다.
+            프로젝트 제목을 5글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>
@@ -49,7 +49,7 @@ function ProjectEditForm({ project, onCancelButtonClickEvent, fetchProjects }) {
         />
         {detail || (
           <Form.Text className="text-danger">
-            상세내역은 5글자 이상이여야 합니다.
+            상세내역을 5글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>

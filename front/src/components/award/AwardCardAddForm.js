@@ -28,7 +28,7 @@ const AwardCardAddForm = ({ onCancelButtonClickEvent, fetchAwards }) => {
           />
           {title || (
             <Form.Text className="text-danger">
-              수상내역이 올바르지 않습니다.
+              수상내역을 5글자 이상 입력해주세요.
             </Form.Text>
           )}
         </Form.Group>
@@ -41,7 +41,7 @@ const AwardCardAddForm = ({ onCancelButtonClickEvent, fetchAwards }) => {
           />
           {detail || (
             <Form.Text className="text-danger">
-              수상내역 설명이 올바르지 않습니다.
+              설명을 5글자 이상 입력해주세요.
             </Form.Text>
           )}
         </Form.Group>
