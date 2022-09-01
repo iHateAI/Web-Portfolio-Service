@@ -31,13 +31,13 @@ function ProjectCard({
       {isEditable && (
         <div className="mvp-management">
           <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
-            편집
+            EDIT
           </button>
           <button
             className="mvp-delete-button"
             onClick={handleShowButtonClickEvent}
           >
-            삭제
+            DELETE
           </button>
         </div>
       )}

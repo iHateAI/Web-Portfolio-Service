@@ -36,7 +36,7 @@ function EducationCard({
             className="mvp-delete-button"
             onClick={handleShowButtonClickEvent}
           >
-            삭제
+            DELETE
           </button>
         </div>
       )}

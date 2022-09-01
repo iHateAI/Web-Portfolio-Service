@@ -31,7 +31,7 @@ function CertificateAddForm({ onCancelButtonClickEvent, fetchCertifications }) {
         />
         {title || (
           <Form.Text className="text-danger">
-            자격증을 5글자 이상 적어주세요.
+            자격증을 5글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>
@@ -44,7 +44,7 @@ function CertificateAddForm({ onCancelButtonClickEvent, fetchCertifications }) {
         />
         {detail || (
           <Form.Text className="text-danger">
-            상세내역을 5글자 이상 적어주세요.
+            상세내역을 5글자 이상 입력해주세요.
           </Form.Text>
         )}
       </Form.Group>
@@ -63,7 +63,7 @@ function CertificateAddForm({ onCancelButtonClickEvent, fetchCertifications }) {
         </Col>
       </Form.Group>
       <Form.Group as={Row} className="mt-3 text-center mb-4">
-        <Col sm={{ span: 20 }}>
+        <Col>
           <Button
             variant="primary"
             className="me-3"
