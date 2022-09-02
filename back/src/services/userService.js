@@ -146,7 +146,7 @@ class userAuthService {
   }
 
   static async setUserProfileImage({ userId, profileImage }) {
-    const profileImageUrl = `http://localhost:${process.env.SERVER_PORT}/user/profileImage/${profileImage.filename}`;
+    const profileImageUrl = `http://kdt-ai5-team10.elicecoding.com:${process.env.SERVER_PORT}/user/profileImage/${profileImage.filename}`;
     const fieldToUpdate = "profileImageUrl";
     const newValue = profileImageUrl;
 
