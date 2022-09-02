@@ -34,9 +34,11 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
     onPasswordCloseButtonClickEventHandler,
   ] = useModal(false);
 
+  const { name, email, description, all } = isValid;
+
   const handleSubmitClick = async (e) => {
     e.preventDefault();
-    if (!isValid) {
+    if (!all) {
       onShowButtonClickEventHandler();
       return;
     }
@@ -71,17 +73,25 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           name="name"
           onChange={handleChange}
         />
+        {name || (
+          <Form.Text className="text-danger">
+            이름은 최소 2글자 이상이여야 합니다.
+          </Form.Text>
+        )}
         <input
           type="text"
           placeholder="Email..."
           style={inputStyle}
           value={values?.email}
           name="email"
-          onChange={handleChange}
+          onChange={(e) => {
+            handleChange(e, false);
+            setError(false);
+          }}
         />
-        {!isValid.email && (
+        {email || (
           <Form.Text className="text-danger">
-            Please check your email.
+            이메일 형식에 맞지 않습니다.
           </Form.Text>
         )}
         {error && (
@@ -97,9 +107,9 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
           name="description"
           onChange={handleChange}
         />
-        {!isValid.description && (
+        {description || (
           <Form.Text className="text-danger">
-            Please check your description.
+            설명은 최소 1글자 이상 입력해주세요.
           </Form.Text>
         )}
         <button type="submit" style={buttonStyle} onClick={handleSubmitClick}>
@@ -117,7 +127,7 @@ const UserEditForm2 = ({ user, setIsEditing, setUser }) => {
         </button>
       </form>
       <AlertModal
-        msg="Please check your information."
+        msg="정보를 바르게 기입해주세요."
         isShow={isShow}
         onCloseButtonClickEvent={onCloseButtonClickEventHandler}
       />

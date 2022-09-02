@@ -5,12 +5,9 @@ const validation = (values) => {
     switch (name) {
       case "title":
       case "detail":
-        result[name] = validateLength(value, 5);
-        break;
-
       case "university":
       case "major":
-        result[name] = validateLength(value, 4);
+        result[name] = validateLength(value, 5);
         break;
 
       case "name":
