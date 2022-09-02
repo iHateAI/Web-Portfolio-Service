@@ -71,7 +71,8 @@ function RegisterForm() {
                   />
                   {!isValid.password && (
                     <Form.Text className="text-danger">
-                      비밀번호는 4글자 이상으로 설정해 주세요.
+                      비밀번호는 4글자 이상 12글자 이하의 소문자와 대문자,
+                      특수문자로 이루어져야 합니다.
                     </Form.Text>
                   )}
                 </Form.Group>

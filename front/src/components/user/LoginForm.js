@@ -15,6 +15,8 @@ function LoginForm() {
   });
   const [errorMessage, setErrorMessage] = useState("");
 
+  const { email, password } = values || {};
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,8 +58,8 @@ function LoginForm() {
                     name="email"
                     onChange={handleChange}
                   />
-                  {!isValid.email && (
-                    <Form.Text className="text-success">
+                  {isValid.email || (
+                    <Form.Text className="text-danger">
                       이메일 형식이 올바르지 않습니다.
                     </Form.Text>
                   )}
@@ -72,11 +74,6 @@ function LoginForm() {
                     name="password"
                     onChange={handleChange}
                   />
-                  {!isValid.password && (
-                    <Form.Text className="text-success">
-                      비밀번호는 4글자 이상입니다.
-                    </Form.Text>
-                  )}
                 </Form.Group>
                 {errorMessage && (
                   <Form.Text className="text-danger">{errorMessage}</Form.Text>
@@ -86,7 +83,7 @@ function LoginForm() {
                     <Button
                       variant="primary"
                       type="submit"
-                      disabled={!isValid.all}
+                      disabled={!email || !password}
                     >
                       로그인
                     </Button>
