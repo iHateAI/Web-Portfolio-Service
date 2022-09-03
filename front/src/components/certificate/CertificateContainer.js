@@ -25,14 +25,18 @@ function CertificateContainer({ portfolioOwnerId, isEditable }) {
   return (
     <div className="mvp-content">
       <h3 className="mvp-title">Certificate</h3>
-      {certifications.map((certification) => (
-        <Certificate
-          certification={certification}
-          isEditable={isEditable}
-          fetchCertifications={fetchCertifications}
-          key={certification._id}
-        />
-      ))}
+      {certifications.length > 0 ? (
+        certifications.map((certification) => (
+          <Certificate
+            certification={certification}
+            isEditable={isEditable}
+            fetchCertifications={fetchCertifications}
+            key={certification._id}
+          />
+        ))
+      ) : (
+        <div className="mvp-alert-div">작성된 내용이 없습니다.</div>
+      )}
       {isEditable && (
         <Row className="mt-3 text-center mb-4">
           <Col sm={{ span: 20 }}>

@@ -19,7 +19,7 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
       <div className="network-item-info">
         <h3 className="user-title">{user?.name}</h3>
         <h3 className="user-email">{user?.email}</h3>
-        <span className="user-descriptiom">{user?.description}</span>
+        <span className="user-description">{user?.description}</span>
         {isEditable && (
           <button className="button-style" onClick={handlerEditClick}>
             EDIT
@@ -33,16 +33,20 @@ function UserCard2({ user, setIsEditing, isEditable, isNetwork }) {
     <div className="item-box">
       <div className="item-wrap" onClick={handlerPortfolioClick}>
         <UserInformation />
-        <img
-          className="item-img"
-          src={
-            user.profileImageUrl ||
-            `${process.env.PUBLIC_URL}/images/profile.PNG`
-          }
-          alt="userImg"
-        />
+        <div className="imgbox">
+          <img
+            className="item-img"
+            src={
+              user.profileImageUrl ||
+              `${process.env.PUBLIC_URL}/images/profile.PNG`
+            }
+            alt="userImg"
+          />
+        </div>
       </div>
-      <BookmarkButton user={user} />
+      <div className="bookmark-button-network-container">
+        <BookmarkButton user={user} />
+      </div>
     </div>
   );
 }

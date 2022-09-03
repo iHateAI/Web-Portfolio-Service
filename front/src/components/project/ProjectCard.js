@@ -23,16 +23,17 @@ function ProjectCard({
     <div className="mvp-content-detail">
       <div className="mvp-info">
         <h3 className="title">{title}</h3>
-        <p className="sub-title">{detail}</p>
-        <p className="sub-title">
+        <div className="date">
           {startDate} ~ {endDate}
-        </p>
+        </div>
+        <div className="sub-title">{detail}</div>
       </div>
       {isEditable && (
-        <div className="mvp-management">
+        <div className="mvp-management mvp-button-box">
           <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
             EDIT
           </button>
+          <div className="mvp-button-divline" />
           <button
             className="mvp-delete-button"
             onClick={handleShowButtonClickEvent}

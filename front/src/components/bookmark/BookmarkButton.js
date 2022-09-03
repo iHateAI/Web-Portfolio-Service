@@ -46,7 +46,7 @@ const BookmarkButton = ({ user }) => {
   };
 
   return (
-    <div className="bookmark-button-container">
+    <div>
       {userState.user.id !== user.id && (
         <button onClick={handleToggleBookmark} className="bookmark-button">
           {toggleBookmark ? (

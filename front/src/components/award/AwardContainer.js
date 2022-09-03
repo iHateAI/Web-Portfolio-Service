@@ -25,14 +25,18 @@ const AwardContainer = ({ portfolioOwnerId, isEditable }) => {
   return (
     <div className="mvp-content">
       <h3 className="mvp-title">Award</h3>
-      {awards.map((award) => (
-        <AwardCardPresenter
-          award={award}
-          isEditable={isEditable}
-          fetchAwards={fetchAwards}
-          key={award._id}
-        />
-      ))}
+      {awards.length ? (
+        awards.map((award) => (
+          <AwardCardPresenter
+            award={award}
+            isEditable={isEditable}
+            fetchAwards={fetchAwards}
+            key={award._id}
+          />
+        ))
+      ) : (
+        <div className="mvp-alert-div">작성된 내용이 없습니다.</div>
+      )}
       {isEditable && (
         <Row className="mt-3 text-center mb-4">
           <Col sm={colStyle}>

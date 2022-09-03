@@ -1,3 +1,9 @@
+@media screen and (max-width: 640px) {
+  html {
+    font-size: 8px;
+  }
+}
+
 /*--------------------------------------------------------------
   # Header
   --------------------------------------------------------------*/
@@ -79,6 +85,9 @@
       }
       a:hover {
         text-decoration: none;
+      }
+      @media screen and (max-width: 640px) {
+        margin: 2.2rem 0;
       }
     }
   }
@@ -256,7 +265,7 @@
   @include fadein-ani;
 
   .title-container {
-    padding: 1.8rem;
+    padding: 0 4.8rem;
     margin-bottom: $spacing-largest;
     .portfolio-title {
       font-size: $font-size-largest;
@@ -265,6 +274,10 @@
       width: 40%;
       margin-top: $spacing-medium;
       font-size: $font-size-small;
+      @media only screen and (max-width: $bp-small) {
+        width: 100%;
+        margin-top: $spacing-small;
+      }
     }
   }
 }
@@ -272,10 +285,21 @@
 .user-container {
   width: 100%;
   display: flex;
+  justify-content: space-between;
   margin-bottom: $spacing-largest;
+  padding-left: 4.8rem;
+  padding-right: 4.8rem;
+  @media only screen and (max-width: $bp-medium) {
+    padding: 0;
+    margin-bottom: 0;
+  }
+  @media only screen and (max-width: $bp-small) {
+    position: relative;
+  }
 }
 
 .single-user-item-box {
+  flex: 1;
   .item-wrap {
     display: flex;
     @media only screen and (max-width: $bp-medium) {
@@ -284,61 +308,74 @@
     }
   }
   .item-img-contaienr {
+    width: 30rem;
+    height: 30rem;
     @media only screen and (max-width: $bp-medium) {
-      display: flex;
-      justify-content: center;
+      width: 75%;
+      padding-bottom: 75%;
+      position: relative;
+      margin-bottom: 3rem;
     }
   }
   .item-img {
-    padding: 0 $spacing-small;
-    width: 55rem;
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
     display: flex;
-    margin-right: $spacing-largest;
+    // margin-right: $spacing-largest;
+    overflow: hidden;
+    object-fit: cover;
     @media only screen and (max-width: $bp-medium) {
-      width: 80%;
-      margin-bottom: $spacing-large;
+      position: absolute;
+      // margin-bottom: $spacing-large;
     }
   }
 }
 
 .single-user-item-info {
+  height: 30rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   padding: 0 $spacing-medium;
-  width: 50%;
+  flex: 1;
   @media only screen and (max-width: $bp-medium) {
+    height: auto;
     width: 80%;
     & > * {
       margin-bottom: $spacing-large;
     }
   }
+  .user-info-box {
+    display: flex;
+    justify-content: space-between;
+  }
   .user-name {
-    font-size: 2.3rem;
+    font-size: 3.3rem;
   }
   .user-email {
-    font-size: $font-size-medium;
+    font-size: $font-size-small;
   }
   .user-description {
     font-size: $font-size-small;
     width: 90%;
+    max-height: 30%;
+    overflow: hidden;
   }
 }
 
 .edit-button {
-  margin-top: $spacing-medium;
   display: flex;
   justify-content: center;
-  width: 10rem;
   background-color: $theme-color-white;
   border: 1px solid $theme-color-dark-2;
-  padding: $spacing-medium 0rem;
+  width: fit-content;
+  height: fit-content;
+  padding: 0.3rem $spacing-smallest;
   font-size: $font-size-small;
   text-transform: uppercase;
   color: $theme-color-dark-2;
   transition: 0.2s all ease;
-  font-weight: 700;
+  font-weight: 400;
 }
 .edit-button:hover {
   background-color: $theme-color-dark-2;
@@ -435,43 +472,65 @@
   }
 }
 .mvp-content {
-  overflow: scroll;
-  height: 30rem;
+  min-height: 30rem;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  background-color: $theme-color-grey-4;
+  background-color: $theme-color-white;
   padding: 3rem;
   @media only screen and (max-width: $bp-medium) {
-    height: 30rem;
+    min-height: 30rem;
   }
   .mvp-title {
-    font-size: 2.5rem;
+    font-size: 3rem;
     letter-spacing: 0.3rem;
+    font-weight: 400;
+    border-bottom: 1px solid $theme-color-dark-1;
+    height: 4.5rem;
+    margin-bottom: $spacing-small;
   }
   .mvp-content-detail {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-bottom: $spacing-small;
+  }
+  .mvp-info {
+    max-width: 75%;
   }
   .mvp-info .title {
-    font-size: $font-size-small;
+    font-size: $font-size-medium;
     margin-left: $spacing-smallest;
   }
-
-  .mvp-info .sub-title {
+  .mvp-info .date {
     font-size: $font-size-smallest;
+    margin-left: $spacing-smallest;
+  }
+  .mvp-info .sub-title {
+    font-size: $font-size-small;
     margin-left: $spacing-medium;
   }
   .mvp-edit-button {
-    @include mvp-button(#085ed6);
+    @include mvp-button-test;
     margin-right: $spacing-smallest;
   }
-
   .mvp-delete-button {
-    @include mvp-button(#eb5462);
+    @include mvp-button-test;
+    margin-left: $spacing-smallest;
+  }
+  .mvp-button-divline {
+    display: flex;
+    width: 1px;
+    height: 1.8rem;
+    border-left: 0.1rem solid $theme-color-dark-1;
+  }
+  .mvp-button-box {
+    display: flex;
+    height: fit-content;
+    justify-content: center;
   }
   .mvp-management {
     display: flex;
+    align-items: center;
 
     button:hover {
       transform: translateY(-0.3rem);
@@ -483,6 +542,13 @@
     button:active {
       transform: translateY(-0.1rem);
     }
+  }
+  .mvp-add-button {
+    @include mvp-add-button(#0d6efd);
+  }
+  .mvp-alert-div {
+    font-size: $font-size-medium;
+    text-align: center;
   }
 }
 
@@ -526,6 +592,7 @@
   height: 100%;
   flex-wrap: wrap;
   .item-box {
+    position: relative;
     border: none;
     padding: $spacing-small;
     width: 33%;
@@ -553,7 +620,7 @@
       visibility: visible;
     }
 
-    &:hover > .item-img {
+    &:hover .item-img {
       transform: scale(1.05);
       filter: brightness(70%);
     }
@@ -573,53 +640,86 @@
       @media only screen and (max-width: $bp-largest) {
         align-items: flex-start;
       }
+
+      @media only screen and (max-width: $bp-small) {
+        top: 37%;
+        visibility: visible;
+      }
       .user-title {
+        margin: 0 auto;
         font-size: $font-size-large;
         width: 70%;
         text-align: center;
+        @media only screen and (max-width: $bp-small) {
+          width: 100%;
+          margin-bottom: 1rem;
+        }
       }
       .user-email {
+        margin: 0 auto;
         width: 70%;
         text-align: center;
         font-size: $font-size-small;
+        @media only screen and (max-width: $bp-small) {
+          width: 100%;
+        }
       }
 
-      .user-descriptiom {
+      .user-description {
+        margin: 0 auto;
         border: none;
         text-align: center;
         width: 70%;
         font-size: $font-size-smallest;
+        @media only screen and (max-width: $bp-small) {
+          display: none;
+        }
       }
     }
 
-    .item-img {
-      width: 40rem;
-      height: 40rem;
-      max-width: 100%;
-      @media only screen and (max-width: $bp-largest) {
-        width: 30rem;
-        height: 30rem;
-      }
+    .imgbox {
+      position: relative;
+      width: 100%;
+      padding-bottom: 100%;
+    }
 
-      @media only screen and (max-width: $bp-medium) {
-        width: 25rem;
-        height: 25rem;
-      }
-      @media only screen and (max-width: $bp-smallest) {
-        width: 30rem;
-        height: 30rem;
-      }
+    .item-img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
       transition: 0.3s transform ease;
       transform: scale(1);
       filter: brightness(100%);
+      @media only screen and (max-width: $bp-small) {
+        filter: brightness(70%);
+      }
     }
   }
 }
 
+.bookmark-button-network-container {
+  @media only screen and (max-width: $bp-small) {
+    position: absolute;
+    top: $spacing-small;
+    right: $spacing-small - 0.9rem;
+  }
+}
+.bookmark-button-container {
+  @media only screen and (max-width: $bp-small) {
+    position: absolute;
+    top: 1rem;
+    right: 6rem;
+  }
+}
 .bookmark-button {
   font-size: $font-size-largest;
   color: #0d1e2d;
   border: none;
   background-color: transparent;
   margin-right: $spacing-small;
+  @media only screen and (max-width: $bp-small) {
+    color: $theme-color-white;
+    font-size: 3.5rem;
+  }
 }

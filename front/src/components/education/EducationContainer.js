@@ -26,14 +26,18 @@ function EducationContainer({ portfolioOwnerId, isEditable }) {
     <div className="mvp-content">
       <h3 className="mvp-title">Education</h3>
 
-      {educations.map((education) => (
-        <Education
-          key={education._id}
-          education={education}
-          fetchEducations={fetchEducations}
-          isEditable={isEditable}
-        />
-      ))}
+      {educations.length > 0 ? (
+        educations.map((education) => (
+          <Education
+            key={education._id}
+            education={education}
+            fetchEducations={fetchEducations}
+            isEditable={isEditable}
+          />
+        ))
+      ) : (
+        <div className="mvp-alert-div">작성된 내용이 없습니다.</div>
+      )}
       {isEditable && (
         <Row className="text-center mb-4">
           <Col>

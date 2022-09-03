@@ -62,7 +62,11 @@ function Portfolio() {
             portfolioOwnerId={portfolioOwner.id}
             isEditable={portfolioOwner.id === userState.user?.id}
           />
-          {userState.user && <BookmarkButton user={portfolioOwner} />}
+          {userState.user && (
+            <div className="bookmark-button-container">
+              <BookmarkButton user={portfolioOwner} />
+            </div>
+          )}
         </div>
 
         <div className="mvps-container">
@@ -82,13 +86,13 @@ function Portfolio() {
 
         <div className="mvps-container">
           <div className="mvp-container">
-            <CertificateContainer
+            <ProjectContainer
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />
           </div>
           <div className="mvp-container">
-            <ProjectContainer
+            <CertificateContainer
               portfolioOwnerId={portfolioOwner.id}
               isEditable={portfolioOwner.id === userState.user?.id}
             />

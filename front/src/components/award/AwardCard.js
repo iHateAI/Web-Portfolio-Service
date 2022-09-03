@@ -22,21 +22,21 @@ const AwardCard = ({
     <div className="mvp-content-detail">
       <div className="mvp-info">
         <h3 className="title">{title}</h3>
-
-        <p className="sub-title">
+        <div className="sub-title">
           <span>{detail}</span>
-        </p>
+        </div>
       </div>
       {isEditable && (
         <div className="mvp-management">
           <button onClick={onEditButtonClickEvent} className="mvp-edit-button">
-            edit
+            EDIT
           </button>
+          <div className="mvp-button-divline" />
           <button
             onClick={handleShowButtonClickEvent}
             className="mvp-delete-button"
           >
-            delete
+            DELETE
           </button>
         </div>
       )}
