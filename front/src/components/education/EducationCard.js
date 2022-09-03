@@ -23,15 +23,16 @@ function EducationCard({
     <div className="mvp-content-detail">
       <div className="mvp-info">
         <h3 className="title">{university}</h3>
-        <p className="sub-title">
+        <div className="sub-title">
           <span>{`${major} (${status})`}</span>
-        </p>
+        </div>
       </div>
       {isEditable && (
         <div className="mvp-management">
           <button className="mvp-edit-button" onClick={onEditButtonClickEvent}>
             EDIT
           </button>
+          <div className="mvp-button-divline" />
           <button
             className="mvp-delete-button"
             onClick={handleShowButtonClickEvent}

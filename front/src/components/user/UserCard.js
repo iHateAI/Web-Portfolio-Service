@@ -50,10 +50,19 @@ function UserCard({
   const UserInformation = () => {
     return (
       <div className="single-user-item-info">
-        <h3 className="user-name">{user?.name}</h3>
-        <p className="user-email">
-          <span>{user?.email}</span>
-        </p>
+        <div className="user-info-box">
+          <div>
+            <h3 className="user-name">{user?.name}</h3>
+            <div className="user-email">
+              <span>{user?.email}</span>
+            </div>
+          </div>
+          {isEditable && (
+            <button className="edit-button" onClick={handlerEditClick}>
+              EDIT
+            </button>
+          )}
+        </div>
         <div className="user-description">
           <p>{user?.description}</p>
         </div>
@@ -62,18 +71,12 @@ function UserCard({
           <UserLike
             portfolioOwnerId={portfolioOwnerId}
             user={userState.user?.id}
-          ></UserLike>
+          />
           <UserLikeList
             portfolioOwnerId={portfolioOwnerId}
             user={userState.user?.id}
           />
         </div>
-
-        {isEditable && (
-          <button className="edit-button" onClick={handlerEditClick}>
-            EDIT
-          </button>
-        )}
       </div>
     );
   };

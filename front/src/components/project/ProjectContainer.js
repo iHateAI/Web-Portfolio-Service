@@ -25,14 +25,18 @@ function ProjectContainer({ portfolioOwnerId, isEditable }) {
   return (
     <div className="mvp-content">
       <h3 className="mvp-title">Project</h3>
-      {projects.map((project) => (
-        <Project
-          project={project}
-          isEditable={isEditable}
-          fetchProjects={fetchProjects}
-          key={project._id}
-        />
-      ))}
+      {projects.length > 0 ? (
+        projects.map((project) => (
+          <Project
+            project={project}
+            isEditable={isEditable}
+            fetchProjects={fetchProjects}
+            key={project._id}
+          />
+        ))
+      ) : (
+        <div className="mvp-alert-div">작성된 내용이 없습니다.</div>
+      )}
       {isEditable && (
         <Row className="mt-3 text-center mb-4">
           <Col>
