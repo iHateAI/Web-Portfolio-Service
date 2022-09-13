@@ -11,7 +11,7 @@
 - 주제 : 포트폴리오 공유를 위한 웹사이트 개발 프로젝트
 - 목표 : 사용자들 간의 편리한 포트폴리오 공유
 - api 문서 : [바로 가기](https://ihateai.github.io/Team10_apidoc/)
-- 테스트 페이지 : [바로 가기](http://kdt-ai5-team10.elicecoding.com/)
+- 테스트 페이지 : 
 
 <br />
 
@@ -314,7 +314,7 @@
 
 1. 해당 프로젝트를 clone 합니다.
 ```
-git clone https://kdt-gitlab.elice.io/ai_track/class05/web_project/team10.git
+https://github.com/iHateAI/Web-Portfolio-Service.git
 ```
 
 2. 프로젝트 실행에 필요한 패키지를 설치합니다.
